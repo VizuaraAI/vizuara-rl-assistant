@@ -107,15 +107,31 @@ export default function MentorInboxPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Fetch messages when student changes - clear threads first to prevent mixing
+  // Fetch messages and context when student changes - clear threads first to prevent mixing
   useEffect(() => {
     if (selectedStudent) {
       // Clear threads immediately to prevent showing old student's conversations
       setThreads([]);
       setSelectedThread(null);
+      setContextData(null); // Clear old context data
       fetchMessages(selectedStudent.id);
+      // Fetch context to get roadmap acceptance status
+      fetchContextSilent(selectedStudent.id);
     }
   }, [selectedStudent]);
+
+  // Silent context fetch (no loading state) for button state management
+  async function fetchContextSilent(studentId: string) {
+    try {
+      const res = await fetch(`/api/agent/context?studentId=${studentId}`);
+      const data = await res.json();
+      if (data.success) {
+        setContextData(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch context:', error);
+    }
+  }
 
   async function fetchStudents() {
     try {
@@ -1248,9 +1264,9 @@ export default function MentorInboxPage() {
                         {/* Accept Roadmap */}
                         <button
                           onClick={acceptRoadmap}
-                          disabled={isAcceptingRoadmap || selectedStudent?.currentPhase !== 'phase2'}
+                          disabled={isAcceptingRoadmap || selectedStudent?.currentPhase !== 'phase2' || contextData?.contextSummary?.roadmapAccepted}
                           className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 disabled:opacity-50 ${
-                            selectedStudent?.currentPhase !== 'phase2'
+                            selectedStudent?.currentPhase !== 'phase2' || contextData?.contextSummary?.roadmapAccepted
                               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                               : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                           }`}
@@ -1258,18 +1274,23 @@ export default function MentorInboxPage() {
                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          {isAcceptingRoadmap ? 'Accepting...' : 'Student Accepted Roadmap'}
+                          {isAcceptingRoadmap ? 'Accepting...' : contextData?.contextSummary?.roadmapAccepted ? 'Roadmap Accepted' : 'Student Accepted Roadmap'}
                         </button>
 
                         {/* Generate Roadmap */}
                         <button
                           onClick={() => setShowRoadmapModal(true)}
-                          className="px-3 py-1.5 bg-purple-100 text-purple-700 text-xs font-medium rounded-lg hover:bg-purple-200 transition-colors flex items-center gap-1.5"
+                          disabled={contextData?.contextSummary?.roadmapAccepted}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 disabled:opacity-50 ${
+                            contextData?.contextSummary?.roadmapAccepted
+                              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                              : 'bg-purple-100 text-purple-700 hover:bg-purple-200'
+                          }`}
                         >
                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
-                          Generate Roadmap
+                          {contextData?.contextSummary?.roadmapAccepted ? 'Roadmap Generated' : 'Generate Roadmap'}
                         </button>
 
                         {/* Generate Colab Notebook */}
@@ -2136,9 +2157,9 @@ export default function MentorInboxPage() {
                   setComposeMessage('');
                   acceptRoadmap();
                 }}
-                disabled={isAcceptingRoadmap || selectedStudent?.currentPhase !== 'phase2'}
+                disabled={isAcceptingRoadmap || selectedStudent?.currentPhase !== 'phase2' || contextData?.contextSummary?.roadmapAccepted}
                 className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 disabled:opacity-50 ${
-                  selectedStudent?.currentPhase !== 'phase2'
+                  selectedStudent?.currentPhase !== 'phase2' || contextData?.contextSummary?.roadmapAccepted
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                     : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                 }`}
@@ -2146,7 +2167,7 @@ export default function MentorInboxPage() {
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                {isAcceptingRoadmap ? 'Accepting...' : 'Student Accepted Roadmap'}
+                {isAcceptingRoadmap ? 'Accepting...' : contextData?.contextSummary?.roadmapAccepted ? 'Roadmap Accepted' : 'Student Accepted Roadmap'}
               </button>
 
               {/* Generate Roadmap */}
@@ -2156,12 +2177,17 @@ export default function MentorInboxPage() {
                   setComposeMessage('');
                   setShowRoadmapModal(true);
                 }}
-                className="px-3 py-1.5 bg-purple-100 text-purple-700 text-xs font-medium rounded-lg hover:bg-purple-200 transition-colors flex items-center gap-1.5"
+                disabled={contextData?.contextSummary?.roadmapAccepted}
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 disabled:opacity-50 ${
+                  contextData?.contextSummary?.roadmapAccepted
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-purple-100 text-purple-700 hover:bg-purple-200'
+                }`}
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Generate Roadmap
+                {contextData?.contextSummary?.roadmapAccepted ? 'Roadmap Generated' : 'Generate Roadmap'}
               </button>
 
               {/* Generate Colab Notebook */}
