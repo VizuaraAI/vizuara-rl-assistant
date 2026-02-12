@@ -13,6 +13,11 @@ try {
     prepare: false, // Required for Supabase connection pooler
     max: 1, // Limit connections in serverless
     connect_timeout: 10,
+    // Force IPv4 to avoid Railway IPv6 issues with Supabase
+    host: connectionString.includes('supabase.co')
+      ? connectionString.match(/[@]([^:]+)/)?.[1]
+      : undefined,
+    ssl: 'require',
   });
 } catch (error) {
   console.warn('Direct PostgreSQL connection not available, some features may be limited');

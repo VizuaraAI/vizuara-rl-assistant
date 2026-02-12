@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { playClickSound, playSendSound, playSuccessSound, playNotificationSound } from '@/lib/sounds';
 
 interface Student {
   id: string;
@@ -324,6 +325,7 @@ export default function MentorInboxPage() {
   }
 
   async function approveDraft(draftId: string, editedContent?: string) {
+    playClickSound();
     setIsSending(true);
 
     try {
@@ -342,6 +344,7 @@ export default function MentorInboxPage() {
       const data = await res.json();
 
       if (data.success) {
+        playSuccessSound();
         setIsEditing(false);
         setSelectedThread(null);
 
@@ -361,6 +364,7 @@ export default function MentorInboxPage() {
   async function transitionToPhase2(studentId: string) {
     if (!confirm('Are you sure you want to transition this student to Phase II? This action confirms they have completed all Phase I videos.')) return;
 
+    playClickSound();
     setIsTransitioning(true);
     try {
       const res = await fetch('/api/students/transition', {
@@ -372,6 +376,7 @@ export default function MentorInboxPage() {
       const data = await res.json();
 
       if (data.success) {
+        playSuccessSound();
         // Refresh the students list
         await fetchStudents();
         alert('Student successfully transitioned to Phase II!');
@@ -389,6 +394,7 @@ export default function MentorInboxPage() {
   async function generateRoadmap() {
     if (!selectedStudent || !roadmapTopic.trim()) return;
 
+    playClickSound();
     setIsGeneratingRoadmap(true);
     setRoadmapProgress({ step: 0, message: 'Starting...', phase: 'init' });
     setRoadmapThinking([]);

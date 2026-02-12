@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { playClickSound, playSendSound, playSuccessSound, playNotificationSound } from '@/lib/sounds';
 
 interface Message {
   id: string;
@@ -55,6 +56,37 @@ export default function StudentInboxPage() {
   useEffect(() => {
     if (!student) return;
     const interval = setInterval(() => fetchMessages(student.id), 10000);
+    return () => clearInterval(interval);
+  }, [student]);
+
+  // Poll for phase changes (auto-transition detection)
+  useEffect(() => {
+    if (!student) return;
+
+    const checkPhaseChange = async () => {
+      try {
+        const res = await fetch('/api/students');
+        const data = await res.json();
+        if (data.success) {
+          const updatedStudent = data.data.students.find((s: Student) => s.id === student.id);
+          if (updatedStudent && updatedStudent.currentPhase !== student.currentPhase) {
+            // Phase changed! Show notification and update
+            playSuccessSound();
+            setStudent(updatedStudent);
+
+            // Show phase transition notification
+            if (updatedStudent.currentPhase === 'phase2') {
+              alert('🎉 Congratulations! You have been transitioned to Phase II - Research Project! The page will now refresh.');
+              window.location.reload();
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Failed to check phase:', error);
+      }
+    };
+
+    const interval = setInterval(checkPhaseChange, 15000); // Check every 15 seconds
     return () => clearInterval(interval);
   }, [student]);
 
@@ -233,6 +265,7 @@ export default function StudentInboxPage() {
 
     if (!body.trim() || !student) return;
 
+    playSendSound();
     setIsSending(true);
 
     try {
@@ -322,6 +355,7 @@ export default function StudentInboxPage() {
           <div className="p-4">
             <button
               onClick={() => {
+                playClickSound();
                 setIsComposing(true);
                 setSelectedThread(null);
               }}

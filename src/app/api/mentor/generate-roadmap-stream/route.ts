@@ -6,7 +6,6 @@
 
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import PDFDocument from 'pdfkit';
 import { getResearchTopic } from '@/services/resources';
 
 const supabase = createClient(
@@ -250,26 +249,26 @@ Follow the JSON structure EXACTLY. Include real papers, real datasets, and actio
         const milestoneCount = roadmapJson.milestones?.length || 5;
         send('status', { step: 2, message: `Found ${milestoneCount} milestones`, phase: 'parse-done' });
 
-        // Step 3: Generate PDF
-        send('status', { step: 3, message: 'Generating PDF document...', phase: 'pdf' });
-        send('thinking', { text: 'Creating professional PDF...' });
+        // Step 3: Generate downloadable document
+        send('status', { step: 3, message: 'Generating document...', phase: 'pdf' });
+        send('thinking', { text: 'Creating downloadable roadmap...' });
 
-        // Generate PDF using pdfkit to buffer
         const timestamp = Date.now();
         const safeTopicName = topicTitle.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30);
-        const filename = `roadmap_${safeTopicName}_${timestamp}.pdf`;
 
-        const pdfBuffer = await generatePDFToBuffer(roadmapJson);
+        // Generate as Markdown (more reliable in serverless)
+        const markdownContent = generateMarkdown(roadmapJson);
+        const filename = `roadmap_${safeTopicName}_${timestamp}.md`;
 
-        send('status', { step: 3, message: 'PDF generated, uploading...', phase: 'pdf-upload' });
+        send('status', { step: 3, message: 'Document generated, uploading...', phase: 'pdf-upload' });
 
         // Try to upload to Supabase Storage
         let fullPdfUrl = '';
         try {
           const { data: uploadData, error: uploadError } = await supabase.storage
             .from('roadmaps')
-            .upload(filename, pdfBuffer, {
-              contentType: 'application/pdf',
+            .upload(filename, markdownContent, {
+              contentType: 'text/markdown',
               cacheControl: '3600',
               upsert: true,
             });
@@ -284,13 +283,13 @@ Follow the JSON structure EXACTLY. Include real papers, real datasets, and actio
           console.warn('Storage upload failed, using data URL fallback:', storageError);
         }
 
-        // If storage failed, create a data URL for PDF
+        // If storage failed, create a data URL
         if (!fullPdfUrl) {
-          const base64Pdf = pdfBuffer.toString('base64');
-          fullPdfUrl = `data:application/pdf;base64,${base64Pdf}`;
+          const base64Content = Buffer.from(markdownContent).toString('base64');
+          fullPdfUrl = `data:text/markdown;base64,${base64Content}`;
         }
 
-        send('status', { step: 3, message: 'PDF generated successfully', phase: 'pdf-done' });
+        send('status', { step: 3, message: 'Document generated successfully', phase: 'pdf-done' });
 
         // Step 4: Save to database
         send('status', { step: 4, message: 'Saving to database...', phase: 'save' });
@@ -443,127 +442,141 @@ function parseJSON(text: string): any {
   return JSON.parse(cleaned.trim());
 }
 
-async function generatePDFToBuffer(roadmapJson: any): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    try {
-      const doc = new PDFDocument({ margin: 50, size: 'A4' });
-      const chunks: Buffer[] = [];
+function generateMarkdown(roadmapJson: any): string {
+  const lines: string[] = [];
 
-      doc.on('data', (chunk: Buffer) => chunks.push(chunk));
-      doc.on('end', () => resolve(Buffer.concat(chunks)));
-      doc.on('error', reject);
+  // Title
+  lines.push(`# ${roadmapJson.title || 'Research Roadmap'}`);
+  lines.push(`## ${roadmapJson.subtitle || ''}`);
+  lines.push('');
+  lines.push(`**Researcher:** ${roadmapJson.researcher || 'Student'}`);
+  lines.push(`**Mentor:** ${roadmapJson.mentor || 'Dr. Raj Dandekar'}`);
+  lines.push(`**Date:** ${roadmapJson.date || new Date().toLocaleDateString()}`);
+  lines.push('');
+  lines.push('---');
+  lines.push('');
 
-      // Title
-      doc.fontSize(24).font('Helvetica-Bold')
-        .text(roadmapJson.title || 'Research Roadmap', { align: 'center' });
-      doc.moveDown(0.5);
-      doc.fontSize(16).font('Helvetica')
-        .text(roadmapJson.subtitle || '', { align: 'center' });
-      doc.moveDown();
-      doc.fontSize(11).font('Helvetica')
-        .text(`Researcher: ${roadmapJson.researcher || 'Student'}`, { align: 'center' })
-        .text(`Mentor: ${roadmapJson.mentor || 'Dr. Raj Dandekar'}`, { align: 'center' })
-        .text(`Date: ${roadmapJson.date || new Date().toLocaleDateString()}`, { align: 'center' });
+  // Abstract
+  if (roadmapJson.abstract) {
+    lines.push('## Abstract');
+    lines.push('');
+    lines.push(roadmapJson.abstract);
+    lines.push('');
+  }
 
-      doc.moveDown(2);
-
-      // Abstract
-      if (roadmapJson.abstract) {
-        doc.fontSize(14).font('Helvetica-Bold').text('Abstract');
-        doc.moveDown(0.3);
-        doc.fontSize(11).font('Helvetica').text(roadmapJson.abstract, { align: 'justify' });
-        doc.moveDown();
-      }
-
-      // Scope & Research Questions
-      if (roadmapJson.scope) {
-        doc.fontSize(14).font('Helvetica-Bold').text('1. Scope & Research Questions');
-        doc.moveDown(0.3);
-        if (roadmapJson.scope.goal) {
-          doc.fontSize(11).font('Helvetica-Bold').text('Goal: ', { continued: true })
-            .font('Helvetica').text(roadmapJson.scope.goal);
-        }
-        if (roadmapJson.scope.questions?.length) {
-          doc.moveDown(0.3);
-          roadmapJson.scope.questions.forEach((q: string, i: number) => {
-            doc.fontSize(11).font('Helvetica').text(`• ${q}`);
-          });
-        }
-        doc.moveDown();
-      }
-
-      // Dataset
-      if (roadmapJson.dataset) {
-        doc.fontSize(14).font('Helvetica-Bold').text('2. Primary Dataset');
-        doc.moveDown(0.3);
-        doc.fontSize(11).font('Helvetica-Bold').text(roadmapJson.dataset.name || 'Dataset');
-        if (roadmapJson.dataset.description) {
-          doc.font('Helvetica').text(roadmapJson.dataset.description);
-        }
-        doc.moveDown();
-      }
-
-      // Milestones
-      if (roadmapJson.milestones?.length) {
-        roadmapJson.milestones.forEach((milestone: any, idx: number) => {
-          // Check if we need a new page
-          if (doc.y > 650) doc.addPage();
-
-          doc.fontSize(14).font('Helvetica-Bold')
-            .text(`Milestone ${milestone.number || idx + 1}: ${milestone.title} (Weeks ${milestone.weeks || `${idx * 2 + 1}-${idx * 2 + 2}`})`);
-          doc.moveDown(0.3);
-
-          // Objectives
-          if (milestone.objectives?.length) {
-            doc.fontSize(11).font('Helvetica-Bold').text('Objectives:');
-            milestone.objectives.forEach((obj: string) => {
-              doc.font('Helvetica').text(`  • ${obj}`);
-            });
-            doc.moveDown(0.3);
-          }
-
-          // Tasks
-          if (milestone.tasks?.length) {
-            doc.fontSize(11).font('Helvetica-Bold').text('Tasks:');
-            milestone.tasks.forEach((task: string) => {
-              doc.font('Helvetica').text(`  ${task}`);
-            });
-            doc.moveDown(0.3);
-          }
-
-          // Deliverables
-          if (milestone.deliverables?.length) {
-            doc.fontSize(11).font('Helvetica-Bold').text('Deliverables:');
-            milestone.deliverables.forEach((del: string) => {
-              doc.font('Helvetica').text(`  • ${del}`);
-            });
-            doc.moveDown(0.3);
-          }
-
-          // Reading list (for milestone 1)
-          if (milestone.reading_list?.length && milestone.reading_list.length <= 15) {
-            doc.fontSize(11).font('Helvetica-Bold').text('Core Reading List:');
-            milestone.reading_list.slice(0, 10).forEach((paper: string) => {
-              doc.font('Helvetica').text(`  • ${paper}`, { width: 480 });
-            });
-            if (milestone.reading_list.length > 10) {
-              doc.font('Helvetica-Oblique').text(`  ... and ${milestone.reading_list.length - 10} more papers`);
-            }
-            doc.moveDown(0.3);
-          }
-
-          doc.moveDown();
-        });
-      }
-
-      // Footer
-      doc.moveDown(2);
-      doc.fontSize(9).font('Helvetica-Oblique')
-        .text('Generated by Vizuara GenAI Mentor', { align: 'center' });
-
-      doc.end();
-    } catch (error) {
-      reject(error);
+  // Scope & Research Questions
+  if (roadmapJson.scope) {
+    lines.push('## 1. Scope & Research Questions');
+    lines.push('');
+    if (roadmapJson.scope.goal) {
+      lines.push(`**Goal:** ${roadmapJson.scope.goal}`);
+      lines.push('');
     }
-  });
+    if (roadmapJson.scope.questions?.length) {
+      lines.push('**Research Questions:**');
+      roadmapJson.scope.questions.forEach((q: string) => {
+        lines.push(`- ${q}`);
+      });
+      lines.push('');
+    }
+  }
+
+  // Dataset
+  if (roadmapJson.dataset) {
+    lines.push('## 2. Primary Dataset');
+    lines.push('');
+    lines.push(`**${roadmapJson.dataset.name || 'Dataset'}**`);
+    if (roadmapJson.dataset.description) {
+      lines.push('');
+      lines.push(roadmapJson.dataset.description);
+    }
+    lines.push('');
+  }
+
+  // Milestones
+  if (roadmapJson.milestones?.length) {
+    roadmapJson.milestones.forEach((milestone: any, idx: number) => {
+      lines.push(`## Milestone ${milestone.number || idx + 1}: ${milestone.title} (Weeks ${milestone.weeks || `${idx * 2 + 1}-${idx * 2 + 2}`})`);
+      lines.push('');
+
+      // Objectives
+      if (milestone.objectives?.length) {
+        lines.push('### Objectives');
+        milestone.objectives.forEach((obj: string) => {
+          lines.push(`- ${obj}`);
+        });
+        lines.push('');
+      }
+
+      // Tasks
+      if (milestone.tasks?.length) {
+        lines.push('### Tasks');
+        milestone.tasks.forEach((task: string) => {
+          lines.push(`- ${task}`);
+        });
+        lines.push('');
+      }
+
+      // Deliverables
+      if (milestone.deliverables?.length) {
+        lines.push('### Deliverables');
+        milestone.deliverables.forEach((del: string) => {
+          lines.push(`- ${del}`);
+        });
+        lines.push('');
+      }
+
+      // Reading list (for milestone 1)
+      if (milestone.reading_list?.length) {
+        lines.push('### Core Reading List');
+        milestone.reading_list.forEach((paper: string) => {
+          lines.push(`- ${paper}`);
+        });
+        lines.push('');
+      }
+
+      // Risks
+      if (milestone.risks?.length) {
+        lines.push('### Risks & Mitigations');
+        milestone.risks.forEach((risk: any) => {
+          lines.push(`- **Risk:** ${risk.risk}`);
+          lines.push(`  - **Mitigation:** ${risk.mitigation}`);
+        });
+        lines.push('');
+      }
+    });
+  }
+
+  // Appendices
+  if (roadmapJson.appendices?.length) {
+    lines.push('---');
+    lines.push('');
+    lines.push('# Appendices');
+    lines.push('');
+    roadmapJson.appendices.forEach((appendix: any) => {
+      lines.push(`## Appendix ${appendix.label}: ${appendix.title}`);
+      lines.push('');
+      if (Array.isArray(appendix.content)) {
+        appendix.content.forEach((item: any) => {
+          if (typeof item === 'string') {
+            lines.push(`- ${item}`);
+          } else if (item.name && item.definition) {
+            lines.push(`- **${item.name}:** ${item.definition}`);
+          }
+        });
+      } else {
+        lines.push('```');
+        lines.push(appendix.content);
+        lines.push('```');
+      }
+      lines.push('');
+    });
+  }
+
+  // Footer
+  lines.push('---');
+  lines.push('');
+  lines.push('*Generated by Vizuara GenAI Mentor*');
+
+  return lines.join('\n');
 }
