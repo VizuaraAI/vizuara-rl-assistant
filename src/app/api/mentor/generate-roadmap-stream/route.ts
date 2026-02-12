@@ -552,6 +552,90 @@ function parseJSON(text: string): any {
   return JSON.parse(cleaned.trim());
 }
 
+// Sanitize text to replace Unicode characters with ASCII equivalents
+// Standard PDF fonts (Helvetica, etc.) use WinAnsi encoding which doesn't support Unicode
+function sanitizeText(text: string): string {
+  if (!text) return '';
+  return text
+    // Checkmarks and ticks
+    .replace(/✓/g, '[x]')
+    .replace(/✔/g, '[x]')
+    .replace(/☑/g, '[x]')
+    .replace(/☐/g, '[ ]')
+    // Bullets and dots
+    .replace(/•/g, '-')
+    .replace(/●/g, '-')
+    .replace(/○/g, 'o')
+    .replace(/◦/g, '-')
+    .replace(/▪/g, '-')
+    .replace(/▫/g, '-')
+    .replace(/■/g, '#')
+    .replace(/□/g, '[ ]')
+    // Arrows
+    .replace(/→/g, '->')
+    .replace(/←/g, '<-')
+    .replace(/↔/g, '<->')
+    .replace(/⇒/g, '=>')
+    .replace(/⇐/g, '<=')
+    .replace(/↑/g, '^')
+    .replace(/↓/g, 'v')
+    // Math symbols
+    .replace(/×/g, 'x')
+    .replace(/÷/g, '/')
+    .replace(/±/g, '+/-')
+    .replace(/≤/g, '<=')
+    .replace(/≥/g, '>=')
+    .replace(/≠/g, '!=')
+    .replace(/≈/g, '~')
+    .replace(/∞/g, 'inf')
+    .replace(/Σ/g, 'SUM')
+    .replace(/∑/g, 'SUM')
+    .replace(/β/g, 'beta')
+    .replace(/α/g, 'alpha')
+    .replace(/γ/g, 'gamma')
+    .replace(/δ/g, 'delta')
+    .replace(/ε/g, 'epsilon')
+    .replace(/λ/g, 'lambda')
+    .replace(/μ/g, 'mu')
+    .replace(/σ/g, 'sigma')
+    .replace(/π/g, 'pi')
+    .replace(/θ/g, 'theta')
+    // Subscripts (common in formulas)
+    .replace(/₀/g, '0')
+    .replace(/₁/g, '1')
+    .replace(/₂/g, '2')
+    .replace(/₃/g, '3')
+    .replace(/₄/g, '4')
+    .replace(/₅/g, '5')
+    .replace(/ᵢ/g, 'i')
+    .replace(/ₙ/g, 'n')
+    .replace(/ₘ/g, 'm')
+    // Superscripts
+    .replace(/²/g, '^2')
+    .replace(/³/g, '^3')
+    // Quotation marks
+    .replace(/"/g, '"')
+    .replace(/"/g, '"')
+    .replace(/'/g, "'")
+    .replace(/'/g, "'")
+    .replace(/«/g, '<<')
+    .replace(/»/g, '>>')
+    // Dashes
+    .replace(/–/g, '-')
+    .replace(/—/g, '--')
+    .replace(/−/g, '-')
+    // Other common symbols
+    .replace(/…/g, '...')
+    .replace(/™/g, '(TM)')
+    .replace(/©/g, '(c)')
+    .replace(/®/g, '(R)')
+    .replace(/°/g, ' deg')
+    .replace(/·/g, '.')
+    .replace(/ŷ/g, 'y-hat')
+    // Remove any remaining non-ASCII characters
+    .replace(/[^\x00-\x7F]/g, '');
+}
+
 // PDF Generation using pdf-lib (serverless compatible)
 async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
   const pdfDoc = await PDFDocument.create();
@@ -572,9 +656,10 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
   const lightGray = rgb(0.5, 0.5, 0.5);
   const accentColor = rgb(0.4, 0.2, 0.6); // Purple accent
 
-  // Helper function to add text with word wrapping
+  // Helper function to add text with word wrapping (sanitizes text automatically)
   function drawText(text: string, x: number, fontSize: number, font: any, color: any, maxWidth: number): number {
-    const words = text.split(' ');
+    const sanitized = sanitizeText(text);
+    const words = sanitized.split(' ');
     let line = '';
     let linesDrawn = 0;
 
@@ -618,7 +703,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
 
   // Title Page
   y = pageHeight - 150;
-  currentPage.drawText(roadmapJson.title || 'Research Roadmap', {
+  currentPage.drawText(sanitizeText(roadmapJson.title || 'Research Roadmap'), {
     x: margin,
     y,
     size: 28,
@@ -627,7 +712,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
   });
   y -= 40;
 
-  currentPage.drawText(roadmapJson.subtitle || '', {
+  currentPage.drawText(sanitizeText(roadmapJson.subtitle || ''), {
     x: margin,
     y,
     size: 18,
@@ -636,7 +721,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
   });
   y -= 60;
 
-  currentPage.drawText(`Prepared for: ${roadmapJson.researcher || 'Student'}`, {
+  currentPage.drawText(sanitizeText(`Prepared for: ${roadmapJson.researcher || 'Student'}`), {
     x: margin,
     y,
     size: 12,
@@ -645,7 +730,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
   });
   y -= 20;
 
-  currentPage.drawText(`Mentor: ${roadmapJson.mentor || 'Dr. Raj Dandekar'}`, {
+  currentPage.drawText(sanitizeText(`Mentor: ${roadmapJson.mentor || 'Dr. Raj Dandekar'}`), {
     x: margin,
     y,
     size: 12,
@@ -654,7 +739,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
   });
   y -= 20;
 
-  currentPage.drawText(`Date: ${roadmapJson.date || new Date().toLocaleDateString()}`, {
+  currentPage.drawText(sanitizeText(`Date: ${roadmapJson.date || new Date().toLocaleDateString()}`), {
     x: margin,
     y,
     size: 12,
@@ -736,7 +821,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
     });
     y -= 25;
 
-    currentPage.drawText(roadmapJson.dataset.name || 'Dataset', {
+    currentPage.drawText(sanitizeText(roadmapJson.dataset.name || 'Dataset'), {
       x: margin,
       y,
       size: 12,
@@ -776,13 +861,13 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
 
       // Milestone header
       currentPage.drawText(
-        `Milestone ${milestone.number}: ${milestone.title}`,
+        sanitizeText(`Milestone ${milestone.number}: ${milestone.title}`),
         { x: margin, y, size: 16, font: helveticaBold, color: accentColor }
       );
       y -= 20;
 
       currentPage.drawText(
-        `Weeks ${milestone.weeks}`,
+        sanitizeText(`Weeks ${milestone.weeks}`),
         { x: margin, y, size: 11, font: helveticaOblique, color: lightGray }
       );
       y -= 25;
@@ -934,7 +1019,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
 
     for (const row of roadmapJson.timeline_table) {
       checkPageBreak(40);
-      currentPage.drawText(row.milestone, {
+      currentPage.drawText(sanitizeText(row.milestone), {
         x: margin,
         y,
         size: 11,
@@ -942,7 +1027,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
         color: black,
       });
       y -= 14;
-      currentPage.drawText(`Weeks: ${row.weeks}`, {
+      currentPage.drawText(sanitizeText(`Weeks: ${row.weeks}`), {
         x: margin + 10,
         y,
         size: 10,
@@ -961,7 +1046,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
       currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
       y = pageHeight - margin;
 
-      currentPage.drawText(`Appendix ${appendix.label}: ${appendix.title}`, {
+      currentPage.drawText(sanitizeText(`Appendix ${appendix.label}: ${appendix.title}`), {
         x: margin,
         y,
         size: 14,
@@ -974,7 +1059,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
         for (const item of appendix.content) {
           checkPageBreak(30);
           if (typeof item === 'string') {
-            drawText(`• ${item}`, margin + 10, 10, helvetica, darkGray, contentWidth - 20);
+            drawText(`- ${item}`, margin + 10, 10, helvetica, darkGray, contentWidth - 20);
           } else if (item.name && item.definition) {
             drawText(`${item.name}: ${item.definition}`, margin + 10, 10, helvetica, darkGray, contentWidth - 20);
           }
@@ -984,7 +1069,7 @@ async function generatePDF(roadmapJson: any): Promise<Uint8Array> {
         const lines = appendix.content.split('\\n');
         for (const line of lines) {
           checkPageBreak(15);
-          currentPage.drawText(line, {
+          currentPage.drawText(sanitizeText(line), {
             x: margin + 10,
             y,
             size: 9,
