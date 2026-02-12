@@ -783,19 +783,19 @@ export default function MentorInboxPage() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-amber-50/30">
+      <div className="h-screen flex items-center justify-center" style={{ backgroundColor: '#fbfbfd' }}>
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-500">Loading...</p>
+          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-4" style={{ borderColor: '#0071e3', borderTopColor: 'transparent' }} />
+          <p style={{ color: '#86868b' }}>Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-amber-50/30">
+    <div className="h-screen flex flex-col" style={{ backgroundColor: '#fbfbfd' }}>
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 py-4 flex items-center justify-between">
+      <header className="px-6 py-4 flex items-center justify-between" style={{ backgroundColor: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #e5e5e7' }}>
         <div className="flex items-center gap-4">
           <img
             src="/vizuara-logo.png"
@@ -811,9 +811,10 @@ export default function MentorInboxPage() {
           {totalDrafts > 0 && (
             <button
               onClick={() => setActiveView('drafts')}
-              className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium hover:bg-amber-200 transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors"
+              style={{ backgroundColor: 'rgba(255, 149, 0, 0.1)', color: '#ff9500' }}
             >
-              <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#ff9500' }} />
               {totalDrafts} draft{totalDrafts > 1 ? 's' : ''} pending review
             </button>
           )}
@@ -845,7 +846,7 @@ export default function MentorInboxPage() {
               </button>
             </>
           )}
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center text-white text-sm font-medium">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-medium" style={{ backgroundColor: '#1d1d1f' }}>
             RD
           </div>
         </div>
@@ -853,9 +854,9 @@ export default function MentorInboxPage() {
 
       <div className="flex-1 flex overflow-hidden min-h-0">
         {/* Students Sidebar */}
-        <aside className="w-64 bg-white/50 backdrop-blur-sm border-r border-slate-200/60 flex flex-col">
-          <div className="p-4 border-b border-slate-200/60">
-            <h2 className="text-sm font-semibold text-slate-600 uppercase tracking-wider">Students</h2>
+        <aside className="w-64 flex flex-col" style={{ backgroundColor: 'rgba(255,255,255,0.9)', borderRight: '1px solid #e5e5e7' }}>
+          <div className="p-4" style={{ borderBottom: '1px solid #e5e5e7' }}>
+            <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: '#86868b' }}>Students</h2>
           </div>
 
           <div className="flex-1 overflow-y-auto">
@@ -868,21 +869,25 @@ export default function MentorInboxPage() {
                     setSelectedStudent(student);
                     setSelectedThread(null);
                   }}
-                  className={`w-full p-4 text-left border-b border-slate-100 transition-all duration-200 ${
+                  className={`w-full p-4 text-left transition-all duration-200 ${
                     selectedStudent?.id === student.id
-                      ? 'bg-amber-50 border-l-4 border-l-amber-500'
+                      ? 'border-l-4'
                       : 'hover:bg-slate-50 border-l-4 border-l-transparent'
                   }`}
+                  style={{
+                    borderBottomColor: '#e5e5e7',
+                    borderBottomWidth: '1px',
+                    ...(selectedStudent?.id === student.id ? { backgroundColor: 'rgba(0, 113, 227, 0.05)', borderLeftColor: '#0071e3' } : {})
+                  }}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium relative ${
-                      student.currentPhase === 'phase1'
-                        ? 'bg-gradient-to-br from-blue-400 to-blue-600'
-                        : 'bg-gradient-to-br from-emerald-400 to-emerald-600'
-                    }`}>
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium relative"
+                      style={{ backgroundColor: student.currentPhase === 'phase1' ? '#0071e3' : '#34c759' }}
+                    >
                       {student.name.charAt(0)}
                       {studentDrafts.length > 0 && (
-                        <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-white text-xs rounded-full flex items-center justify-center">
+                        <span className="absolute -top-1 -right-1 w-5 h-5 text-white text-xs rounded-full flex items-center justify-center" style={{ backgroundColor: '#ff9500' }}>
                           {studentDrafts.length}
                         </span>
                       )}
@@ -904,22 +909,23 @@ export default function MentorInboxPage() {
         </aside>
 
         {/* Thread List */}
-        <div className="w-96 bg-white/30 border-r border-slate-200/60 flex flex-col">
+        <div className="w-96 flex flex-col" style={{ backgroundColor: '#ffffff', borderRight: '1px solid #e5e5e7' }}>
           {/* View Toggle */}
-          <div className="flex border-b border-slate-200/60">
+          <div className="flex" style={{ borderBottom: '1px solid #e5e5e7' }}>
             <button
               onClick={() => {
                 setActiveView('drafts');
                 setSelectedThread(null);
               }}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-                activeView === 'drafts'
-                  ? 'text-amber-600 border-b-2 border-amber-500 bg-amber-50/50'
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
-              }`}
+              className="flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2"
+              style={{
+                color: activeView === 'drafts' ? '#0071e3' : '#86868b',
+                borderBottom: activeView === 'drafts' ? '2px solid #0071e3' : '2px solid transparent',
+                backgroundColor: activeView === 'drafts' ? 'rgba(0, 113, 227, 0.05)' : 'transparent'
+              }}
             >
               {filteredDrafts.length > 0 && (
-                <span className="w-5 h-5 text-xs bg-amber-500 text-white rounded-full flex items-center justify-center">
+                <span className="w-5 h-5 text-xs text-white rounded-full flex items-center justify-center" style={{ backgroundColor: '#ff9500' }}>
                   {filteredDrafts.length}
                 </span>
               )}
@@ -930,18 +936,20 @@ export default function MentorInboxPage() {
                 setActiveView('conversations');
                 setSelectedThread(null);
               }}
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                activeView === 'conversations'
-                  ? 'text-amber-600 border-b-2 border-amber-500 bg-amber-50/50'
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
-              }`}
+              className="flex-1 px-4 py-3 text-sm font-medium transition-all duration-200"
+              style={{
+                color: activeView === 'conversations' ? '#0071e3' : '#86868b',
+                borderBottom: activeView === 'conversations' ? '2px solid #0071e3' : '2px solid transparent',
+                backgroundColor: activeView === 'conversations' ? 'rgba(0, 113, 227, 0.05)' : 'transparent'
+              }}
             >
               All Conversations
             </button>
             {selectedStudent && (
               <button
                 onClick={() => setShowComposeModal(true)}
-                className="px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all duration-200 flex items-center gap-1.5"
+                className="px-3 py-2 text-sm font-medium text-white transition-all duration-200 flex items-center gap-1.5"
+                style={{ backgroundColor: '#0071e3' }}
                 title="Send a message directly to the student"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

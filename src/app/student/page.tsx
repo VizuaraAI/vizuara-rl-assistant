@@ -305,19 +305,19 @@ export default function StudentInboxPage() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      <div className="h-screen flex items-center justify-center" style={{ backgroundColor: '#fbfbfd' }}>
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-500">Loading...</p>
+          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-4" style={{ borderColor: '#0071e3', borderTopColor: 'transparent' }} />
+          <p style={{ color: '#86868b' }}>Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="h-screen flex flex-col" style={{ backgroundColor: '#fbfbfd' }}>
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 py-4 flex items-center justify-between">
+      <header className="px-6 py-4 flex items-center justify-between" style={{ backgroundColor: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #e5e5e7' }}>
         <div className="flex items-center gap-4">
           <img
             src="/vizuara-logo.png"
@@ -351,7 +351,7 @@ export default function StudentInboxPage() {
 
       <div className="flex-1 flex overflow-hidden min-h-0">
         {/* Sidebar */}
-        <aside className="w-64 bg-white/50 backdrop-blur-sm border-r border-slate-200/60 flex flex-col">
+        <aside className="w-64 flex flex-col" style={{ backgroundColor: 'rgba(255,255,255,0.8)', borderRight: '1px solid #e5e5e7' }}>
           <div className="p-4">
             <button
               onClick={() => {
@@ -359,7 +359,7 @@ export default function StudentInboxPage() {
                 setIsComposing(true);
                 setSelectedThread(null);
               }}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl font-medium shadow-lg shadow-violet-200 hover:shadow-xl hover:shadow-violet-300 transition-all duration-200 hover:-translate-y-0.5"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-white rounded-xl font-medium shadow-lg transition-all duration-200 hover:-translate-y-0.5" style={{ backgroundColor: '#0071e3' }}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -369,12 +369,12 @@ export default function StudentInboxPage() {
           </div>
 
           <nav className="flex-1 px-3">
-            <div className="px-4 py-2.5 text-violet-700 bg-violet-100 rounded-lg flex items-center gap-3">
+            <div className="px-4 py-2.5 rounded-lg flex items-center gap-3" style={{ backgroundColor: 'rgba(0, 113, 227, 0.1)', color: '#0071e3' }}>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
               </svg>
               <span className="font-medium">All Conversations</span>
-              <span className="ml-auto text-xs bg-violet-500 text-white px-2 py-0.5 rounded-full">
+              <span className="ml-auto text-xs text-white px-2 py-0.5 rounded-full" style={{ backgroundColor: '#0071e3' }}>
                 {threads.length}
               </span>
             </div>
@@ -396,7 +396,7 @@ export default function StudentInboxPage() {
         </aside>
 
         {/* Thread List */}
-        <div className="w-96 bg-white/30 border-r border-slate-200/60 flex flex-col min-h-0">
+        <div className="w-96 flex flex-col min-h-0" style={{ backgroundColor: '#ffffff', borderRight: '1px solid #e5e5e7' }}>
           <div className="p-4 border-b border-slate-200/60">
             <h2 className="font-semibold text-slate-800">Conversations</h2>
             <p className="text-sm text-slate-500">{threads.length} thread{threads.length !== 1 ? 's' : ''}</p>
@@ -421,15 +421,14 @@ export default function StudentInboxPage() {
                     setReplyBody('');
                   }}
                   className={`w-full p-4 text-left border-b border-slate-100 transition-all duration-200 ${
-                    selectedThread?.id === thread.id ? 'bg-violet-50' : 'hover:bg-slate-50'
+                    selectedThread?.id === thread.id ? 'bg-blue-50' : 'hover:bg-slate-50'
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium flex-shrink-0 ${
-                      thread.lastSender === 'agent'
-                        ? 'bg-gradient-to-br from-violet-500 to-purple-600'
-                        : 'bg-gradient-to-br from-emerald-400 to-teal-500'
-                    }`}>
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium flex-shrink-0"
+                      style={{ backgroundColor: thread.lastSender === 'agent' ? '#0071e3' : '#34c759' }}
+                    >
                       {thread.lastSender === 'agent' ? 'RD' : student?.name?.charAt(0) || 'S'}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -452,7 +451,7 @@ export default function StudentInboxPage() {
                           {thread.messages.length} message{thread.messages.length > 1 ? 's' : ''}
                         </span>
                         {thread.lastSender === 'agent' && (
-                          <span className="text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded">
+                          <span className="text-xs px-1.5 py-0.5 rounded" style={{ backgroundColor: 'rgba(0, 113, 227, 0.1)', color: '#0071e3' }}>
                             New reply
                           </span>
                         )}
@@ -466,7 +465,7 @@ export default function StudentInboxPage() {
         </div>
 
         {/* Main Content */}
-        <main className="flex-1 bg-white/50 flex flex-col min-h-0">
+        <main className="flex-1 flex flex-col min-h-0" style={{ backgroundColor: '#ffffff' }}>
           {isComposing ? (
             // Compose View
             <div className="flex-1 flex flex-col min-h-0">
@@ -484,7 +483,7 @@ export default function StudentInboxPage() {
                   <div className="flex items-center gap-4 p-4 border-b border-slate-100">
                     <span className="text-sm text-slate-500 w-16">To:</span>
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-xs font-medium">RD</div>
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-medium" style={{ backgroundColor: '#0071e3' }}>RD</div>
                       <span className="text-sm text-slate-800">Dr. Raj Dandekar</span>
                     </div>
                   </div>
@@ -512,7 +511,7 @@ export default function StudentInboxPage() {
                 <button
                   onClick={() => sendMessage(false)}
                   disabled={isSending || !composeBody.trim() || !composeSubject.trim()}
-                  className="px-6 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl font-medium shadow-lg disabled:opacity-50 flex items-center gap-2"
+                  className="px-6 py-2.5 text-white rounded-xl font-medium shadow-lg disabled:opacity-50 flex items-center gap-2" style={{ backgroundColor: '#0071e3' }}
                 >
                   {isSending ? 'Sending...' : 'Send'}
                 </button>
@@ -545,11 +544,10 @@ export default function StudentInboxPage() {
                   <div key={message.id} className="bg-white rounded-xl border border-slate-200 shadow-sm">
                     <div className="p-4 border-b border-slate-100 bg-slate-50/50">
                       <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium ${
-                          message.role === 'agent'
-                            ? 'bg-gradient-to-br from-violet-500 to-purple-600'
-                            : 'bg-gradient-to-br from-emerald-400 to-teal-500'
-                        }`}>
+                        <div
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium"
+                          style={{ backgroundColor: message.role === 'agent' ? '#0071e3' : '#34c759' }}
+                        >
                           {message.role === 'agent' ? 'RD' : student?.name?.charAt(0) || 'S'}
                         </div>
                         <div className="flex-1">
@@ -606,7 +604,7 @@ export default function StudentInboxPage() {
                     <button
                       onClick={() => sendMessage(true)}
                       disabled={isSending || !replyBody.trim()}
-                      className="px-4 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-lg font-medium disabled:opacity-50 flex items-center gap-2 text-sm"
+                      className="px-4 py-2 text-white rounded-lg font-medium disabled:opacity-50 flex items-center gap-2 text-sm" style={{ backgroundColor: '#0071e3' }}
                     >
                       {isSending ? 'Sending...' : 'Send Reply'}
                     </button>
@@ -618,8 +616,8 @@ export default function StudentInboxPage() {
             // Empty State
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-violet-100 to-purple-100 flex items-center justify-center">
-                  <svg className="w-10 h-10 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 113, 227, 0.1)' }}>
+                  <svg className="w-10 h-10" style={{ color: '#0071e3' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
