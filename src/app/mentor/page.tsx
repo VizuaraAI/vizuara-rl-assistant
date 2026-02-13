@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { playClickSound, playSendSound, playSuccessSound, playNotificationSound } from '@/lib/sounds';
@@ -110,7 +110,7 @@ export default function MentorInboxPage() {
   const [threadComposeMessage, setThreadComposeMessage] = useState('');
   const [isSendingThreadMessage, setIsSendingThreadMessage] = useState(false);
   const [threadAttachments, setThreadAttachments] = useState<File[]>([]);
-  const threadFileInputRef = React.useRef<HTMLInputElement>(null);
+  const threadFileInputRef = useRef<HTMLInputElement>(null);
 
   // Upload document modal state
   const [showUploadModal, setShowUploadModal] = useState(false);
