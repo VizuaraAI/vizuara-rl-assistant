@@ -308,7 +308,7 @@ export default function StudentInboxPage() {
     setIsSending(true);
 
     try {
-      // First upload any attachments
+      // First upload any attachments (must wait for this)
       const uploadedFiles: Array<{ filename: string; publicUrl: string; mimeType: string; storagePath: string }> = [];
 
       for (const file of attachments) {
@@ -328,7 +328,7 @@ export default function StudentInboxPage() {
         if (uploadData.success && uploadData.data?.document) {
           const uploadedFile = {
             filename: uploadData.data.document.originalFilename,
-            publicUrl: uploadData.data.document.publicUrl,  // Must be publicUrl, not url
+            publicUrl: uploadData.data.document.publicUrl,
             mimeType: uploadData.data.document.mimeType,
             storagePath: uploadData.data.document.storagePath,
           };
@@ -351,11 +351,57 @@ export default function StudentInboxPage() {
       // Always include subject for proper threading
       const fullMessage = `Subject: ${subject || 'General Question'}\n\n${messageContent}`;
 
-      // Use AbortController for timeout (2 minutes for large PDF processing)
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 120000);
+      // OPTIMISTIC UI: Add message to local state immediately
+      const optimisticMessage: Message = {
+        id: `temp-${Date.now()}`,
+        role: 'student',
+        content: fullMessage,
+        timestamp: new Date().toISOString(),
+        status: 'sent',
+        attachments: uploadedFiles.map(f => ({
+          filename: f.filename,
+          url: f.publicUrl,
+          mimeType: f.mimeType,
+          storagePath: f.storagePath,
+        })),
+      };
 
-      const res = await fetch('/api/agent/chat', {
+      // Add to threads immediately
+      const threadSubject = subject || 'General Question';
+      const now = new Date();
+      setThreads(prev => {
+        const existingThread = prev.find(t => t.subject === threadSubject);
+        if (existingThread) {
+          return prev.map(t =>
+            t.subject === threadSubject
+              ? { ...t, messages: [...t.messages, optimisticMessage], lastMessageAt: now, lastSender: 'student' as const, preview: messageContent.substring(0, 100) }
+              : t
+          );
+        } else {
+          return [{
+            id: `thread-${Date.now()}`,
+            subject: threadSubject,
+            lastMessageAt: now,
+            messages: [optimisticMessage],
+            lastSender: 'student' as const,
+            preview: messageContent.substring(0, 100),
+          }, ...prev];
+        }
+      });
+
+      // Clear inputs immediately - user sees their message right away
+      if (isReply) {
+        setReplyBody('');
+      } else {
+        setIsComposing(false);
+        setComposeSubject('');
+        setComposeBody('');
+      }
+      setAttachments([]);
+      setIsSending(false); // Stop spinner immediately
+
+      // Fire API call in background - don't await
+      fetch('/api/agent/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -363,29 +409,21 @@ export default function StudentInboxPage() {
           message: fullMessage,
           attachments: uploadedFiles,
         }),
-        signal: controller.signal,
+      }).then(async (res) => {
+        const data = await res.json();
+        if (!data.success) {
+          console.error('Background send failed:', data.error);
+          // Could show a toast notification here
+        }
+        // Refresh to get the real message from server
+        fetchMessages(student.id);
+      }).catch(err => {
+        console.error('Background send error:', err);
       });
 
-      clearTimeout(timeoutId);
-      const data = await res.json();
-
-      if (data.success) {
-        if (isReply) {
-          setReplyBody('');
-        } else {
-          setIsComposing(false);
-          setComposeSubject('');
-          setComposeBody('');
-        }
-        setAttachments([]);
-        await fetchMessages(student.id);
-      } else {
-        alert(`Failed to send message: ${data.error}`);
-      }
     } catch (error) {
       console.error('Failed to send message:', error);
-      alert('Failed to send message. Please try again.');
-    } finally {
+      alert('Failed to upload attachments. Please try again.');
       setIsSending(false);
     }
   }
