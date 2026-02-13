@@ -373,6 +373,16 @@ export default function StudentInboxPage() {
 
   return (
     <div className="h-screen flex flex-col" style={{ backgroundColor: '#fbfbfd' }}>
+      {/* Hidden file input - ALWAYS rendered so ref works */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileSelect}
+        className="hidden"
+        multiple
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.md,.py,.js,.ts,.jsx,.tsx,.json,.csv,.png,.jpg,.jpeg,.gif,.webp,.jl,.ipynb"
+      />
+
       {/* Header */}
       <header className="px-6 py-4 flex items-center justify-between" style={{ backgroundColor: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #e5e5e7' }}>
         <div className="flex items-center gap-4">
@@ -711,15 +721,6 @@ export default function StudentInboxPage() {
               {/* Reply Box - Modern Email Style */}
               <div className="p-4 border-t border-slate-200/60 bg-white/80 flex-shrink-0">
                 <div className="bg-white rounded-xl border border-slate-200 shadow-lg overflow-hidden">
-                  {/* Hidden file input */}
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileSelect}
-                    className="hidden"
-                    multiple
-                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.md,.py,.js,.ts,.jsx,.tsx,.json,.csv,.png,.jpg,.jpeg,.gif,.webp,.jl,.ipynb"
-                  />
 
                   {/* Attachments Preview - Shows above textarea when files attached */}
                   {attachments.length > 0 && (

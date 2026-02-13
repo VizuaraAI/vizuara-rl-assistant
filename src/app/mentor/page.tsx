@@ -1077,6 +1077,16 @@ export default function MentorInboxPage() {
 
   return (
     <div className="h-screen flex flex-col" style={{ backgroundColor: '#fbfbfd' }}>
+      {/* Hidden file input - ALWAYS rendered at top level so ref works */}
+      <input
+        type="file"
+        ref={threadFileInputRef}
+        onChange={handleThreadFileSelect}
+        className="hidden"
+        multiple
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.md,.py,.js,.ts,.jsx,.tsx,.json,.csv,.png,.jpg,.jpeg,.gif,.webp,.jl,.ipynb"
+      />
+
       {/* Header */}
       <header className="px-6 py-4 flex items-center justify-between" style={{ backgroundColor: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #e5e5e7' }}>
         <div className="flex items-center gap-4">
@@ -1698,16 +1708,6 @@ export default function MentorInboxPage() {
                     )}
                   </div>
                 ))}
-
-                {/* Hidden file input - ALWAYS rendered so ref works */}
-                <input
-                  type="file"
-                  ref={threadFileInputRef}
-                  onChange={handleThreadFileSelect}
-                  className="hidden"
-                  multiple
-                  accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.md,.py,.js,.ts,.jsx,.tsx,.json,.csv,.png,.jpg,.jpeg,.gif,.webp,.jl,.ipynb"
-                />
 
                 {/* Always Visible Compose Area - Modern Email Style */}
                 {!selectedThread.hasDraft && (
