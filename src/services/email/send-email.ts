@@ -1,18 +1,7 @@
 /**
  * Email Service
- * Send emails using nodemailer with Gmail SMTP
+ * Send emails using Resend API (HTTP-based, works on Railway)
  */
-
-import nodemailer from 'nodemailer';
-
-// Create reusable transporter using Gmail SMTP
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER, // hello@vizuara.com
-    pass: process.env.GMAIL_APP_PASSWORD, // App password (not regular password)
-  },
-});
 
 interface WelcomeEmailParams {
   to: string;
@@ -45,14 +34,42 @@ Let us get started.
 Best regards,
 Dr Raj Dandekar`;
 
+  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
+  if (!RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not configured');
+    return {
+      success: false,
+      error: 'Email service not configured. Please set RESEND_API_KEY environment variable.',
+    };
+  }
+
   try {
-    await transporter.sendMail({
-      from: `"Dr Raj Dandekar" <${process.env.GMAIL_USER || 'hello@vizuara.com'}>`,
-      to,
-      subject: 'Welcome to the Generative AI Bootcamp - Your Login Credentials',
-      text: emailContent,
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Dr Raj Dandekar <onboarding@resend.dev>',
+        to: [to],
+        subject: "Let's get started",
+        text: emailContent,
+      }),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Resend API error:', errorData);
+      return {
+        success: false,
+        error: errorData.message || 'Failed to send email',
+      };
+    }
+
+    const data = await response.json();
+    console.log('Email sent successfully:', data.id);
     return { success: true };
   } catch (error) {
     console.error('Failed to send email:', error);

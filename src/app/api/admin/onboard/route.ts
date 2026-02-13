@@ -168,6 +168,7 @@ Let me know if you have any doubts or questions!`;
 // GET - List all students with their credentials
 export async function GET() {
   try {
+    // Use explicit foreign key reference to avoid ambiguity (students has user_id and mentor_id)
     const { data: students, error } = await supabase
       .from('students')
       .select(`
@@ -177,7 +178,7 @@ export async function GET() {
         current_topic_index,
         current_milestone,
         enrollment_date,
-        users!inner (
+        users!user_id (
           id,
           name,
           preferred_name,
