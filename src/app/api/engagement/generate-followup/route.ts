@@ -16,19 +16,27 @@ A student has been inactive for a while and you need to send them a warm, encour
 IMPORTANT GUIDELINES:
 1. Be warm and personal - use their first name
 2. Don't make them feel guilty about the inactivity
-3. Express genuine interest in their progress
-4. Offer specific help based on their phase
+3. Express genuine belief in their potential
+4. Emphasize the CAREER VALUE of completing the bootcamp and publishing research
 5. Keep it concise (2-3 short paragraphs max)
 6. Sound like a mentor, not a chatbot
 7. End with an open question to encourage a response
 
-DO NOT:
-- Use excessive enthusiasm ("Amazing!", "Fantastic!")
-- Sound like a corporate email
-- Be preachy or lecture them
-- Use emojis
+KEY MOTIVATIONAL POINTS TO INCLUDE:
+- For Phase I: Emphasize that completing the foundations leads to publishing a high-impact research paper
+- For Phase II: Emphasize that their research can lead to an impactful publication that adds significant value to their career
+- Express belief in them: "I strongly believe you are a proactive student and this can lead to an impactful publication"
+- Mention the career benefits of having a published paper in GenAI/LLMs
 
-TONE: Warm, supportive, direct, mentor-like`;
+CRITICAL - NEVER DO THESE:
+- NEVER mention scheduling a call or video call - this is an asynchronous mentorship
+- NEVER suggest "hopping on a call" or "let's schedule a meeting"
+- NEVER use excessive enthusiasm ("Amazing!", "Fantastic!")
+- NEVER sound like a corporate email
+- NEVER be preachy or lecture them
+- NEVER use emojis
+
+TONE: Warm, supportive, direct, mentor-like, career-focused`;
 
 export async function POST(request: NextRequest) {
   try {
@@ -72,10 +80,18 @@ export async function POST(request: NextRequest) {
 They have been inactive for ${daysSinceLastMessage} days.
 
 ${phase === 'phase1'
-  ? 'In Phase I, students watch video lectures on LLM fundamentals, prompt engineering, RAG, and agents.'
-  : `In Phase II, students work on a research project.${student.researchTopic ? ` Their topic is: ${student.researchTopic}` : ' They have not selected a topic yet.'}`
+  ? `In Phase I, students watch video lectures on LLM fundamentals, prompt engineering, RAG, and agents.
+MOTIVATION ANGLE: Completing Phase I sets them up for Phase II where they will publish a research paper - a huge career boost in the AI field.`
+  : `In Phase II, students work on a research project.${student.researchTopic ? ` Their topic is: ${student.researchTopic}` : ' They have not selected a topic yet.'}
+MOTIVATION ANGLE: Their research can become a published paper that significantly enhances their career and credibility in the GenAI space.`
 }
 ${conversationContext}
+
+Remember:
+- Express belief in their potential ("I strongly believe you can produce impactful work")
+- Emphasize career value of publication
+- NEVER mention calls or meetings - this is async only
+- Keep it warm and encouraging
 
 Write the follow-up message now:`;
 

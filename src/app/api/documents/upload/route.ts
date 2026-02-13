@@ -18,17 +18,36 @@ const BUCKET_NAME = 'documents';
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
 const ALLOWED_MIME_TYPES = [
+  // Documents
   'application/pdf',
-  'image/png',
-  'image/jpeg',
-  'image/gif',
-  'image/webp',
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   'application/vnd.ms-excel',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  // Images
+  'image/png',
+  'image/jpeg',
+  'image/gif',
+  'image/webp',
+  'image/svg+xml',
+  // Text and code
   'text/plain',
   'text/markdown',
+  'text/csv',
+  'text/x-python',
+  'text/x-julia',
+  'application/x-python-code',
+  'application/json',
+  'application/javascript',
+  'text/javascript',
+  'text/typescript',
+  'text/x-typescript',
+  // Jupyter notebooks
+  'application/x-ipynb+json',
+  // Allow any text-based files (catch-all for code files)
+  'application/octet-stream',
 ];
 
 export async function POST(request: NextRequest) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { playClickSound, playSendSound, playSuccessSound, playNotificationSound } from '@/lib/sounds';
@@ -41,6 +41,8 @@ export default function StudentInboxPage() {
   const [isSending, setIsSending] = useState(false);
   const [student, setStudent] = useState<Student | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [attachments, setAttachments] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     loadLoggedInStudent();
@@ -259,18 +261,71 @@ export default function StudentInboxPage() {
     });
   }
 
+  // Handle file selection
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (files) {
+      setAttachments(prev => [...prev, ...Array.from(files)]);
+    }
+    // Reset input so same file can be selected again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }
+
+  // Remove an attachment
+  function removeAttachment(index: number) {
+    setAttachments(prev => prev.filter((_, i) => i !== index));
+  }
+
   async function sendMessage(isReply: boolean = false) {
     const body = isReply ? replyBody : composeBody;
     const subject = isReply && selectedThread ? selectedThread.subject : composeSubject;
 
-    if (!body.trim() || !student) return;
+    if ((!body.trim() && attachments.length === 0) || !student) return;
 
     playSendSound();
     setIsSending(true);
 
     try {
+      // First upload any attachments
+      const uploadedFiles: Array<{ filename: string; url: string; mimeType: string; storagePath: string }> = [];
+
+      for (const file of attachments) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('documentType', 'other');
+        formData.append('studentId', student.id);
+        formData.append('uploaderEmail', student.email);
+        formData.append('description', `Attached in thread: ${file.name}`);
+
+        const uploadRes = await fetch('/api/documents/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const uploadData = await uploadRes.json();
+        if (uploadData.success && uploadData.data?.document) {
+          uploadedFiles.push({
+            filename: uploadData.data.document.originalFilename,
+            url: uploadData.data.document.publicUrl,
+            mimeType: uploadData.data.document.mimeType,
+            storagePath: uploadData.data.document.storagePath,
+          });
+        }
+      }
+
+      // Build message content with attachment links
+      let messageContent = body.trim();
+      if (uploadedFiles.length > 0) {
+        messageContent += '\n\n📎 Attachments:\n';
+        uploadedFiles.forEach(f => {
+          messageContent += `- [${f.filename}](${f.url})\n`;
+        });
+      }
+
       // Always include subject for proper threading
-      const fullMessage = `Subject: ${subject || 'General Question'}\n\n${body}`;
+      const fullMessage = `Subject: ${subject || 'General Question'}\n\n${messageContent}`;
 
       const res = await fetch('/api/agent/chat', {
         method: 'POST',
@@ -278,6 +333,7 @@ export default function StudentInboxPage() {
         body: JSON.stringify({
           studentId: student.id,
           message: fullMessage,
+          attachments: uploadedFiles,
         }),
       });
 
@@ -291,6 +347,7 @@ export default function StudentInboxPage() {
           setComposeSubject('');
           setComposeBody('');
         }
+        setAttachments([]);
         await fetchMessages(student.id);
       } else {
         alert(`Failed to send message: ${data.error}`);
@@ -600,10 +657,55 @@ export default function StudentInboxPage() {
                     placeholder="Write your reply..."
                     className="w-full p-4 text-slate-800 bg-transparent outline-none resize-none placeholder-slate-400 min-h-[80px]"
                   />
-                  <div className="p-3 border-t border-slate-100 flex items-center gap-3">
+
+                  {/* Attachments list */}
+                  {attachments.length > 0 && (
+                    <div className="px-4 pb-2 flex flex-wrap gap-2">
+                      {attachments.map((file, index) => (
+                        <div key={index} className="flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-sm">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                          </svg>
+                          <span className="max-w-[150px] truncate">{file.name}</span>
+                          <button
+                            onClick={() => removeAttachment(index)}
+                            className="text-blue-500 hover:text-blue-700"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Hidden file input */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    multiple
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.md,.py,.js,.ts,.jsx,.tsx,.json,.csv,.png,.jpg,.jpeg,.gif,.webp,.jl,.ipynb"
+                  />
+
+                  <div className="p-3 border-t border-slate-100 flex items-center justify-between">
+                    {/* Attachment button */}
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="flex items-center gap-2 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors text-sm"
+                      title="Attach files"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                      </svg>
+                      <span>Attach</span>
+                    </button>
+
                     <button
                       onClick={() => sendMessage(true)}
-                      disabled={isSending || !replyBody.trim()}
+                      disabled={isSending || (!replyBody.trim() && attachments.length === 0)}
                       className="px-4 py-2 text-white rounded-lg font-medium disabled:opacity-50 flex items-center gap-2 text-sm" style={{ backgroundColor: '#0071e3' }}
                     >
                       {isSending ? 'Sending...' : 'Send Reply'}

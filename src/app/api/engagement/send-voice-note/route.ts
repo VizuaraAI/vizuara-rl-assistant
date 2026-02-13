@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
 
     if (!fs.existsSync(voiceNotePath)) {
       return NextResponse.json(
-        { success: false, error: `Voice note file not found: ${noteConfig.filename}` },
+        { success: false, error: `Voice notes are not configured yet. Please add ${noteConfig.filename} to resources/${phase}-voice-notes/ folder.` },
         { status: 404 }
       );
     }
