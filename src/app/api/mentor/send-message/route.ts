@@ -11,10 +11,21 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+interface Attachment {
+  filename: string;
+  url: string;
+  mimeType: string;
+  storagePath: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { studentId, content } = body;
+    const { studentId, content, attachments } = body as {
+      studentId: string;
+      content: string;
+      attachments?: Attachment[];
+    };
 
     if (!studentId || !content) {
       return NextResponse.json(
@@ -24,6 +35,9 @@ export async function POST(request: NextRequest) {
     }
 
     console.log(`[Mentor API] Sending direct message to student ${studentId}`);
+    if (attachments && attachments.length > 0) {
+      console.log(`[Mentor API] With ${attachments.length} attachment(s):`, attachments.map(a => a.filename));
+    }
 
     // Get or create conversation for this student
     let { data: conversation } = await supabase
@@ -46,14 +60,21 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert the message as 'approved' (already sent, from mentor)
+    // Include attachments if provided
+    const messageData: any = {
+      conversation_id: conversation.id,
+      role: 'agent', // Shows as Dr. Raj
+      content: content,
+      status: 'approved', // Directly sent, no draft needed
+    };
+
+    if (attachments && attachments.length > 0) {
+      messageData.attachments = attachments;
+    }
+
     const { data: message, error: msgError } = await supabase
       .from('messages')
-      .insert({
-        conversation_id: conversation.id,
-        role: 'agent', // Shows as Dr. Raj
-        content: content,
-        status: 'approved', // Directly sent, no draft needed
-      })
+      .insert(messageData)
       .select()
       .single();
 

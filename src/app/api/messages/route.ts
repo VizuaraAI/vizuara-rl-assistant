@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
     // Sort by newest first (descending) for Gmail-style inbox
     const { data: messages, error } = await supabase
       .from('messages')
-      .select('id, role, content, tool_calls, status, created_at')
+      .select('id, role, content, tool_calls, attachments, status, created_at')
       .eq('conversation_id', conversation.id)
       .in('status', ['sent', 'approved'])
       .order('created_at', { ascending: false });
@@ -59,6 +59,7 @@ export async function GET(request: NextRequest) {
       role: msg.role,
       content: msg.content,
       toolCalls: msg.tool_calls,
+      attachments: msg.attachments || [],
       status: msg.status,
       timestamp: msg.created_at,
     }));
