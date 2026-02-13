@@ -71,7 +71,7 @@ Dr Raj Dandekar`;
             name: preferredName,
           },
         ],
-        subject: "Let's get started",
+        subject: "Let's get started with the Generative AI Bootcamp.",
         textContent: emailContent,
       }),
     });

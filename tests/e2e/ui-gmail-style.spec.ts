@@ -40,7 +40,7 @@ test.describe('Student Portal - Gmail Style', () => {
 
   test('should display email-style inbox interface', async ({ page }) => {
     // Check header
-    await expect(page.getByText('Vizuara Bootcamp')).toBeVisible();
+    await expect(page.getByText('Vizuara Generative AI Bootcamp')).toBeVisible();
 
     // Check sidebar with Compose button
     await expect(page.getByRole('button', { name: /Compose/i })).toBeVisible();
