@@ -302,6 +302,23 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Build document context for system prompt
+    const documentContext = multimodalParts.length > 0
+      ? `The student has attached ${multimodalParts.length} file(s) that you can see and read:\n${attachmentDescriptions.join('\n')}\n\nThese files are included as inline multimodal content in this message. Read and analyze them.`
+      : '';
+
+    console.log(`[DEBUG] Document context: ${documentContext || '(none)'}`);
+    console.log(`[DEBUG] Multimodal parts count: ${multimodalParts.length}`);
+
+    // Log what's in each multimodal part
+    multimodalParts.forEach((part, i) => {
+      if ('inlineData' in part && part.inlineData) {
+        console.log(`[DEBUG] Part ${i}: inlineData, mimeType=${part.inlineData.mimeType}, dataLength=${part.inlineData.data?.length || 0} chars`);
+      } else {
+        console.log(`[DEBUG] Part ${i}: ${JSON.stringify(Object.keys(part))}`);
+      }
+    });
+
     // Build system prompt
     const systemPrompt = buildSystemPrompt(studentName, phase, {
       researchTopic: student.research_topic,
@@ -311,10 +328,12 @@ export async function POST(request: NextRequest) {
       lastMessageAt,
       memoryContext,
       roadmapContent: roadmapAccepted ? roadmapContent : null,
-      documentContext: multimodalParts.length > 0
-        ? `The student has attached ${multimodalParts.length} file(s) that you can see and read:\n${attachmentDescriptions.join('\n')}\n\nThese files are included as inline multimodal content in this message. Read and analyze them.`
-        : '',
+      documentContext,
     });
+
+    // Log if system prompt includes document section
+    console.log(`[DEBUG] System prompt includes MULTIMODAL: ${systemPrompt.includes('MULTIMODAL FILE ATTACHMENTS')}`);
+    console.log(`[DEBUG] System prompt length: ${systemPrompt.length} chars`);
 
     // Get tools and registry based on phase
     const tools = phase === 'phase1' ? getPhase1Tools() : getPhase2Tools();
@@ -339,6 +358,7 @@ export async function POST(request: NextRequest) {
     ];
 
     console.log(`[Chat API] Sending to Gemini with ${userParts.length} part(s)`);
+    console.log(`[DEBUG] User message text: "${message}"`);
 
     // Start chat and send message
     const chat = model.startChat({
@@ -354,8 +374,10 @@ export async function POST(request: NextRequest) {
     const maxIterations = 5;
 
     // Send initial message
+    console.log(`[DEBUG] Calling chat.sendMessage with ${userParts.length} parts...`);
     let result = await chat.sendMessage(userParts);
     let response = result.response;
+    console.log(`[DEBUG] Gemini responded, candidates: ${response.candidates?.length || 0}`);
 
     // Tool execution loop
     while (iterations < maxIterations) {
