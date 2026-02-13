@@ -544,13 +544,27 @@ export async function POST(request: NextRequest) {
     }
 
     if (conversation) {
-      // Save user message
-      await supabase.from('messages').insert({
+      // Build student message data with attachments if present
+      const studentMessageData: any = {
         conversation_id: conversation.id,
         role: 'student',
         content: message,
         status: 'sent',
-      });
+      };
+
+      // Include attachments in student message if they were provided
+      if (attachments && attachments.length > 0) {
+        studentMessageData.attachments = attachments.map(a => ({
+          filename: a.filename,
+          url: a.publicUrl || '',
+          mimeType: a.mimeType,
+          storagePath: a.storagePath,
+        }));
+        console.log(`[Chat API] Saving student message with ${attachments.length} attachment(s)`);
+      }
+
+      // Save user message
+      await supabase.from('messages').insert(studentMessageData);
 
       // Save agent response as draft
       await supabase.from('messages').insert({
