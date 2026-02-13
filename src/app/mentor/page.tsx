@@ -399,12 +399,12 @@ export default function MentorInboxPage() {
           });
 
           const uploadData = await uploadRes.json();
-          if (uploadData.success && uploadData.data) {
+          if (uploadData.success && uploadData.data?.document) {
             uploadedFiles.push({
               filename: file.name,
-              url: uploadData.data.publicUrl,
+              url: uploadData.data.document.publicUrl,
               mimeType: file.type,
-              storagePath: uploadData.data.storagePath,
+              storagePath: uploadData.data.document.storagePath,
             });
             console.log(`[ApproveDraft] Uploaded: ${file.name}`);
           } else {
