@@ -76,10 +76,23 @@ export async function GET(request: NextRequest) {
   }
 }
 
+interface Attachment {
+  filename: string;
+  url: string;
+  mimeType: string;
+  storagePath: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { action, draftId, content, reason } = body;
+    const { action, draftId, content, reason, attachments } = body as {
+      action: string;
+      draftId: string;
+      content?: string;
+      reason?: string;
+      attachments?: Attachment[];
+    };
 
     if (!draftId) {
       return NextResponse.json(
@@ -88,12 +101,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log(`[Drafts API] Action: ${action}, draftId: ${draftId}, attachments: ${attachments?.length || 0}`);
+
     switch (action) {
       case 'approve': {
         // Update status to 'approved' (sent to student)
+        // Include attachments if provided
+        const updateData: any = { status: 'approved' };
+        if (attachments && attachments.length > 0) {
+          updateData.attachments = attachments;
+          console.log(`[Drafts API] Adding ${attachments.length} attachment(s) to approved message`);
+        }
+
         const { data, error } = await supabase
           .from('messages')
-          .update({ status: 'approved' })
+          .update(updateData)
           .eq('id', draftId)
           .select()
           .single();
@@ -133,10 +155,16 @@ export async function POST(request: NextRequest) {
           );
         }
 
-        // Update content and approve
+        // Update content and approve, include attachments if provided
+        const updateData: any = { content, status: 'approved' };
+        if (attachments && attachments.length > 0) {
+          updateData.attachments = attachments;
+          console.log(`[Drafts API] Adding ${attachments.length} attachment(s) to edited message`);
+        }
+
         const { data, error } = await supabase
           .from('messages')
-          .update({ content, status: 'approved' })
+          .update(updateData)
           .eq('id', draftId)
           .select()
           .single();
