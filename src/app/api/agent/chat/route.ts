@@ -381,8 +381,10 @@ export async function POST(request: NextRequest) {
       const functionResponses: Part[] = [];
 
       for (const part of functionCalls) {
-        if ('functionCall' in part) {
-          const { name, args } = part.functionCall;
+        if ('functionCall' in part && part.functionCall) {
+          const functionCall = part.functionCall;
+          const name = functionCall.name;
+          const args = functionCall.args;
           console.log(`[Chat API] Executing tool: ${name}`, args);
 
           let toolResult: any;
