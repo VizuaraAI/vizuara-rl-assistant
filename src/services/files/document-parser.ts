@@ -119,9 +119,29 @@ async function parsePDF(
 ): Promise<ParsedDocument> {
   console.log(`[DocParser] Parsing PDF: ${filename}, buffer size: ${buffer.length} bytes`);
   try {
-    // Dynamic import with type assertion to handle ESM/CJS compatibility
+    // Use pdf-parse with custom options to avoid DOM dependencies
     const pdfParse = require('pdf-parse');
-    const result = await pdfParse(buffer);
+
+    // Custom page render function that just extracts text without canvas
+    const options = {
+      // Disable canvas-based rendering which requires DOM
+      pagerender: function(pageData: any) {
+        return pageData.getTextContent().then(function(textContent: any) {
+          let lastY: number | null = null;
+          let text = '';
+          for (const item of textContent.items) {
+            if (lastY !== item.transform[5] && lastY !== null) {
+              text += '\n';
+            }
+            text += item.str;
+            lastY = item.transform[5];
+          }
+          return text;
+        });
+      }
+    };
+
+    const result = await pdfParse(buffer, options);
     console.log(`[DocParser] PDF parsed successfully, extracted ${result.text?.length || 0} characters`);
 
     return {
