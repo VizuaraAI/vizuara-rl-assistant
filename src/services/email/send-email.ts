@@ -1,16 +1,12 @@
 /**
  * Email Service
- * Send emails using SendGrid API
+ * Send emails using Brevo (formerly Sendinblue) API
  *
  * Setup:
- * 1. Create free account at https://sendgrid.com
- * 2. Go to Settings > API Keys > Create API Key (Full Access)
- * 3. Go to Settings > Sender Authentication > Verify a Single Sender
- *    - Add your email (e.g., teamvizuara@gmail.com)
- *    - Click verification link in your inbox
- * 4. Set SENDGRID_API_KEY and SENDGRID_FROM_EMAIL in environment
- *
- * Free tier: 100 emails/day
+ * 1. Log in to your Brevo account at https://app.brevo.com
+ * 2. Go to SMTP & API > API Keys
+ * 3. Create or copy your API key
+ * 4. Set BREVO_API_KEY and BREVO_FROM_EMAIL in environment
  */
 
 interface WelcomeEmailParams {
@@ -44,55 +40,54 @@ Let us get started.
 Best regards,
 Dr Raj Dandekar`;
 
-  const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-  const SENDGRID_FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL || 'rajatdandekar@vizuara.com';
+  const BREVO_API_KEY = process.env.BREVO_API_KEY;
+  const BREVO_FROM_EMAIL = process.env.BREVO_FROM_EMAIL || 'raj@vizuara.com';
+  const BREVO_FROM_NAME = process.env.BREVO_FROM_NAME || 'Raj Dandekar';
 
-  if (!SENDGRID_API_KEY) {
-    console.error('SENDGRID_API_KEY is not configured');
+  if (!BREVO_API_KEY) {
+    console.error('BREVO_API_KEY is not configured');
     return {
       success: false,
-      error: 'Email service not configured. Please set SENDGRID_API_KEY environment variable.',
+      error: 'Email service not configured. Please set BREVO_API_KEY environment variable.',
     };
   }
 
   try {
-    const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${SENDGRID_API_KEY}`,
+        'api-key': BREVO_API_KEY,
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({
-        personalizations: [
-          {
-            to: [{ email: to }],
-          },
-        ],
-        from: {
-          email: SENDGRID_FROM_EMAIL,
-          name: 'Dr Raj Dandekar',
+        sender: {
+          name: BREVO_FROM_NAME,
+          email: BREVO_FROM_EMAIL,
         },
-        subject: "Let's get started",
-        content: [
+        to: [
           {
-            type: 'text/plain',
-            value: emailContent,
+            email: to,
+            name: preferredName,
           },
         ],
+        subject: "Let's get started",
+        textContent: emailContent,
       }),
     });
 
-    // SendGrid returns 202 Accepted on success (no body)
-    if (response.status === 202) {
-      console.log('Email sent successfully via SendGrid');
+    // Brevo returns 201 Created on success with messageId
+    if (response.status === 201) {
+      const data = await response.json();
+      console.log('Email sent successfully via Brevo, messageId:', data.messageId);
       return { success: true };
     }
 
     const errorData = await response.json().catch(() => ({}));
-    console.error('SendGrid API error:', response.status, errorData);
+    console.error('Brevo API error:', response.status, errorData);
     return {
       success: false,
-      error: errorData.errors?.[0]?.message || `SendGrid error: ${response.status}`,
+      error: errorData.message || `Brevo error: ${response.status}`,
     };
   } catch (error) {
     console.error('Failed to send email:', error);
