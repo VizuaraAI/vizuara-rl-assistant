@@ -6,6 +6,7 @@ import { playClickSound, playSuccessSound } from '@/lib/sounds';
 interface Student {
   id: string;
   name: string;
+  preferredName: string;
   email: string;
   password: string;
   currentPhase: string;
@@ -14,6 +15,7 @@ interface Student {
 
 interface OnboardedStudent {
   name: string;
+  preferredName: string;
   email: string;
   password: string;
   joiningDate: string;
@@ -28,6 +30,7 @@ export default function AdminDashboard() {
 
   // Form state
   const [name, setName] = useState('');
+  const [preferredName, setPreferredName] = useState('');
   const [email, setEmail] = useState('');
   const [joiningDate, setJoiningDate] = useState(new Date().toISOString().split('T')[0]);
 
@@ -64,7 +67,7 @@ export default function AdminDashboard() {
       const res = await fetch('/api/admin/onboard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, joiningDate }),
+        body: JSON.stringify({ name, preferredName: preferredName || name.split(' ')[0], email, joiningDate }),
       });
 
       const data = await res.json();
@@ -73,6 +76,7 @@ export default function AdminDashboard() {
         playSuccessSound();
         setOnboardedStudent({
           name: data.data.name,
+          preferredName: data.data.preferredName,
           email: data.data.email,
           password: data.data.password,
           joiningDate: data.data.joiningDate,
@@ -80,6 +84,7 @@ export default function AdminDashboard() {
           welcomeMessage: data.data.welcomeMessage,
         });
         setName('');
+        setPreferredName('');
         setEmail('');
         setJoiningDate(new Date().toISOString().split('T')[0]);
         fetchStudents();
@@ -145,7 +150,7 @@ export default function AdminDashboard() {
             <form onSubmit={handleOnboard} className="space-y-4">
               <div>
                 <label className="block text-[13px] font-medium text-[#1d1d1f] mb-2">
-                  Student Name
+                  Full Name
                 </label>
                 <input
                   type="text"
@@ -154,6 +159,19 @@ export default function AdminDashboard() {
                   placeholder="e.g., Vishnu Kumar"
                   className="w-full px-4 py-3 bg-[#f5f5f7] border border-[#e5e5e7] rounded-xl text-[#1d1d1f] placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
                   required
+                />
+              </div>
+
+              <div>
+                <label className="block text-[13px] font-medium text-[#1d1d1f] mb-2">
+                  Preferred Name <span className="text-[#86868b] font-normal">(what to call them in chat)</span>
+                </label>
+                <input
+                  type="text"
+                  value={preferredName}
+                  onChange={e => setPreferredName(e.target.value)}
+                  placeholder="e.g., Vishnu (defaults to first name if empty)"
+                  className="w-full px-4 py-3 bg-[#f5f5f7] border border-[#e5e5e7] rounded-xl text-[#1d1d1f] placeholder-[#86868b] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
                 />
               </div>
 

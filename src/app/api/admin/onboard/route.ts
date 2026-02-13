@@ -37,7 +37,7 @@ function formatDate(date: Date): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, joiningDate } = body;
+    const { name, preferredName, email, joiningDate } = body;
 
     if (!name || !email || !joiningDate) {
       return NextResponse.json(
@@ -45,6 +45,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Use preferred name or default to first name
+    const displayName = preferredName || name.split(' ')[0];
 
     // Generate credentials
     const username = generateUsername(name);
@@ -61,6 +64,7 @@ export async function POST(request: NextRequest) {
     const { error: userError } = await supabase.from('users').insert({
       id: userId,
       name,
+      preferred_name: displayName,
       email: normalizedEmail,
       role: 'student',
       password_hash: password, // In production, this should be hashed
@@ -100,8 +104,8 @@ export async function POST(request: NextRequest) {
       console.error('Failed to create conversation:', convError);
     }
 
-    // Generate welcome message
-    const welcomeMessage = `Hello ${name.split(' ')[0]},
+    // Generate welcome message using preferred name
+    const welcomeMessage = `Hello ${displayName},
 
 Welcome to the GenAI Industry Professional Plan!
 
@@ -142,6 +146,7 @@ Let me know if you have any doubts or questions!`;
         studentId,
         userId,
         name,
+        preferredName: displayName,
         email,
         username,
         password,
@@ -175,6 +180,7 @@ export async function GET() {
         users!inner (
           id,
           name,
+          preferred_name,
           email,
           password_hash
         )
@@ -189,6 +195,7 @@ export async function GET() {
       id: s.id,
       userId: s.user_id,
       name: s.users.name,
+      preferredName: s.users.preferred_name || s.users.name?.split(' ')[0] || '',
       email: s.users.email,
       password: s.users.password_hash,
       currentPhase: s.current_phase,
