@@ -177,7 +177,10 @@ export default function MentorInboxPage() {
 
   async function fetchDrafts() {
     try {
-      const res = await fetch('/api/drafts/all');
+      const res = await fetch('/api/drafts/all', {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' },
+      });
       const data = await res.json();
       if (data.success) {
         const formattedDrafts: Draft[] = data.data.drafts.map((d: any) => ({
@@ -199,9 +202,13 @@ export default function MentorInboxPage() {
   async function fetchMessages(studentId: string) {
     try {
       // Fetch both sent/approved messages AND drafts for this student
+      const fetchOptions = {
+        cache: 'no-store' as RequestCache,
+        headers: { 'Cache-Control': 'no-cache' },
+      };
       const [messagesRes, draftsRes] = await Promise.all([
-        fetch(`/api/messages?studentId=${studentId}`),
-        fetch(`/api/drafts?studentId=${studentId}`),
+        fetch(`/api/messages?studentId=${studentId}`, fetchOptions),
+        fetch(`/api/drafts?studentId=${studentId}`, fetchOptions),
       ]);
 
       const messagesData = await messagesRes.json();

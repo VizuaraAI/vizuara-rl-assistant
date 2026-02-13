@@ -544,6 +544,22 @@ export async function POST(request: NextRequest) {
     }
 
     if (conversation) {
+      // Delete any existing drafts for this conversation to prevent duplicates
+      const { data: deletedDrafts, error: deleteError } = await supabase
+        .from('messages')
+        .delete()
+        .eq('conversation_id', conversation.id)
+        .eq('role', 'agent')
+        .eq('status', 'draft')
+        .select('id');
+
+      if (deletedDrafts && deletedDrafts.length > 0) {
+        console.log(`[Chat API] Cleaned up ${deletedDrafts.length} old draft(s) for conversation ${conversation.id}`);
+      }
+      if (deleteError) {
+        console.error('[Chat API] Failed to clean up old drafts:', deleteError);
+      }
+
       // Build student message data with attachments if present
       const studentMessageData: any = {
         conversation_id: conversation.id,
@@ -566,7 +582,7 @@ export async function POST(request: NextRequest) {
       // Save user message
       await supabase.from('messages').insert(studentMessageData);
 
-      // Save agent response as draft
+      // Save agent response as draft (old drafts already cleaned up above)
       await supabase.from('messages').insert({
         id: draftId,
         conversation_id: conversation.id,
