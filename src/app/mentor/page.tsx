@@ -122,6 +122,12 @@ export default function MentorInboxPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadForStudent, setUploadForStudent] = useState(true); // True = for selected student, False = general resource
 
+  // Conference finder modal state
+  const [showConferenceModal, setShowConferenceModal] = useState(false);
+  const [isLoadingConferences, setIsLoadingConferences] = useState(false);
+  const [conferences, setConferences] = useState<any[]>([]);
+  const [conferenceError, setConferenceError] = useState<string | null>(null);
+
   // Fetch data on mount
   useEffect(() => {
     fetchStudents();
@@ -817,6 +823,46 @@ export default function MentorInboxPage() {
       alert('Failed to accept roadmap. Please try again.');
     } finally {
       setIsAcceptingRoadmap(false);
+    }
+  }
+
+  // Find conferences for student's research topic
+  async function findConferences() {
+    if (!selectedStudent) return;
+
+    const topic = contextData?.roadmap?.topic || selectedStudent.researchTopic;
+    if (!topic) {
+      alert('No research topic found. Please generate a roadmap first.');
+      return;
+    }
+
+    setShowConferenceModal(true);
+    setIsLoadingConferences(true);
+    setConferenceError(null);
+    setConferences([]);
+
+    try {
+      const res = await fetch('/api/mentor/find-conferences', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: selectedStudent.id,
+          researchTopic: topic,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setConferences(data.data.conferences);
+      } else {
+        setConferenceError(data.error || 'Failed to find conferences');
+      }
+    } catch (error) {
+      console.error('Failed to find conferences:', error);
+      setConferenceError('Failed to find conferences. Please try again.');
+    } finally {
+      setIsLoadingConferences(false);
     }
   }
 
@@ -1683,6 +1729,22 @@ export default function MentorInboxPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                           </svg>
                           Generate Colab Notebook
+                        </button>
+
+                        {/* Find Conferences - Only enabled after roadmap is accepted */}
+                        <button
+                          onClick={findConferences}
+                          disabled={!contextData?.contextSummary?.roadmapAccepted}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 disabled:opacity-50 ${
+                            contextData?.contextSummary?.roadmapAccepted
+                              ? 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                          }`}
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                          Find Conferences
                         </button>
 
                         {/* Attach File Button for Draft */}
@@ -2757,6 +2819,26 @@ export default function MentorInboxPage() {
                 </svg>
                 Generate Colab Notebook
               </button>
+
+              {/* Find Conferences - Only enabled after roadmap is accepted */}
+              <button
+                onClick={() => {
+                  setShowComposeModal(false);
+                  setComposeMessage('');
+                  findConferences();
+                }}
+                disabled={!contextData?.contextSummary?.roadmapAccepted}
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1.5 disabled:opacity-50 ${
+                  contextData?.contextSummary?.roadmapAccepted
+                    ? 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                }`}
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Find Conferences
+              </button>
             </div>
 
             <div className="p-6">
@@ -3310,6 +3392,149 @@ export default function MentorInboxPage() {
                 </button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Conference Finder Modal */}
+      {showConferenceModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[85vh] flex flex-col">
+            <div className="p-6 border-b border-slate-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-800">Find Relevant Conferences</h3>
+                  <p className="text-sm text-slate-500 mt-1">
+                    Conferences matching: <span className="font-medium text-indigo-600">{contextData?.roadmap?.topic || selectedStudent?.researchTopic || 'Research Topic'}</span>
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    setShowConferenceModal(false);
+                    setConferences([]);
+                    setConferenceError(null);
+                  }}
+                  className="p-1 hover:bg-slate-100 rounded-lg transition-colors"
+                >
+                  <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6">
+              {isLoadingConferences ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <svg className="w-10 h-10 animate-spin text-indigo-600 mb-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  <p className="text-slate-600 font-medium">Searching for conferences...</p>
+                  <p className="text-slate-400 text-sm mt-1">This may take a moment</p>
+                </div>
+              ) : conferenceError ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-slate-600 font-medium">Error finding conferences</p>
+                  <p className="text-slate-400 text-sm mt-1">{conferenceError}</p>
+                  <button
+                    onClick={findConferences}
+                    className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              ) : conferences.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-slate-600 font-medium">No conferences found</p>
+                  <p className="text-slate-400 text-sm mt-1">Try again later or broaden the search criteria</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {conferences.map((conf, index) => (
+                    <div
+                      key={index}
+                      className="border border-slate-200 rounded-xl p-4 hover:border-indigo-300 hover:bg-indigo-50/30 transition-all"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-slate-800">{conf.name}</h4>
+                          {conf.track && (
+                            <p className="text-sm text-slate-500 mt-0.5">{conf.track}</p>
+                          )}
+                          <div className="flex flex-wrap items-center gap-2 mt-2">
+                            {conf.deadline && (
+                              <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                                conf.daysUntilDeadline <= 7
+                                  ? 'bg-red-100 text-red-700'
+                                  : conf.daysUntilDeadline <= 14
+                                  ? 'bg-orange-100 text-orange-700'
+                                  : 'bg-green-100 text-green-700'
+                              }`}>
+                                Deadline: {conf.deadline}
+                                {conf.daysUntilDeadline && ` (${conf.daysUntilDeadline} days)`}
+                              </span>
+                            )}
+                            {conf.venue && (
+                              <span className="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">
+                                {conf.venue}
+                              </span>
+                            )}
+                            {conf.type && (
+                              <span className="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full">
+                                {conf.type}
+                              </span>
+                            )}
+                          </div>
+                          {conf.description && (
+                            <p className="text-sm text-slate-600 mt-2 line-clamp-2">{conf.description}</p>
+                          )}
+                        </div>
+                        {conf.url && (
+                          <a
+                            href={conf.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-shrink-0 px-3 py-1.5 bg-indigo-600 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-1"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            View
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="p-4 border-t border-slate-200 flex justify-between items-center">
+              <p className="text-xs text-slate-400">
+                {conferences.length > 0 && `Found ${conferences.length} conference${conferences.length > 1 ? 's' : ''}`}
+              </p>
+              <button
+                onClick={() => {
+                  setShowConferenceModal(false);
+                  setConferences([]);
+                  setConferenceError(null);
+                }}
+                className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors font-medium text-sm"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
