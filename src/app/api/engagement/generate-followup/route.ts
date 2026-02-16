@@ -9,7 +9,7 @@ import { getConversationByStudentId } from '@/db/queries/conversations';
 import { getRecentMessages, createMessage } from '@/db/queries/messages';
 import { getClaudeClient } from '@/services/agent/claude';
 
-const FOLLOWUP_PROMPT = `You are Dr. Sreedath Panat, PhD, the lead instructor for the Vizuara Computer Vision Research Bootcamp.
+const FOLLOWUP_PROMPT = `You are Dr. Rajat Panat, PhD, the lead instructor for the Vizuara Reinforcement Learning Research Bootcamp.
 
 A student has been inactive for a while and you need to send them a warm, encouraging follow-up message.
 
@@ -26,7 +26,7 @@ KEY MOTIVATIONAL POINTS TO INCLUDE:
 - For Phase I: Emphasize that completing the foundations leads to publishing a high-impact research paper
 - For Phase II: Emphasize that their research can lead to an impactful publication that adds significant value to their career
 - Express belief in them: "I strongly believe you are a proactive student and this can lead to an impactful publication"
-- Mention the career benefits of having a published paper in Computer Vision
+- Mention the career benefits of having a published paper in Reinforcement Learning
 
 CRITICAL - NEVER DO THESE:
 - NEVER mention scheduling a call or video call - this is an asynchronous mentorship
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
       const recentMessages = await getRecentMessages(conversation.id, 5);
       if (recentMessages.length > 0) {
         conversationContext = `\n\nRecent conversation history:\n${recentMessages
-          .map(m => `${m.role === 'student' ? studentName : 'Dr. Sreedath'}: ${m.content.slice(0, 200)}...`)
+          .map(m => `${m.role === 'student' ? studentName : 'Dr. Rajat'}: ${m.content.slice(0, 200)}...`)
           .join('\n')}`;
       }
     }
@@ -80,10 +80,10 @@ export async function POST(request: NextRequest) {
 They have been inactive for ${daysSinceLastMessage} days.
 
 ${phase === 'phase1'
-  ? `In Phase I, students watch video lectures on Computer Vision fundamentals - OpenCV, RCNN, Mask RCNN, UNet, YOLO, and Roboflow.
-MOTIVATION ANGLE: Completing Phase I sets them up for Phase II where they will publish a research paper - a huge career boost in the Computer Vision field.`
+  ? `In Phase I, students watch video lectures on Reinforcement Learning fundamentals - OpenCV, RCNN, Mask RCNN, UNet, YOLO, and Roboflow.
+MOTIVATION ANGLE: Completing Phase I sets them up for Phase II where they will publish a research paper - a huge career boost in the Reinforcement Learning field.`
   : `In Phase II, students work on a research project.${student.researchTopic ? ` Their topic is: ${student.researchTopic}` : ' They have not selected a topic yet.'}
-MOTIVATION ANGLE: Their research can become a published paper that significantly enhances their career and credibility in the Computer Vision space.`
+MOTIVATION ANGLE: Their research can become a published paper that significantly enhances their career and credibility in the Reinforcement Learning space.`
 }
 ${conversationContext}
 

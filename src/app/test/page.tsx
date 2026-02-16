@@ -95,7 +95,7 @@ function VoiceNotePlayer({ url, title }: { url: string; title?: string }) {
           </svg>
         </div>
         <div>
-          <p className="text-sm font-semibold text-purple-800">Voice Message from Dr. Sreedath</p>
+          <p className="text-sm font-semibold text-purple-800">Voice Message from Dr. Rajat</p>
           <p className="text-xs text-purple-600">{title || 'Motivational Message'}</p>
         </div>
       </div>
@@ -524,7 +524,7 @@ export default function TestChatPage() {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder={viewMode === 'student' ? "Send a message to Dr. Sreedath..." : "Send message as student..."}
+              placeholder={viewMode === 'student' ? "Send a message to Dr. Rajat..." : "Send message as student..."}
               className="flex-1 border border-slate-300 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 placeholder-slate-400"
               disabled={isLoading}
             />

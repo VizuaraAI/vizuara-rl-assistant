@@ -22,11 +22,11 @@ export async function sendWelcomeEmail({
   email,
   password,
 }: WelcomeEmailParams): Promise<{ success: boolean; error?: string }> {
-  const loginUrl = 'https://vizuara-cv-assistant-production.up.railway.app/student';
+  const loginUrl = 'https://vizuara-rl-assistant-production.up.railway.app/student';
 
   const emailContent = `Hello ${preferredName}!
 
-Let us get started with the Computer Vision Bootcamp.
+Let us get started with the Reinforcement Learning Bootcamp.
 
 Login here: ${loginUrl}
 
@@ -38,11 +38,11 @@ When you log in to this website, you will already see an onboarding email with t
 Let us get started.
 
 Best regards,
-Dr Sreedath Panat`;
+Dr Rajat Dandekar`;
 
   const BREVO_API_KEY = process.env.BREVO_API_KEY;
-  const BREVO_FROM_EMAIL = process.env.BREVO_FROM_EMAIL || 'sreedath@vizuara.com';
-  const BREVO_FROM_NAME = process.env.BREVO_FROM_NAME || 'Sreedath Panat';
+  const BREVO_FROM_EMAIL = process.env.BREVO_FROM_EMAIL || 'rajatdandekar@vizuara.com';
+  const BREVO_FROM_NAME = process.env.BREVO_FROM_NAME || 'Dr Rajat Dandekar';
 
   if (!BREVO_API_KEY) {
     console.error('BREVO_API_KEY is not configured');
@@ -71,7 +71,7 @@ Dr Sreedath Panat`;
             name: preferredName,
           },
         ],
-        subject: "Let's get started with the Computer Vision Bootcamp.",
+        subject: "Let's get started with the Reinforcement Learning Bootcamp.",
         textContent: emailContent,
       }),
     });

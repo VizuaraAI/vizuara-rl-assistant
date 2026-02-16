@@ -40,7 +40,7 @@ test.describe('Student Portal - Gmail Style', () => {
 
   test('should display email-style inbox interface', async ({ page }) => {
     // Check header
-    await expect(page.getByText('Vizuara Computer Vision Bootcamp')).toBeVisible();
+    await expect(page.getByText('Vizuara Reinforcement Learning Bootcamp')).toBeVisible();
 
     // Check sidebar with Compose button
     await expect(page.getByRole('button', { name: /Compose/i })).toBeVisible();
@@ -59,7 +59,7 @@ test.describe('Student Portal - Gmail Style', () => {
     // Check compose view elements
     await expect(page.getByText('New Message')).toBeVisible();
     await expect(page.getByText('To:')).toBeVisible();
-    await expect(page.getByText('Dr. Sreedath Panat')).toBeVisible();
+    await expect(page.getByText('Dr. Rajat Dandekar')).toBeVisible();
     await expect(page.getByText('Subject:')).toBeVisible();
 
     // Check input fields
@@ -75,7 +75,7 @@ test.describe('Student Portal - Gmail Style', () => {
 
   test('should show message detail when clicking a message', async ({ page }) => {
     // Click on first message in inbox
-    const firstMessage = page.locator('button').filter({ hasText: 'Dr. Sreedath Panat' }).first();
+    const firstMessage = page.locator('button').filter({ hasText: 'Dr. Rajat Dandekar' }).first();
     await firstMessage.click();
 
     // Check message detail view
@@ -87,7 +87,7 @@ test.describe('Student Portal - Gmail Style', () => {
 
   test('should have reply button on received messages', async ({ page }) => {
     // Click on first message from mentor
-    const mentorMessage = page.locator('button').filter({ hasText: 'Dr. Sreedath Panat' }).first();
+    const mentorMessage = page.locator('button').filter({ hasText: 'Dr. Rajat Dandekar' }).first();
     await mentorMessage.click();
 
     // Check for reply button
@@ -103,7 +103,7 @@ test.describe('Mentor Portal - Gmail Style', () => {
   test('should display mentor dashboard interface', async ({ page }) => {
     // Check header
     await expect(page.getByText('Mentor Dashboard')).toBeVisible();
-    await expect(page.getByText('Dr. Sreedath Panat')).toBeVisible();
+    await expect(page.getByText('Dr. Rajat Dandekar')).toBeVisible();
 
     // Check students sidebar
     await expect(page.getByText('Students')).toBeVisible();

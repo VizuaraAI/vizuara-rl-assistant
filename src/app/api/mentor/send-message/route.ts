@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     // Include attachments if provided
     const messageData: any = {
       conversation_id: conversation.id,
-      role: 'agent', // Shows as Dr. Sreedath
+      role: 'agent', // Shows as Dr. Rajat
       content: content,
       status: 'approved', // Directly sent, no draft needed
     };

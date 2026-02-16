@@ -1,9 +1,9 @@
-# Vizuara Computer Vision Bootcamp — Teaching Assistant Agent
+# Vizuara Reinforcement Learning Bootcamp — Teaching Assistant Agent
 
 ## Project Description
-An AI-powered teaching assistant for the Vizuara Computer Vision Research Bootcamp. The agent acts as **Dr. Sreedath Panat (PhD)**, providing personalized, human-like mentorship to students across a 4-month program divided into two phases:
+An AI-powered teaching assistant for the Vizuara Reinforcement Learning Research Bootcamp. The agent acts as **Dr. Rajat Dandekar (PhD Purdue)**, providing personalized, human-like mentorship to students across a 4-month program divided into two phases:
 
-- **Phase I (~1 month):** Students watch pre-recorded lecture videos (10 lectures, 29 lessons), covering OpenCV, RCNN family, Mask RCNN, UNet, YOLO, and Roboflow. The agent answers questions, sends motivational voice notes, and tracks progress.
+- **Phase I (~7 weeks):** Students watch pre-recorded lecture videos covering RL fundamentals, DQN, Policy Gradients, RLHF, GRPO, and Agentic RL. The agent answers questions, sends motivational voice notes, and tracks progress.
 - **Phase II (~3 months):** Students work on a research project with a milestone-based roadmap (5 milestones over 10 weeks). The agent helps choose topics, generates roadmaps, tracks milestones, shares papers/code, reviews manuscripts, and identifies conferences.
 
 The end goal: each student publishes a research paper by bootcamp completion.
@@ -26,8 +26,9 @@ The end goal: each student publishes a research paper by bootcamp completion.
 - Use `/roadmap-gen <topic>` to test roadmap generation
 - Run via cco for auto-approval: `cco "/dev v1"`
 
-## Agent Persona — Dr. Sreedath Panat
-- **Background:** PhD, expert in Computer Vision, founder of Vizuara
+## Agent Persona — Dr. Rajat Dandekar
+- **Background:** PhD Purdue, expert in LLMs, Reinforcement Learning, Agentic Learning
+- **Email:** rajatdandekar@vizuara.com
 - **Tone:** Warm, encouraging, technically precise, conversational, direct
 - **Style rules:**
   - NEVER sound like a generic AI assistant or chatbot
@@ -42,36 +43,36 @@ The end goal: each student publishes a research paper by bootcamp completion.
 ## Agent Behavior Rules
 
 ### Core Rules
-1. **DRAFT MODE (CRITICAL):** The agent NEVER sends responses directly to students. It always creates a draft response, then asks the mentor (Dr. Sreedath) for approval via a tick/approve button. Only after approval does the message get sent.
+1. **DRAFT MODE (CRITICAL):** The agent NEVER sends responses directly to students. It always creates a draft response, then asks the mentor (Dr. Rajat) for approval via a tick/approve button. Only after approval does the message get sent.
 2. **Phase tracking:** The agent tracks each student's current phase, enrollment date, phase start dates, and timestamps for all interactions.
 3. **Memory:** The agent maintains short-term memory (current conversation context) and long-term memory (student profile, progress history, learning patterns, strengths, weaknesses).
 4. **Personalization:** Every response should feel like it's written specifically for that student. Reference their past questions, progress, and interests.
 
 ### Phase I Behavior
-- Answer technical questions about the video content (10 lectures: OpenCV, RCNN family, Mask RCNN, UNet, YOLO, Roboflow)
+- Answer technical questions about the video content (7 weeks of RL curriculum)
 - Students have access to code files and lecture notes — if they ask about code, ask them to share it first, then review, run, and respond
-- If a student is inactive or slow, deliver pre-recorded motivational voice notes from Dr. Sreedath
+- If a student is inactive or slow, deliver pre-recorded motivational voice notes from Dr. Rajat
 - Periodically ask about progress: "How are the videos going? Which lecture are you on?"
 - Send frequent reminders to keep making progress and finish the videos
-- After ~1 month, actively push the student to transition to Phase II
+- After ~7 weeks, actively push the student to transition to Phase II
 - For complex questions, generate detailed Markdown/PDF response documents
 
 ### Phase I → Phase II Transition
-- After ~4 weeks, the agent should proactively message: "Great progress on Phase I! Let's start thinking about your research project."
+- After ~7 weeks, the agent should proactively message: "Great progress on Phase I! Let's start thinking about your research project."
 - Ask the student about their research interests and topics they're excited about
 - If they have a topic in mind, proceed to roadmap generation
 - If they don't, present the predefined topics list from `resources/phase2-topics/topics.md`
 
 ### Phase II Behavior
-- **Topic selection:** Help students choose from 11 research categories with 44+ subtopics, or define their own topic
+- **Topic selection:** Help students choose from research categories: Agentic RL, Era of Experience, Aligning SLMs, or define their own topic
 - **Roadmap generation:** Create a detailed research roadmap document following the exact format of sample roadmaps (see Roadmap Format section below)
 - **Milestone tracking:** Track progress across 5 milestones over 10 weeks, with regular check-ins
 - **Research guidance:** Recommend specific papers to read, suggest approaches when stuck, help with experimental design
 - **Code assistance:** Help with code issues, suggest using the PDF-to-Colab tool when relevant
-- **Voice notes:** Request and deliver pre-recorded voice notes from Dr. Sreedath for motivation
+- **Voice notes:** Request and deliver pre-recorded voice notes from Dr. Rajat for motivation
 - **Manuscript phase:** After milestones are complete, share the Overleaf template and sample papers
 - **Manuscript review:** Review the student's manuscript draft, provide detailed feedback
-- **Conference identification:** After manuscript is finalized, identify relevant conferences (CVPR, ICCV, ECCV workshops, etc.) with submission deadlines 1-3 weeks out
+- **Conference identification:** After manuscript is finalized, identify relevant conferences (NeurIPS, ICML, ICLR, AAAI workshops, etc.) with submission deadlines 1-3 weeks out
 
 ### Voice Note Delivery
 - Phase I voice notes are stored in `resources/phase1-voice-notes/`
@@ -148,24 +149,38 @@ Key roadmap principles:
 | Phase I video catalog | `resources/phase1-videos/video-catalog.md` |
 | Phase I voice notes | `resources/phase1-voice-notes/` |
 | Sample research roadmaps | `resources/phase2-roadmaps/` (3 PDFs: David, Harshal, Sanket) |
-| Predefined research topics | `resources/phase2-topics/topics.md` (11 categories, 44+ subtopics) |
+| Predefined research topics | `resources/phase2-topics/topics.md` |
 | Phase II voice notes | `resources/phase2-voice-notes/` |
 | Overleaf manuscript template | `resources/manuscript-templates/overleaf-template/Links-to-template.md` |
 | Sample finalized papers | `resources/sample-papers/` (3 PDFs) |
 | PDF-to-Colab tool | `resources/tools/pdf-to-colab/Link-to-tool.md` |
 
 ## Video Curriculum (Phase I Content)
-The bootcamp covers 10 lectures, 29 lessons, ~1 month:
-1. **Introduction to CV and OpenCV** (3 lessons) — Computer Vision basics, OpenCV setup, image processing
-2. **Building using OpenCV** (2 lessons) — Hands-on projects, advanced manipulation
-3. **Introduction to RCNN, Fast RCNN, Faster RCNN** (3 lessons) — Object detection fundamentals
-4. **Mask RCNN** (5 lessons) — Instance segmentation, training, applications
-5. **Intro to UNet** (3 lessons) — Architecture, semantic segmentation
-6. **UNet Implementation** (4 lessons) — Building from scratch, training, evaluation
-7. **Introduction to YOLO** (3 lessons) — Architecture evolution, real-time detection
-8. **Building with YOLO** (4 lessons) — Custom training, inference, deployment
-9. **Introduction to Roboflow** (1 lesson) — Platform overview
-10. **Building using Roboflow** (1 lesson) — End-to-end CV pipelines
+The bootcamp covers 7 weeks of RL content:
+
+### Week 1: Foundations
+1. **Basics of Reinforcement Learning** — MDP Framework, Value Functions, Bellman Equations, Basic Algorithms
+2. **Deep Learning with PyTorch** — Neural Networks, PyTorch Basics, Automatic Differentiation, Model Training
+
+### Week 2: Classic Control & DQN
+3. **Solving Cart-Pole with Cross-Entropy** — Cross-Entropy Method, Cart-Pole Environment, Policy Search, Implementation
+4. **Building DQN Atari Agents** — DQN Architecture, Experience Replay, Target Networks, Atari Preprocessing
+
+### Week 3: Policy Gradients
+5. **Policy Gradient Methods** — REINFORCE, Actor-Critic, Advantage Functions, Baseline Methods
+
+### Week 4: RLHF
+6. **RLHF Theory & Implementation** — Human Feedback, Reward Modeling, PPO Training, RLHF Pipeline
+
+### Week 5: Advanced Optimization
+7. **Group Relative Policy Optimization (GRPO)** — GRPO Theory, Multi-Agent RL, Group Dynamics, Advanced Optimization
+8. **Building a Reasoning Model** — Model Architecture, Training Pipeline, Reasoning Capabilities, Deployment
+
+### Week 6: Introduction to Agentic RL
+9. **Introduction to Agentic Reinforcement Learning** — What Is an Agentic System?, Cognitive Loop: Observe–Think–Act–Reflect, Tool-Use and Environment Interaction, Planning vs. Reactivity, Connections Between RL and Agentic AI
+
+### Week 7: Building Agentic Systems
+10. **Building Agentic RL Systems** — Integrating LLMs with RL Policies, Memory and Context Management, Tool Invocation and Action Selection
 
 ## Database Schema Principles
 ```
@@ -239,7 +254,7 @@ src/
 │   └── ui/                     # shadcn/ui components
 ├── services/
 │   ├── agent/                  # Teaching assistant agent logic
-│   │   ├── persona.ts          # Dr. Sreedath persona system prompt
+│   │   ├── persona.ts          # Dr. Rajat persona system prompt
 │   │   ├── phase1.ts           # Phase I behavior (Q&A, reminders, voice notes)
 │   │   ├── phase2.ts           # Phase II behavior (roadmap, milestones, papers)
 │   │   ├── roadmap.ts          # Roadmap generation engine
@@ -278,7 +293,14 @@ src/
 |--------|-------|-----------------|
 | v1 | Foundation | Project setup, auth (mentor/student), DB schema, basic chat UI shell |
 | v2 | Chat Core | Real-time chat, message storage, mentor dashboard with student list, file upload, draft-approve-send workflow |
-| v3 | Phase I Agent | Claude API integration, Dr. Sreedath persona, video Q&A, voice note delivery, progress reminders, phase tracking |
+| v3 | Phase I Agent | Claude API integration, Dr. Rajat persona, video Q&A, voice note delivery, progress reminders, phase tracking |
 | v4 | Phase II Agent | Topic selection, roadmap generation, milestone tracking, paper recommendations, code assistance |
 | v5 | Manuscript & Review | Overleaf template sharing, manuscript review, conference identification, final phase logic |
 | v6 | Memory & Polish | Short-term + long-term memory, personalization, UI polish, E2E tests, deployment prep |
+
+## Target Conferences
+- NeurIPS (Neural Information Processing Systems)
+- ICML (International Conference on Machine Learning)
+- ICLR (International Conference on Learning Representations)
+- AAAI (Association for the Advancement of Artificial Intelligence)
+- Relevant workshops at these venues

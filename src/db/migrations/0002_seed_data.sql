@@ -1,10 +1,10 @@
--- Vizuara Teaching Assistant Seed Data
+-- Vizuara RL Teaching Assistant Seed Data
 -- Run this AFTER 0001_create_schema.sql in Supabase SQL Editor
 
--- Create mentor user (Dr. Sreedath Panat)
+-- Create mentor user (Dr. Rajat Dandekar)
 -- Password: mentor123 (bcrypt hash)
 INSERT INTO users (id, name, email, password_hash, role) VALUES
-  ('00000000-0000-0000-0000-000000000001', 'Dr. Sreedath Panat', 'sreedath@vizuara.com', '$2a$10$8K1p/a0dR1xqM8K3hM8ui.MhXKs2B.CjYcM0TzHlQvDjHTSJWKJYm', 'mentor')
+  ('00000000-0000-0000-0000-000000000001', 'Dr. Rajat Dandekar', 'rajatdandekar@vizuara.com', '$2a$10$8K1p/a0dR1xqM8K3hM8ui.MhXKs2B.CjYcM0TzHlQvDjHTSJWKJYm', 'mentor')
 ON CONFLICT (email) DO NOTHING;
 
 -- Create test student users
@@ -53,11 +53,11 @@ ON CONFLICT DO NOTHING;
 
 -- Set Carol's research topic
 UPDATE students
-SET research_topic = 'Retrieval-Augmented Generation for Scientific Literature'
+SET research_topic = 'Agentic RL with Tool-Augmented Agents'
 WHERE id = '00000000-0000-0000-0000-000000000103';
 
 -- Done!
 SELECT 'Seed data inserted successfully!' as status;
 SELECT 'Test accounts created:' as info;
-SELECT '  Mentor: sreedath@vizuara.com / mentor123' as mentor_login;
+SELECT '  Mentor: rajatdandekar@vizuara.com / mentor123' as mentor_login;
 SELECT '  Students: alice@student.com, bob@student.com, carol@student.com / student123' as student_logins;

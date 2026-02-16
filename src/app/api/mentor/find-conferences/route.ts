@@ -65,7 +65,7 @@ const MAJOR_CONFERENCES = [
   },
   {
     name: 'CVPR',
-    fullName: 'IEEE/CVF Conference on Computer Vision and Pattern Recognition',
+    fullName: 'IEEE/CVF Conference on Reinforcement Learning and Pattern Recognition',
     type: 'Main Conference',
     venue: 'Annual - June',
     topics: ['computer vision', 'image processing', 'visual recognition', 'multimodal', 'vision transformers'],
@@ -73,7 +73,7 @@ const MAJOR_CONFERENCES = [
   },
   {
     name: 'ICCV',
-    fullName: 'IEEE/CVF International Conference on Computer Vision',
+    fullName: 'IEEE/CVF International Conference on Reinforcement Learning',
     type: 'Main Conference',
     venue: 'Biennial - October',
     topics: ['computer vision', '3D vision', 'video understanding', 'visual learning'],
@@ -81,7 +81,7 @@ const MAJOR_CONFERENCES = [
   },
   {
     name: 'ECCV',
-    fullName: 'European Conference on Computer Vision',
+    fullName: 'European Conference on Reinforcement Learning',
     type: 'Main Conference',
     venue: 'Biennial - October',
     topics: ['computer vision', 'image analysis', 'scene understanding'],

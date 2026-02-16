@@ -71,7 +71,7 @@ async function addInactiveStudents() {
     await db.insert(schema.messages).values({
       conversationId: johnConv.id,
       role: 'student',
-      content: "Hi Dr. Sreedath, I'm working through the OpenCV section. Will update you soon!",
+      content: "Hi Dr. Rajat, I'm working through the OpenCV section. Will update you soon!",
       status: 'sent',
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
     });
@@ -158,7 +158,7 @@ async function addInactiveStudents() {
     await db.insert(schema.messages).values({
       conversationId: kevinConv.id,
       role: 'student',
-      content: "Dr. Sreedath, I started the literature review but got busy with work. Will catch up this weekend.",
+      content: "Dr. Rajat, I started the literature review but got busy with work. Will catch up this weekend.",
       status: 'sent',
       createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), // 15 days ago
     });

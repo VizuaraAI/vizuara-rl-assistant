@@ -1,108 +1,139 @@
-# Computer Vision Bootcamp - Phase I Curriculum
+# Reinforcement Learning Bootcamp - Phase I Curriculum
 
-**10 lectures • 29 lessons • ~1 month**
-
----
-
-## 1. Introduction to CV and OpenCV
-
-*3 lessons*
-
-- Introduction to Computer Vision
-- OpenCV Basics and Setup
-- Image Processing Fundamentals
+**7 weeks • 10 lectures • ~7 weeks**
 
 ---
 
-## 2. Building using OpenCV
+## Week 1: Foundations
 
-*2 lessons*
+### 1. Basics of Reinforcement Learning
 
-- Hands-on OpenCV Projects
-- Advanced Image Manipulation
+*Foundation concepts, Markov Decision Processes, and core RL principles*
 
----
-
-## 3. Introduction to RCNN, Fast RCNN, Faster RCNN
-
-*3 lessons*
-
-- Understanding RCNN Architecture
-- Fast RCNN Deep Dive
-- Faster RCNN Implementation
+- MDP Framework
+- Value Functions
+- Bellman Equations
+- Basic Algorithms
 
 ---
 
-## 4. Mask RCNN
+### 2. Deep Learning with PyTorch
 
-*5 lessons*
+*Essential deep learning skills and PyTorch fundamentals for RL*
 
-- Mask RCNN Architecture Overview
-- Instance Segmentation Basics
-- Training Mask RCNN Models
-- Mask RCNN Applications
-- Advanced Mask RCNN Techniques
-
----
-
-## 5. Intro to UNet
-
-*3 lessons*
-
-- UNet Architecture Overview
-- Semantic Segmentation Concepts
-- UNet for Medical Imaging
+- Neural Networks
+- PyTorch Basics
+- Automatic Differentiation
+- Model Training
 
 ---
 
-## 6. UNet Implementation
+## Week 2: Classic Control & DQN
 
-*4 lessons*
+### 3. Solving Cart-Pole with Cross-Entropy
 
-- Building UNet from Scratch
-- Training UNet Models
-- UNet Loss Functions and Optimization
-- UNet Evaluation Metrics
+*Hands-on implementation of the Cross-Entropy method for control problems*
 
----
-
-## 7. Introduction to YOLO
-
-*3 lessons*
-
-- YOLO Architecture Evolution (v1 to v8)
-- YOLOv5/v8 Deep Dive
-- Real-time Object Detection Concepts
+- Cross-Entropy Method
+- Cart-Pole Environment
+- Policy Search
+- Implementation
 
 ---
 
-## 8. Building with YOLO
+### 4. Building DQN Atari Agents
 
-*4 lessons*
+*Deep Q-Networks for playing Atari games with experience replay*
 
-- Custom YOLO Training
-- YOLO Inference Pipeline
-- YOLO Model Optimization
-- Deploying YOLO Models
-
----
-
-## 9. Introduction to Roboflow
-
-*1 lesson*
-
-- Roboflow Platform Overview and Setup
+- DQN Architecture
+- Experience Replay
+- Target Networks
+- Atari Preprocessing
 
 ---
 
-## 10. Building using Roboflow
+## Week 3: Policy Gradients
 
-*1 lesson*
+### 5. Policy Gradient Methods
 
-- End-to-End Computer Vision Pipeline with Roboflow
+*Policy gradient theory and hands-on implementation from scratch*
+
+- REINFORCE
+- Actor-Critic
+- Advantage Functions
+- Baseline Methods
+
+---
+
+## Week 4: RLHF
+
+### 6. RLHF Theory & Implementation
+
+*Reinforcement Learning from Human Feedback – the backbone of modern LLMs*
+
+- Human Feedback
+- Reward Modeling
+- PPO Training
+- RLHF Pipeline
+
+---
+
+## Week 5: Advanced Optimization
+
+### 7. Group Relative Policy Optimization (GRPO)
+
+*Advanced GRPO techniques for multi-agent and complex optimization*
+
+- GRPO Theory
+- Multi-Agent RL
+- Group Dynamics
+- Advanced Optimization
+
+---
+
+### 8. Building a Reasoning Model
+
+*Capstone project – Build a reasoning model from the ground up*
+
+- Model Architecture
+- Training Pipeline
+- Reasoning Capabilities
+- Deployment
+
+---
+
+## Week 6: Introduction to Agentic RL
+
+### 9. Introduction to Agentic Reinforcement Learning
+
+*Understanding the principles of agentic systems — autonomous agents capable of reasoning, planning, and acting within dynamic environments*
+
+- What Is an Agentic System?
+- Cognitive Loop: Observe–Think–Act–Reflect
+- Tool-Use and Environment Interaction
+- Planning vs. Reactivity in Agents
+- Connections Between RL and Agentic AI
+
+---
+
+## Week 7: Building Agentic Systems
+
+### 10. Building Agentic RL Systems
+
+*Practical implementation of agentic reinforcement learning, combining LLMs with RL for goal-driven reasoning*
+
+- Integrating LLMs with RL Policies
+- Memory and Context Management
+- Tool Invocation and Action Selection
 
 ---
 
 Students get access to all the code files and lecture notes as well.
 
 A student asks a question about a particular code. You can ask them to first share their code with you. Then you can see that code, run it, and finally give a response.
+
+## Course Access
+
+You can access the bootcamp material here: https://vizuara.ai/courses/course_20004941
+
+Please check this dashboard frequently for announcements.

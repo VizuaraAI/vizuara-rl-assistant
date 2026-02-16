@@ -1,185 +1,158 @@
-# Vizuara Computer Vision Bootcamp — Proposed Research & Project Topics
+# Vizuara Reinforcement Learning Bootcamp — Phase II Research Topics
 
 > **Duration:** 2–3 months per topic (practically oriented, hands-on projects)
-> **Level:** Intermediate to Advanced (assumes working knowledge of CNNs, object detection, segmentation, and Python)
+> **Level:** Intermediate to Advanced (assumes working knowledge of RL fundamentals, policy gradients, and Python)
 > **Philosophy:** Every topic must produce a working prototype, demo, or deployable system by the end of the project timeline.
 
 ---
 
-## 1. Medical Imaging & Healthcare
+## 1. Agentic Reinforcement Learning
 
-### 1.1 Automated Tumor Detection and Segmentation in Medical Scans
-Build a deep learning pipeline using UNet or Mask RCNN to detect and segment tumors in CT/MRI scans. Implement data augmentation strategies for limited medical datasets, compare different backbone architectures, and evaluate using Dice coefficient and IoU metrics.
+### 1.1 Tool-Augmented RL Agents
+Build an RL agent that learns to effectively use external tools (calculators, search engines, code interpreters) to solve complex tasks. Implement tool selection policies and evaluate on benchmarks requiring multi-step reasoning with tool use.
 
-### 1.2 Retinal Disease Classification from Fundus Images
-Develop a multi-class classification system for detecting diabetic retinopathy, glaucoma, and macular degeneration from retinal fundus images. Implement transfer learning with attention mechanisms and explainability via Grad-CAM visualizations.
+### 1.2 Memory-Enhanced Agentic Systems
+Develop an agentic RL system with explicit memory mechanisms (episodic, semantic, working memory) that can maintain context over long horizons. Compare different memory architectures and their impact on task performance.
 
-### 1.3 X-Ray Abnormality Detection with Localization
-Create a chest X-ray analysis system that detects multiple abnormalities (pneumonia, cardiomegaly, effusion) with bounding box localization. Compare YOLO-based approaches with Faster RCNN and implement confidence calibration.
+### 1.3 Multi-Agent Collaborative Planning
+Create a multi-agent system where RL agents learn to collaborate on complex planning tasks. Implement communication protocols and evaluate emergent coordination behaviors.
 
-### 1.4 Surgical Tool Detection and Tracking in Laparoscopic Videos
-Build a real-time surgical tool detection and tracking system for laparoscopic surgery videos. Implement temporal consistency, handle occlusions, and provide tool usage analytics.
+### 1.4 Hierarchical Goal-Conditioned Agents
+Build a hierarchical RL agent that decomposes high-level goals into subgoals and learns policies at multiple abstraction levels. Apply to long-horizon tasks requiring structured planning.
 
----
-
-## 2. Autonomous Vehicles & Robotics
-
-### 2.1 Multi-Object Tracking for Autonomous Driving
-Develop a robust multi-object tracking system that combines YOLO detection with tracking algorithms (SORT, DeepSORT, ByteTrack). Handle occlusions, track identity switches, and evaluate on autonomous driving benchmarks.
-
-### 2.2 Lane Detection and Road Segmentation
-Build an end-to-end lane detection system using semantic segmentation approaches. Implement curve fitting, handle challenging conditions (rain, night, shadows), and optimize for real-time inference.
-
-### 2.3 Monocular Depth Estimation for Navigation
-Create a depth estimation system from single RGB images using encoder-decoder architectures. Implement self-supervised training approaches and evaluate generalization across different environments.
-
-### 2.4 3D Object Detection from Point Clouds and Camera Fusion
-Develop a sensor fusion system that combines LiDAR point clouds with camera images for 3D object detection. Implement bird's eye view representations and evaluate on KITTI benchmark.
+### 1.5 Self-Improving Agent Architectures
+Develop an agent that can modify its own learning algorithm or architecture based on task performance. Implement meta-learning approaches for agent self-improvement.
 
 ---
 
-## 3. Manufacturing & Quality Control
+## 2. Era of Experience (Large-Scale RL)
 
-### 3.1 Automated Visual Defect Detection in Manufacturing
-Build an anomaly detection system for identifying surface defects in manufactured products using both supervised and unsupervised approaches. Implement few-shot learning for rare defect types.
+### 2.1 Scalable Experience Collection
+Build infrastructure for collecting and managing large-scale RL experience data. Implement distributed data collection, efficient storage, and experience prioritization systems.
 
-### 3.2 PCB Component Inspection and Verification
-Create a system that inspects printed circuit boards for missing components, misalignment, and solder defects. Use object detection combined with template matching for verification.
+### 2.2 Cross-Domain Transfer Learning
+Develop methods for transferring RL policies across different domains and tasks. Evaluate on diverse environments and measure transfer efficiency.
 
-### 3.3 Industrial Safety Compliance Monitoring
-Develop a real-time monitoring system that detects PPE (hard hats, safety vests, goggles) compliance and unsafe behaviors in industrial settings using YOLO-based detection.
+### 2.3 Curriculum Learning for Complex Tasks
+Implement automatic curriculum generation for training RL agents on progressively harder tasks. Compare different curriculum strategies and their impact on final performance.
 
-### 3.4 Automated Visual Quality Grading
-Build a classification system that grades product quality (e.g., fruits, textiles, metals) based on visual features. Implement fine-grained classification with attention mechanisms.
+### 2.4 World Model Learning at Scale
+Build and train large-scale world models for model-based RL. Implement efficient world model architectures and evaluate on complex, high-dimensional environments.
 
----
-
-## 4. Agriculture & Environmental Monitoring
-
-### 4.1 Crop Disease Detection from Aerial Imagery
-Develop a drone-based crop health monitoring system that detects diseases and nutrient deficiencies from aerial/satellite imagery. Implement multi-scale analysis and temporal change detection.
-
-### 4.2 Weed Detection and Precision Spraying
-Build a real-time weed detection system for precision agriculture that distinguishes crops from weeds. Optimize for edge deployment on agricultural robots.
-
-### 4.3 Livestock Monitoring and Behavior Analysis
-Create a system that tracks and monitors livestock health and behavior using video analysis. Implement pose estimation for animals and anomaly detection for health issues.
-
-### 4.4 Forest Fire Detection from Satellite Imagery
-Develop an early warning system for forest fire detection using satellite imagery. Implement change detection algorithms and evaluate false positive rates.
+### 2.5 Experience Replay Optimization
+Develop novel experience replay strategies that improve sample efficiency. Implement prioritized, hindsight, and other advanced replay mechanisms.
 
 ---
 
-## 5. Security & Surveillance
+## 3. Aligning Small Language Models (SLMs)
 
-### 5.1 Real-Time Face Recognition with Anti-Spoofing
-Build a face recognition system with liveness detection to prevent spoofing attacks. Implement efficient face embedding extraction and compare different anti-spoofing approaches.
+### 3.1 Efficient RLHF for Small Models
+Implement RLHF techniques optimized for small language models (1B-7B parameters). Develop methods to achieve strong alignment with limited compute and data.
 
-### 5.2 Anomaly Detection in Surveillance Videos
-Create an unsupervised anomaly detection system for identifying unusual events in surveillance footage. Implement video prediction and reconstruction-based approaches.
+### 3.2 Direct Preference Optimization (DPO) Variants
+Explore and implement variants of DPO for SLM alignment. Compare with traditional RLHF approaches in terms of efficiency and alignment quality.
 
-### 5.3 Human Action Recognition for Safety Monitoring
-Develop an action recognition system that identifies dangerous activities (fighting, falling, trespassing). Compare skeleton-based and appearance-based approaches.
+### 3.3 Constitutional AI for Resource-Constrained Settings
+Adapt Constitutional AI methods for small models with limited compute budgets. Develop efficient self-critique and revision mechanisms.
 
-### 5.4 Crowd Counting and Density Estimation
-Build a crowd analysis system that estimates density and counts individuals in crowded scenes. Implement density map regression and evaluate on crowd counting benchmarks.
+### 3.4 Reward Model Distillation
+Create methods to distill large reward models into smaller, efficient versions suitable for SLM alignment. Evaluate alignment quality vs. computational cost tradeoffs.
 
----
-
-## 6. Document Analysis & OCR
-
-### 6.1 End-to-End Document Digitization Pipeline
-Create a comprehensive document processing system that handles scanning, deskewing, OCR, and structured data extraction. Support multiple document types (invoices, forms, receipts).
-
-### 6.2 Handwritten Text Recognition
-Develop a handwritten text recognition system using attention-based sequence models. Handle multiple languages and evaluate on IAM dataset.
-
-### 6.3 Table Detection and Structure Recognition
-Build a system that detects tables in documents and extracts their structure (rows, columns, cells). Handle complex nested tables and spanning cells.
-
-### 6.4 Document Layout Analysis and Classification
-Create a document understanding system that classifies document types and analyzes layout structure. Implement multi-modal approaches combining visual and textual features.
+### 3.5 Multi-Objective Alignment
+Develop techniques for aligning SLMs to multiple objectives simultaneously (helpfulness, harmlessness, honesty). Implement Pareto-optimal policy search methods.
 
 ---
 
-## 7. 3D Vision & Reconstruction
+## 4. Policy Optimization Advances
 
-### 7.1 Stereo Vision Depth Estimation
-Develop a stereo matching system for dense depth estimation. Implement cost volume construction, compare different aggregation methods, and handle challenging regions (textureless, reflective).
+### 4.1 Sample-Efficient Policy Gradient Methods
+Develop novel policy gradient algorithms with improved sample efficiency. Compare with PPO, TRPO on standard benchmarks.
 
-### 7.2 Visual SLAM for Indoor Navigation
-Build a visual odometry and mapping system for indoor environments. Implement feature-based and direct methods, evaluate trajectory accuracy and map quality.
+### 4.2 Offline RL with Limited Data
+Implement offline RL methods that work effectively with limited, suboptimal datasets. Apply conservative Q-learning, implicit Q-learning variants.
 
-### 7.3 Single-Image 3D Reconstruction
-Create a system that reconstructs 3D shapes from single RGB images. Implement neural implicit representations and compare with mesh-based approaches.
+### 4.3 Robust Policy Learning
+Create policies that are robust to distribution shift and adversarial perturbations. Implement domain randomization and robust optimization techniques.
 
-### 7.4 Multi-View 3D Reconstruction
-Develop a structure-from-motion pipeline that reconstructs 3D scenes from multiple images. Implement feature matching, bundle adjustment, and dense reconstruction.
-
----
-
-## 8. Video Understanding & Analysis
-
-### 8.1 Video Object Segmentation
-Build a video object segmentation system that tracks and segments objects throughout video sequences. Implement memory-based approaches for handling long videos.
-
-### 8.2 Video Summarization and Highlight Detection
-Create a system that automatically generates video summaries by identifying key moments. Implement attention-based scoring and evaluate on video summarization datasets.
-
-### 8.3 Sports Video Analytics
-Develop an analytics system for sports videos that tracks players, detects events, and generates statistics. Focus on a specific sport (soccer, basketball, tennis).
-
-### 8.4 Video-based Pose Estimation and Motion Analysis
-Build a multi-person pose estimation system for videos with temporal consistency. Implement applications like fitness tracking or physical therapy assessment.
+### 4.4 Constrained Policy Optimization
+Develop methods for learning policies that satisfy safety constraints. Implement Lagrangian methods and safe RL algorithms.
 
 ---
 
-## 9. Edge Deployment & Model Optimization
+## 5. Reward Learning & Modeling
 
-### 9.1 Real-Time Object Detection on Edge Devices
-Optimize YOLO models for deployment on edge devices (Jetson, RPi, mobile). Compare pruning, quantization, and knowledge distillation approaches.
+### 5.1 Reward Modeling from Human Feedback
+Build reward models from human preference data. Implement Bradley-Terry models, ensemble methods, and evaluate reward model accuracy.
 
-### 9.2 Neural Architecture Search for Efficient Vision Models
-Implement neural architecture search techniques to find efficient architectures for specific vision tasks. Compare search strategies and evaluate Pareto-optimal solutions.
+### 5.2 Inverse Reinforcement Learning Applications
+Apply IRL to learn reward functions from expert demonstrations. Implement MaxEnt IRL, GAIL, and evaluate on complex tasks.
 
-### 9.3 Model Compression for Production Deployment
-Build a comprehensive model compression pipeline combining pruning, quantization, and knowledge distillation. Evaluate accuracy-latency tradeoffs on multiple hardware platforms.
+### 5.3 Intrinsic Motivation Design
+Develop intrinsic reward mechanisms for exploration. Implement curiosity-driven, empowerment-based rewards and evaluate on sparse reward tasks.
 
-### 9.4 TensorRT Optimization Pipeline
-Create an end-to-end pipeline for optimizing PyTorch vision models with TensorRT. Benchmark speedups and handle complex model architectures.
-
----
-
-## 10. Domain Adaptation & Few-Shot Learning
-
-### 10.1 Unsupervised Domain Adaptation for Object Detection
-Develop a domain adaptation system that transfers object detection models across domains (synthetic to real, day to night). Implement adversarial and self-training approaches.
-
-### 10.2 Few-Shot Object Detection
-Build a few-shot learning system that can detect new object categories with minimal examples. Compare meta-learning and transfer learning approaches.
-
-### 10.3 Self-Supervised Pre-training for Vision
-Implement self-supervised pre-training methods (contrastive learning, masked image modeling) and evaluate transfer performance on downstream tasks.
-
-### 10.4 Active Learning for Efficient Annotation
-Create an active learning pipeline that intelligently selects images for annotation. Compare uncertainty-based and diversity-based sampling strategies.
+### 5.4 Multi-Modal Reward Learning
+Create reward models that incorporate multiple modalities (text, images, actions). Implement vision-language reward models for embodied tasks.
 
 ---
 
-## 11. Emerging & Frontier Topics
+## 6. LLM + RL Integration
 
-### 11.1 Vision Transformers for Dense Prediction
-Implement and evaluate Vision Transformer architectures for dense prediction tasks (segmentation, depth estimation). Compare with CNN-based approaches on efficiency and accuracy.
+### 6.1 LLM-Guided Exploration
+Use language models to guide RL exploration in complex environments. Implement LLM-based curiosity and evaluate exploration efficiency.
 
-### 11.2 Neural Radiance Fields (NeRF) for Novel View Synthesis
-Build a NeRF-based system for novel view synthesis from sparse images. Implement optimization strategies and evaluate rendering quality.
+### 6.2 Language-Conditioned Policy Learning
+Build policies that can be conditioned on natural language instructions. Implement language-to-action mappings and evaluate generalization.
 
-### 11.3 Diffusion Models for Image Generation and Editing
-Develop a diffusion-based system for controlled image generation or editing. Implement conditional generation and inpainting applications.
+### 6.3 Reasoning Chain Optimization
+Apply RL to optimize chain-of-thought reasoning in language models. Implement process reward models and step-level feedback.
 
-### 11.4 Foundation Models for Computer Vision
-Fine-tune vision-language models (CLIP, SAM) for specific downstream tasks. Evaluate zero-shot capabilities and compare with task-specific training.
+### 6.4 LLM World Models
+Use language models as world models for planning. Implement text-based simulation and evaluate planning quality.
 
 ---
 
-*This topic list is designed to be a living document — updated as the Computer Vision landscape evolves. Each topic should include a hands-on project component with deliverable code, a written report, and a demo presentation.*
+## 7. Emergent Capabilities & Scaling
+
+### 7.1 Emergent Behaviors in Multi-Agent RL
+Study emergent behaviors in large-scale multi-agent systems. Implement environments that encourage emergence and analyze resulting behaviors.
+
+### 7.2 Scaling Laws for RL
+Investigate scaling laws for RL algorithms (model size, data, compute). Develop predictive models for RL performance scaling.
+
+### 7.3 Foundation Models for RL
+Develop foundation models pre-trained for RL tasks. Implement large-scale pre-training and fine-tuning pipelines.
+
+### 7.4 Compositional Generalization in RL
+Study compositional generalization in RL agents. Develop methods for systematic generalization to novel task combinations.
+
+---
+
+## 8. Practical RL Systems
+
+### 8.1 Real-Time RL Deployment
+Build systems for deploying RL policies in real-time applications. Implement efficient inference, monitoring, and online adaptation.
+
+### 8.2 RL for Hyperparameter Optimization
+Apply RL to automatic hyperparameter tuning. Implement population-based training and neural architecture search.
+
+### 8.3 Continual Learning in RL
+Develop methods for continual learning that prevent catastrophic forgetting. Implement elastic weight consolidation, progressive networks.
+
+### 8.4 Reproducibility and Evaluation Frameworks
+Build comprehensive evaluation frameworks for RL research. Implement statistical testing, visualization, and benchmarking tools.
+
+---
+
+## Target Conferences
+
+- **NeurIPS** (Neural Information Processing Systems)
+- **ICML** (International Conference on Machine Learning)
+- **ICLR** (International Conference on Learning Representations)
+- **AAAI** (Association for the Advancement of Artificial Intelligence)
+- **AAMAS** (Autonomous Agents and Multi-Agent Systems)
+- **CoRL** (Conference on Robot Learning)
+- Related workshops at these venues
+
+---
+
+*This topic list is designed to be a living document — updated as the Reinforcement Learning landscape evolves. Each topic should include a hands-on project component with deliverable code, a written report, and a demo presentation.*

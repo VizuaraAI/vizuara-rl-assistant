@@ -1,11 +1,11 @@
 /**
- * Unit tests for Dr. Sreedath persona system prompt
+ * Unit tests for Dr. Rajat persona system prompt
  */
 
 import { describe, it, expect } from 'vitest';
 import { DR_SREEDATH_PERSONA, getBaseSystemPrompt, buildSystemPrompt } from './system';
 
-describe('Dr. Sreedath Persona System Prompt', () => {
+describe('Dr. Rajat Persona System Prompt', () => {
   describe('DR_SREEDATH_PERSONA', () => {
     it('should include PhD identity', () => {
       expect(DR_SREEDATH_PERSONA).toContain('PhD');

@@ -1,6 +1,6 @@
 /**
  * Voice Note tools for the teaching assistant
- * Delivers pre-recorded motivational voice notes from Dr. Sreedath
+ * Delivers pre-recorded motivational voice notes from Dr. Rajat
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -20,7 +20,7 @@ export const voiceNoteToolDefinitions = {
   send_voice_note: {
     name: 'send_voice_note',
     description:
-      'Send a pre-recorded motivational voice note from Dr. Sreedath to the student. Use this when the student has been inactive for 7+ days, seems discouraged, or needs extra encouragement. Available types: "motivation" (general encouragement), "progress" (celebrate progress), "reminder" (gentle nudge to continue).',
+      'Send a pre-recorded motivational voice note from Dr. Rajat to the student. Use this when the student has been inactive for 7+ days, seems discouraged, or needs extra encouragement. Available types: "motivation" (general encouragement), "progress" (celebrate progress), "reminder" (gentle nudge to continue).',
     input_schema: {
       type: 'object' as const,
       properties: {

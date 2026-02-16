@@ -23,7 +23,7 @@ interface Message {
   timestamp: string;
 }
 
-const WELCOME_MESSAGE = `Welcome to the Computer Vision Research Bootcamp!
+const WELCOME_MESSAGE = `Welcome to the Reinforcement Learning Research Bootcamp!
 
 **Phase I (~1 month):** Complete the video curriculum - 10 lectures covering OpenCV, RCNN family, Mask RCNN, UNet, YOLO, and Roboflow.
 
@@ -306,7 +306,7 @@ export default function DashboardPage() {
       {/* Mentor Panel */}
       <div className="w-96 bg-[#0d0d14] border-l border-white/10 flex flex-col">
         <div className="p-4 border-b border-white/10 bg-[#12121a]">
-          <h2 className="font-semibold">Mentor - Dr. Sreedath</h2>
+          <h2 className="font-semibold">Mentor - Dr. Rajat</h2>
           <p className="text-xs text-white/40">Draft Approval</p>
         </div>
 

@@ -49,22 +49,22 @@
       "path": "resources/phase1-videos/video-catalog.md",
       "type": "markdown",
       "category": "phase1-videos",
-      "title": "Computer Vision Course Curriculum",
+      "title": "Reinforcement Learning Bootcamp - Phase I Curriculum",
       "metadata": {
         "lectures": 10,
-        "lessons": 29,
-        "duration": "~1 month",
+        "lessons": 10,
+        "duration": "~7 weeks",
         "topics_list": [
-          "Introduction to CV and OpenCV",
-          "Building using OpenCV",
-          "Introduction to RCNN, Fast RCNN, Faster RCNN",
-          "Mask RCNN",
-          "Intro to UNet",
-          "UNet Implementation",
-          "Introduction to YOLO",
-          "Building with YOLO",
-          "Introduction to Roboflow",
-          "Building using Roboflow"
+          "Basics of Reinforcement Learning",
+          "Deep Learning with PyTorch",
+          "Solving Cart-Pole with Cross-Entropy",
+          "Building DQN Atari Agents",
+          "Policy Gradient Methods",
+          "RLHF Theory & Implementation",
+          "Group Relative Policy Optimization (GRPO)",
+          "Building a Reasoning Model",
+          "Introduction to Agentic Reinforcement Learning",
+          "Building Agentic RL Systems"
         ]
       }
     },
@@ -124,22 +124,19 @@
       "path": "resources/phase2-topics/topics.md",
       "type": "markdown",
       "category": "phase2-topics",
-      "title": "Proposed Computer Vision Research & Project Topics",
+      "title": "Vizuara Reinforcement Learning Bootcamp — Phase II Research Topics",
       "metadata": {
-        "categories": 11,
-        "subtopics": 44,
+        "categories": 8,
+        "subtopics": 40,
         "category_list": [
-          "Medical Imaging & Healthcare",
-          "Autonomous Vehicles & Robotics",
-          "Manufacturing & Quality Control",
-          "Agriculture & Environmental Monitoring",
-          "Security & Surveillance",
-          "Document Analysis & OCR",
-          "3D Vision & Reconstruction",
-          "Video Understanding & Analysis",
-          "Edge Deployment & Model Optimization",
-          "Domain Adaptation & Few-Shot Learning",
-          "Emerging & Frontier Topics"
+          "Agentic Reinforcement Learning",
+          "Era of Experience (Large-Scale RL)",
+          "Aligning Small Language Models (SLMs)",
+          "Policy Optimization Advances",
+          "Reward Learning & Modeling",
+          "LLM + RL Integration",
+          "Emergent Capabilities & Scaling",
+          "Practical RL Systems"
         ]
       }
     },

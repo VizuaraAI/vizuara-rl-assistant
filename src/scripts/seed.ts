@@ -47,7 +47,7 @@ async function seed() {
   const [mentor] = await db
     .insert(schema.users)
     .values({
-      name: 'Dr. Sreedath Panat',
+      name: 'Dr. Rajat Panat',
       email: 'sreedath@vizuara.com',
       passwordHash,
       role: 'mentor',
@@ -161,7 +161,7 @@ async function seed() {
     {
       conversationId: priyaConv.id,
       role: 'student',
-      content: "Hi Dr. Sreedath! I just started the RCNN section. The concept of region proposals is a bit confusing to me. Can you explain it simply?",
+      content: "Hi Dr. Rajat! I just started the RCNN section. The concept of region proposals is a bit confusing to me. Can you explain it simply?",
       status: 'sent',
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     },
@@ -201,7 +201,7 @@ async function seed() {
     {
       conversationId: alexConv.id,
       role: 'student',
-      content: "Dr. Sreedath, I'm working through the YOLO section and I'm confused about anchor boxes. When should I use predefined anchors vs anchor-free approaches?",
+      content: "Dr. Rajat, I'm working through the YOLO section and I'm confused about anchor boxes. When should I use predefined anchors vs anchor-free approaches?",
       status: 'sent',
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     },
@@ -262,7 +262,7 @@ async function seed() {
     {
       conversationId: sarahConv.id,
       role: 'student',
-      content: "Hi Dr. Sreedath! I'm starting Milestone 2 of my research project on medical image segmentation. I have my literature review done and dataset identified. What should I focus on for implementation?",
+      content: "Hi Dr. Rajat! I'm starting Milestone 2 of my research project on medical image segmentation. I have my literature review done and dataset identified. What should I focus on for implementation?",
       status: 'sent',
       createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
     },

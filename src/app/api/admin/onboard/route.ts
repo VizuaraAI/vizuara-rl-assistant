@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
     // Generate welcome message using preferred name
     const welcomeMessage = `Hi,
 
-Welcome to the Computer Vision research bootcamp.
+Welcome to the Reinforcement Learning research bootcamp.
 
 Please note the following points
 

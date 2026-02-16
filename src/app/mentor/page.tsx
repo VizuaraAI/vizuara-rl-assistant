@@ -1233,7 +1233,7 @@ export default function MentorInboxPage() {
           />
           <div>
             <h1 className="text-lg font-semibold text-slate-800">Vizuara Mentor Dashboard</h1>
-            <p className="text-sm text-slate-500">Dr. Sreedath Panat</p>
+            <p className="text-sm text-slate-500">Dr. Rajat Panat</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -1620,7 +1620,7 @@ export default function MentorInboxPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
                             <p className="font-medium text-slate-800">
-                              {message.role === 'agent' ? 'Dr. Sreedath Panat (You)' : selectedStudent?.name || 'Student'}
+                              {message.role === 'agent' ? 'Dr. Rajat Panat (You)' : selectedStudent?.name || 'Student'}
                             </p>
                             {message.status === 'draft' && (
                               <span className="px-2 py-0.5 bg-amber-200 text-amber-800 text-xs rounded-full font-medium">
@@ -2737,7 +2737,7 @@ export default function MentorInboxPage() {
                 </button>
               </div>
               <p className="text-sm text-slate-500 mt-1">
-                Send a direct message as Dr. Sreedath to {selectedStudent?.name}
+                Send a direct message as Dr. Rajat to {selectedStudent?.name}
               </p>
             </div>
 
@@ -3046,7 +3046,7 @@ export default function MentorInboxPage() {
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                                 </svg>
-                                Send Dr. Sreedath&apos;s Voice Note
+                                Send Dr. Rajat&apos;s Voice Note
                               </>
                             )}
                           </button>

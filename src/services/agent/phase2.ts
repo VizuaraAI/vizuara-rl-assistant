@@ -182,7 +182,7 @@ Help the student find appropriate venues for their paper:
    - Main conferences are more competitive
    - Look for "New Researchers" tracks
 
-4. **Common venues for Computer Vision work:**
+4. **Common venues for Reinforcement Learning work:**
    - CVPR, ICCV, ECCV workshops
    - NeurIPS, ICML workshops
    - AAAI, IJCAI workshops

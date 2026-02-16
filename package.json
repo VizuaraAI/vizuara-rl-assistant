@@ -1,5 +1,5 @@
 {
-  "name": "vizuara-teaching-assistant",
+  "name": "vizuara-rl-teaching-assistant",
   "version": "0.1.2",
   "private": true,
   "engines": {
