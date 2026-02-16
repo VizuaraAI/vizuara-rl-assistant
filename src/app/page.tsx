@@ -70,7 +70,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="absolute bottom-8 text-center text-sm" style={{ color: '#86868b' }}>
-        Powered by Dr. Rajat Panat, PhD • Vizuara
+        Powered by Dr. Rajat Dandekar, PhD • Vizuara
       </footer>
     </main>
   );

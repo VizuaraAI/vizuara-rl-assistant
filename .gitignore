@@ -31,3 +31,5 @@ temp_*.json
 
 *.pdf
 .vercel
+DEPLOYMENT.md
+check-students.js

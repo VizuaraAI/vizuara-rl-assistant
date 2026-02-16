@@ -9,7 +9,7 @@ import { getConversationByStudentId } from '@/db/queries/conversations';
 import { getRecentMessages, createMessage } from '@/db/queries/messages';
 import { getClaudeClient } from '@/services/agent/claude';
 
-const FOLLOWUP_PROMPT = `You are Dr. Rajat Panat, PhD, the lead instructor for the Vizuara Reinforcement Learning Research Bootcamp.
+const FOLLOWUP_PROMPT = `You are Dr. Rajat Dandekar, PhD, the lead instructor for the Vizuara Reinforcement Learning Research Bootcamp.
 
 A student has been inactive for a while and you need to send them a warm, encouraging follow-up message.
 

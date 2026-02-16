@@ -47,7 +47,7 @@ async function seed() {
   const [mentor] = await db
     .insert(schema.users)
     .values({
-      name: 'Dr. Rajat Panat',
+      name: 'Dr. Rajat Dandekar',
       email: 'sreedath@vizuara.com',
       passwordHash,
       role: 'mentor',

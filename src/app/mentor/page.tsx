@@ -1233,7 +1233,7 @@ export default function MentorInboxPage() {
           />
           <div>
             <h1 className="text-lg font-semibold text-slate-800">Vizuara Mentor Dashboard</h1>
-            <p className="text-sm text-slate-500">Dr. Rajat Panat</p>
+            <p className="text-sm text-slate-500">Dr. Rajat Dandekar</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -1620,7 +1620,7 @@ export default function MentorInboxPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
                             <p className="font-medium text-slate-800">
-                              {message.role === 'agent' ? 'Dr. Rajat Panat (You)' : selectedStudent?.name || 'Student'}
+                              {message.role === 'agent' ? 'Dr. Rajat Dandekar (You)' : selectedStudent?.name || 'Student'}
                             </p>
                             {message.status === 'draft' && (
                               <span className="px-2 py-0.5 bg-amber-200 text-amber-800 text-xs rounded-full font-medium">
