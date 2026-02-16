@@ -467,7 +467,7 @@ export default function StudentInboxPage() {
             className="w-10 h-10 object-contain"
           />
           <div>
-            <h1 className="text-lg font-semibold text-slate-800">Vizuara Generative AI Bootcamp</h1>
+            <h1 className="text-lg font-semibold text-slate-800">Vizuara Computer Vision Bootcamp</h1>
             <p className="text-sm text-slate-500">{student?.name || 'Student Portal'}</p>
           </div>
         </div>
@@ -532,7 +532,7 @@ export default function StudentInboxPage() {
             </div>
 
             <div className="text-xs text-slate-400 text-center">
-              Messages are reviewed by Dr. Raj
+              Messages are reviewed by Dr. Sreedath
             </div>
           </div>
         </aside>
@@ -585,7 +585,7 @@ export default function StudentInboxPage() {
                         </span>
                       </div>
                       <p className="text-sm text-slate-500 truncate">
-                        {thread.lastSender === 'agent' ? 'Dr. Raj: ' : 'You: '}
+                        {thread.lastSender === 'agent' ? 'Dr. Sreedath: ' : 'You: '}
                         {thread.preview.slice(0, 40)}...
                       </p>
                       <div className="flex items-center gap-2 mt-1">
@@ -626,7 +626,7 @@ export default function StudentInboxPage() {
                     <span className="text-sm text-slate-500 w-16">To:</span>
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-medium" style={{ backgroundColor: '#0071e3' }}>RD</div>
-                      <span className="text-sm text-slate-800">Dr. Raj Dandekar</span>
+                      <span className="text-sm text-slate-800">Dr. Sreedath Panat</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 border-b border-slate-100">
@@ -763,7 +763,7 @@ export default function StudentInboxPage() {
                         </div>
                         <div className="flex-1">
                           <p className="font-medium text-slate-800">
-                            {message.role === 'agent' ? 'Dr. Raj Dandekar' : student?.name || 'You'}
+                            {message.role === 'agent' ? 'Dr. Sreedath Panat' : student?.name || 'You'}
                           </p>
                           <p className="text-xs text-slate-500">
                             {formatFullDate(parseTimestamp(message.timestamp))}

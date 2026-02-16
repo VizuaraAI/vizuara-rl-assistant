@@ -182,11 +182,12 @@ Help the student find appropriate venues for their paper:
    - Main conferences are more competitive
    - Look for "New Researchers" tracks
 
-4. **Common venues for GenAI work:**
-   - ACL, EMNLP, NAACL workshops
+4. **Common venues for Computer Vision work:**
+   - CVPR, ICCV, ECCV workshops
    - NeurIPS, ICML workshops
    - AAAI, IJCAI workshops
-   - Domain-specific conferences (healthcare, legal, etc.)
+   - WACV, BMVC conferences
+   - Domain-specific conferences (medical imaging, autonomous driving, etc.)
 
 5. **Help with submission:**
    - Review formatting requirements

@@ -396,7 +396,7 @@ export default function MentorInboxPage() {
           formData.append('file', file);
           formData.append('documentType', 'other');
           formData.append('studentId', selectedStudent.id);
-          formData.append('uploaderEmail', 'raj@vizuara.com');
+          formData.append('uploaderEmail', 'sreedath@vizuara.com');
           formData.append('description', `Attached to draft: ${file.name}`);
 
           const uploadRes = await fetch('/api/documents/upload', {
@@ -1043,7 +1043,7 @@ export default function MentorInboxPage() {
         formData.append('file', file);
         formData.append('documentType', 'other');
         formData.append('studentId', selectedStudent.id);
-        formData.append('uploaderEmail', 'raj@vizuara.com'); // Mentor email
+        formData.append('uploaderEmail', 'sreedath@vizuara.com'); // Mentor email
         formData.append('description', `Attached in thread: ${file.name}`);
 
         const uploadRes = await fetch('/api/documents/upload', {
@@ -1110,7 +1110,7 @@ export default function MentorInboxPage() {
       const formData = new FormData();
       formData.append('file', uploadFile);
       formData.append('documentType', uploadDocType);
-      formData.append('uploaderEmail', 'raj@vizuara.com'); // Mentor email
+      formData.append('uploaderEmail', 'sreedath@vizuara.com'); // Mentor email
       if (uploadDescription) {
         formData.append('description', uploadDescription);
       }
@@ -1233,7 +1233,7 @@ export default function MentorInboxPage() {
           />
           <div>
             <h1 className="text-lg font-semibold text-slate-800">Vizuara Mentor Dashboard</h1>
-            <p className="text-sm text-slate-500">Dr. Raj Dandekar</p>
+            <p className="text-sm text-slate-500">Dr. Sreedath Panat</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -1620,7 +1620,7 @@ export default function MentorInboxPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
                             <p className="font-medium text-slate-800">
-                              {message.role === 'agent' ? 'Dr. Raj Dandekar (You)' : selectedStudent?.name || 'Student'}
+                              {message.role === 'agent' ? 'Dr. Sreedath Panat (You)' : selectedStudent?.name || 'Student'}
                             </p>
                             {message.status === 'draft' && (
                               <span className="px-2 py-0.5 bg-amber-200 text-amber-800 text-xs rounded-full font-medium">
@@ -2737,7 +2737,7 @@ export default function MentorInboxPage() {
                 </button>
               </div>
               <p className="text-sm text-slate-500 mt-1">
-                Send a direct message as Dr. Raj to {selectedStudent?.name}
+                Send a direct message as Dr. Sreedath to {selectedStudent?.name}
               </p>
             </div>
 
@@ -3046,7 +3046,7 @@ export default function MentorInboxPage() {
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                                 </svg>
-                                Send Dr. Raj&apos;s Voice Note
+                                Send Dr. Sreedath&apos;s Voice Note
                               </>
                             )}
                           </button>

@@ -121,17 +121,25 @@ export function getPhase2TopicSuggestions(context: AgentContext): string[] {
 
   // Map Phase I interests to Phase II topic categories
   const interestMap: Record<string, string[]> = {
-    'healthcare': ['Healthcare & Biomedical AI'],
-    'medical': ['Healthcare & Biomedical AI'],
-    'clinical': ['Healthcare & Biomedical AI'],
-    'legal': ['Finance & Legal AI'],
-    'contract': ['Finance & Legal AI'],
-    'finance': ['Finance & Legal AI'],
-    'education': ['Education & Learning'],
-    'code': ['Software Engineering'],
-    'agents': ['Autonomous Agents & Assistants'],
-    'rag': ['Data Analysis & Business Intelligence'],
-    'creative': ['Creative & Generative AI'],
+    'healthcare': ['Medical Imaging & Healthcare'],
+    'medical': ['Medical Imaging & Healthcare'],
+    'clinical': ['Medical Imaging & Healthcare'],
+    'autonomous': ['Autonomous Vehicles & Robotics'],
+    'driving': ['Autonomous Vehicles & Robotics'],
+    'robot': ['Autonomous Vehicles & Robotics'],
+    'manufacturing': ['Manufacturing & Quality Control'],
+    'defect': ['Manufacturing & Quality Control'],
+    'agriculture': ['Agriculture & Environmental Monitoring'],
+    'crop': ['Agriculture & Environmental Monitoring'],
+    'security': ['Security & Surveillance'],
+    'face': ['Security & Surveillance'],
+    'document': ['Document Analysis & OCR'],
+    'ocr': ['Document Analysis & OCR'],
+    '3d': ['3D Vision & Reconstruction'],
+    'depth': ['3D Vision & Reconstruction'],
+    'video': ['Video Understanding & Analysis'],
+    'edge': ['Edge Deployment & Model Optimization'],
+    'deploy': ['Edge Deployment & Model Optimization'],
   };
 
   for (const interest of studentProfile.interests) {

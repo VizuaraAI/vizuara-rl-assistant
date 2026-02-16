@@ -47,8 +47,8 @@ async function seed() {
   const [mentor] = await db
     .insert(schema.users)
     .values({
-      name: 'Dr. Raj Dandekar',
-      email: 'raj@vizuara.com',
+      name: 'Dr. Sreedath Panat',
+      email: 'sreedath@vizuara.com',
       passwordHash,
       role: 'mentor',
     })
@@ -125,7 +125,7 @@ async function seed() {
       currentPhase: 'phase2',
       currentTopicIndex: 8, // Completed Phase I
       currentMilestone: 2,
-      researchTopic: 'AI-Powered Clinical Documentation & EHR Summarization',
+      researchTopic: 'Deep Learning for Multi-Organ CT Segmentation',
       enrollmentDate: new Date(Date.now() - 70 * 24 * 60 * 60 * 1000), // 10 weeks ago
       phase1Start: new Date(Date.now() - 70 * 24 * 60 * 60 * 1000),
       phase2Start: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000), // 4 weeks ago
@@ -161,28 +161,28 @@ async function seed() {
     {
       conversationId: priyaConv.id,
       role: 'student',
-      content: "Hi Dr. Raj! I just started the Agents and LangChain section. The concept of chains is a bit confusing to me. Can you explain it simply?",
+      content: "Hi Dr. Sreedath! I just started the RCNN section. The concept of region proposals is a bit confusing to me. Can you explain it simply?",
       status: 'sent',
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: priyaConv.id,
       role: 'agent',
-      content: "Hey Priya! Great question. Think of chains like a recipe - each step transforms the output of the previous step. In LangChain, you're chaining together LLM calls, prompts, and tools.\n\nFor example: User question → Prompt template → LLM → Output parser → Final answer.\n\nThe video in Lesson 3.3 has a great visual diagram. Have you gotten to that part yet? I'd recommend watching it with the code example open side-by-side.",
+      content: "Hey Priya! Great question. Think of region proposals as a two-stage process - first you find candidate regions that might contain objects, then you classify each region.\n\nThe video in Lesson 3.2 has a great visual diagram of how Selective Search generates proposals. Have you gotten to that part yet? I'd recommend watching it with the code example open side-by-side.",
       status: 'sent',
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000),
     },
     {
       conversationId: priyaConv.id,
       role: 'student',
-      content: "That makes sense! The recipe analogy helps. I'll check out Lesson 3.3. Also, I'm interested in healthcare applications - do you think agents would work well for clinical documentation?",
+      content: "That makes sense! The two-stage process is clearer now. I'll check out Lesson 3.2. Also, I'm interested in healthcare applications - do you think object detection would work well for medical imaging?",
       status: 'sent',
       createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: priyaConv.id,
       role: 'agent',
-      content: "Absolutely, Priya! Healthcare is one of the most exciting areas for agents. Clinical documentation is a perfect use case - you could have an agent that:\n\n1. Listens to doctor-patient conversations\n2. Extracts key medical information\n3. Structures it into proper EHR format\n4. Flags any missing required fields\n\nWhen you get to Phase II, this could make an excellent research project. In fact, it's one of our predefined topics under Healthcare & Biomedical AI.\n\nFor now, focus on understanding the fundamentals. We'll dive deeper when you're ready for Phase II. How's your progress on the current videos?",
+      content: "Absolutely, Priya! Healthcare is one of the most exciting areas for computer vision. Medical imaging is a perfect use case - you could build a system that:\n\n1. Detects tumors or anomalies in X-rays/CT scans\n2. Segments organs or lesions using Mask RCNN or UNet\n3. Tracks disease progression over time\n4. Flags critical findings for radiologist review\n\nWhen you get to Phase II, this could make an excellent research project. In fact, it's one of our predefined topics under Medical Imaging AI.\n\nFor now, focus on understanding the fundamentals. We'll dive deeper when you're ready for Phase II. How's your progress on the current videos?",
       status: 'sent',
       createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000),
     },
@@ -201,56 +201,56 @@ async function seed() {
     {
       conversationId: alexConv.id,
       role: 'student',
-      content: "Dr. Raj, I'm working through the RAG section and I'm confused about chunking strategies. When should I use fixed-size chunks vs semantic chunking?",
+      content: "Dr. Sreedath, I'm working through the YOLO section and I'm confused about anchor boxes. When should I use predefined anchors vs anchor-free approaches?",
       status: 'sent',
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: alexConv.id,
       role: 'agent',
-      content: "Great question, Alex! This is one of the trickier decisions in RAG systems.\n\n**Fixed-size chunking** is simpler and works well when:\n- Your documents have consistent structure\n- You need predictable chunk sizes for your embedding model\n- You're just starting out and need a baseline\n\n**Semantic chunking** is better when:\n- Documents have natural section breaks (headers, paragraphs)\n- Context coherence matters a lot\n- You're dealing with diverse document types\n\nFor legal documents (which I know you're interested in), I'd lean toward semantic chunking since legal clauses and sections are meaningful units.\n\nThe key insight: there's no universally \"best\" approach. I'd recommend starting with fixed-size (say, 500 tokens with 50 token overlap), then experimenting with semantic chunking and comparing retrieval quality.\n\nLesson 4.3 covers this in detail with code examples. Have you run those notebooks yet?",
+      content: "Great question, Alex! This is one of the trickier decisions in object detection.\n\n**Predefined anchors** work well when:\n- You have a good understanding of your object size distributions\n- Your objects have consistent aspect ratios\n- You're just starting out and need a baseline (like YOLOv3/v5)\n\n**Anchor-free approaches** (like YOLOX, FCOS) are better when:\n- Objects vary significantly in size and aspect ratio\n- You want simpler, faster training\n- You're dealing with dense, small objects\n\nFor autonomous driving (which I know you're interested in), anchor-free often works better since vehicles, pedestrians, and cyclists have very different aspect ratios.\n\nThe key insight: there's no universally \"best\" approach. I'd recommend starting with YOLOv8 (anchor-free by default), then comparing with YOLOv5 (anchor-based) on your specific use case.\n\nLesson 7.3 covers this in detail with code examples. Have you run those notebooks yet?",
       status: 'sent',
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000 + 20 * 60 * 1000),
     },
     {
       conversationId: alexConv.id,
       role: 'student',
-      content: "Thanks! Yes I ran the notebooks. Quick follow-up - how do I evaluate which chunking strategy is actually better for my use case?",
+      content: "Thanks! Yes I ran the notebooks. Quick follow-up - how do I evaluate which detection approach is actually better for my use case?",
       status: 'sent',
       createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: alexConv.id,
       role: 'agent',
-      content: "Excellent follow-up, Alex. This is exactly the right question to ask.\n\nFor RAG evaluation, you'll want to measure:\n\n1. **Retrieval metrics:**\n   - Recall@k: Did the relevant chunks make it into top-k results?\n   - MRR (Mean Reciprocal Rank): How high did the best chunk rank?\n\n2. **End-to-end metrics:**\n   - Answer accuracy (if you have ground truth)\n   - Faithfulness: Does the answer actually come from retrieved context?\n\nLesson 4.5 covers the RAGAS framework which is perfect for this. You create a small test set of questions with known answers, then measure how well different chunking strategies perform.\n\nFor your legal use case, I'd create 20-30 test questions across different contract types and see which chunking gives better retrieval.\n\nWant me to elaborate on any of these metrics?",
+      content: "Excellent follow-up, Alex. This is exactly the right question to ask.\n\nFor object detection evaluation, you'll want to measure:\n\n1. **Detection metrics:**\n   - mAP (mean Average Precision): Standard metric at IoU 0.5 and 0.5:0.95\n   - AP per class: How well does each object category perform?\n\n2. **Speed metrics:**\n   - FPS (Frames Per Second): Critical for real-time applications\n   - Inference latency: Important for edge deployment\n\nLesson 7.4 covers the COCO evaluation framework which is perfect for this. You run inference on a validation set and compute mAP across different IoU thresholds.\n\nFor your autonomous driving use case, pay special attention to AP for small objects (pedestrians at distance) and mAP@0.75 for precise localization.\n\nWant me to elaborate on any of these metrics?",
       status: 'sent',
       createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000),
     },
     {
       conversationId: alexConv.id,
       role: 'student',
-      content: "This is super helpful! RAGAS looks perfect. One more thing - my Python background is pretty strong but I'm less familiar with the ML evaluation side. Any papers you'd recommend?",
+      content: "This is super helpful! COCO metrics look perfect. One more thing - my Python background is pretty strong but I'm less familiar with the object detection research side. Any papers you'd recommend?",
       status: 'sent',
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: alexConv.id,
       role: 'agent',
-      content: "Happy to help, Alex! Here are a few papers that'll level you up on RAG evaluation:\n\n1. **\"RAGAS: Automated Evaluation of Retrieval Augmented Generation\"** (2023) - The foundational paper for the framework we discussed\n\n2. **\"Benchmarking Large Language Models in Retrieval-Augmented Generation\"** (2023) - Great overview of different evaluation approaches\n\n3. **\"Lost in the Middle\"** (2023) - Critical paper on how LLMs use retrieved context - super relevant for legal docs where order matters\n\nAll of these are on arXiv. For your legal AI project in Phase II, you'll want to be familiar with these concepts.\n\nHow's your progress on the remaining RAG videos? You're getting close to finishing Phase I!",
+      content: "Happy to help, Alex! Here are a few papers that'll level you up on object detection:\n\n1. **\"YOLOX: Exceeding YOLO Series in 2021\"** - Great paper on anchor-free detection with practical insights\n\n2. **\"Focal Loss for Dense Object Detection\" (RetinaNet)** - Critical paper on handling class imbalance in detection\n\n3. **\"Objects as Points\" (CenterNet)** - Elegant anchor-free approach that's very relevant for autonomous driving\n\nAll of these are on arXiv. For your autonomous driving project in Phase II, you'll want to be familiar with these concepts.\n\nHow's your progress on the remaining YOLO videos? You're getting close to finishing Phase I!",
       status: 'sent',
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000),
     },
     {
       conversationId: alexConv.id,
       role: 'student',
-      content: "Just finished Lesson 5.2 today. Should wrap up RAG by end of week, then just Multimodal left!",
+      content: "Just finished Lesson 7.2 today. Should wrap up YOLO by end of week, then just Roboflow left!",
       status: 'sent',
       createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: alexConv.id,
       role: 'agent',
-      content: "Excellent progress, Alex! You're flying through the material. At this pace, you'll be ready for Phase II in about 2 weeks.\n\nStart thinking about your research topic. Given your interest in legal AI and strong Python skills, a few options come to mind:\n\n1. **Intelligent Contract Analysis** - Building a RAG system for legal contract review\n2. **Automated Compliance Auditor** - Using LLMs to check documents against regulations\n\nWe can discuss more when you finish the videos. Keep up the great work!",
+      content: "Excellent progress, Alex! You're flying through the material. At this pace, you'll be ready for Phase II in about 2 weeks.\n\nStart thinking about your research topic. Given your interest in autonomous vehicles and strong Python skills, a few options come to mind:\n\n1. **Multi-Object Tracking for Autonomous Driving** - Building a real-time detection + tracking system\n2. **3D Object Detection from LiDAR + Camera Fusion** - Combining sensor modalities for robust perception\n\nWe can discuss more when you finish the videos. Keep up the great work!",
       status: 'sent',
       createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 8 * 60 * 1000),
     },
@@ -262,70 +262,70 @@ async function seed() {
     {
       conversationId: sarahConv.id,
       role: 'student',
-      content: "Hi Dr. Raj! I'm starting Milestone 2 of my research project on clinical documentation. I have my literature review done and dataset identified. What should I focus on for implementation?",
+      content: "Hi Dr. Sreedath! I'm starting Milestone 2 of my research project on medical image segmentation. I have my literature review done and dataset identified. What should I focus on for implementation?",
       status: 'sent',
       createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'agent',
-      content: "Great to hear from you, Sarah! Congrats on completing Milestone 1.\n\nFor Milestone 2 (Implementation Setup), based on your roadmap, here's what to focus on:\n\n1. **Dataset Processing Pipeline:**\n   - Load your MIMIC-III clinical notes subset\n   - Implement preprocessing (PHI removal, text cleaning)\n   - Create train/val/test splits\n\n2. **Baseline System:**\n   - Set up your RAG pipeline with basic chunking\n   - Implement the summarization prompt template\n   - Get end-to-end inference working\n\n3. **Evaluation Framework:**\n   - Implement ROUGE metrics for summary quality\n   - Set up your clinical accuracy scorer (from Milestone 1 lit review)\n\nBy end of Milestone 2, you should have a working baseline that produces summaries, even if they're not perfect yet. Milestone 3 is where you'll iterate and improve.\n\nWhat's your current status on each of these?",
+      content: "Great to hear from you, Sarah! Congrats on completing Milestone 1.\n\nFor Milestone 2 (Implementation Setup), based on your roadmap, here's what to focus on:\n\n1. **Dataset Processing Pipeline:**\n   - Load your medical imaging dataset (CT scans or MRI)\n   - Implement preprocessing (normalization, augmentation)\n   - Create train/val/test splits with proper stratification\n\n2. **Baseline System:**\n   - Set up your UNet architecture as baseline\n   - Implement the training loop with appropriate loss function\n   - Get end-to-end training and inference working\n\n3. **Evaluation Framework:**\n   - Implement Dice coefficient and IoU metrics\n   - Set up visualization for segmentation overlays\n\nBy end of Milestone 2, you should have a working baseline that produces segmentation masks, even if they're not perfect yet. Milestone 3 is where you'll iterate and improve.\n\nWhat's your current status on each of these?",
       status: 'sent',
       createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000 + 30 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'student',
-      content: "I have the MIMIC data loaded and preprocessing is mostly done. Struggling with the chunking strategy for clinical notes - they're very different from regular text.",
+      content: "I have the medical imaging data loaded and preprocessing is mostly done. Struggling with the data augmentation strategy - medical images need special handling compared to natural images.",
       status: 'sent',
       createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'agent',
-      content: "Ah yes, clinical notes are tricky! They have a unique structure that standard chunking misses.\n\nBased on my experience with medical NLP, I'd recommend:\n\n**Section-aware chunking:**\nClinical notes typically have sections like:\n- Chief Complaint\n- History of Present Illness\n- Physical Exam\n- Assessment & Plan\n\nUse regex or a simple classifier to detect section headers, then chunk within sections. This preserves clinical context better than arbitrary splits.\n\n**Implementation approach:**\n```python\nSECTION_HEADERS = [\n    r'CHIEF COMPLAINT:?',\n    r'HISTORY OF PRESENT ILLNESS:?',\n    r'HPI:?',\n    r'PHYSICAL EXAM:?',\n    # ... etc\n]\n```\n\nThere's also a paper \"ClinicalBERT\" that discusses clinical note structure - worth a quick skim.\n\nWant me to help debug your chunking code? Feel free to share it.",
+      content: "Ah yes, medical image augmentation is tricky! Standard augmentations can introduce unrealistic artifacts.\n\nBased on my experience with medical imaging, I'd recommend:\n\n**Domain-appropriate augmentations:**\nFor medical images, focus on:\n- Rotation (small angles, 10-15 degrees)\n- Elastic deformation (mimics natural tissue variation)\n- Intensity scaling and shifting\n- Avoid: heavy color jitter, cutout, mixup\n\n**Implementation approach:**\n```python\nimport albumentations as A\n\nmedical_transform = A.Compose([\n    A.Rotate(limit=15),\n    A.ElasticTransform(alpha=50, sigma=5),\n    A.RandomBrightnessContrast(0.1, 0.1),\n])\n```\n\nThere's also a paper \"nnU-Net\" that discusses optimal augmentation for medical imaging - worth a quick skim.\n\nWant me to help debug your augmentation pipeline? Feel free to share it.",
       status: 'sent',
       createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000 + 20 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'student',
-      content: "That section-aware approach makes so much sense! Let me implement that. Also, for the LLM - should I use Claude or try a medical-specific model?",
+      content: "That augmentation approach makes so much sense! Let me implement that. Also, for the model architecture - should I use vanilla UNet or try a more advanced variant like Attention UNet?",
       status: 'sent',
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'agent',
-      content: "Good question, Sarah. Here's my recommendation:\n\n**For your baseline (Milestone 2):** Use Claude. It's:\n- Easier to set up and iterate quickly\n- Strong at following complex instructions\n- Good at structured output (which you need for EHR formatting)\n\n**For experiments (Milestone 3):** Consider comparing:\n- Claude (your baseline)\n- GPT-4 (for comparison)\n- Med-PaLM or BioMedLM (if you have access)\n\nThe comparison between general vs. medical-specific models could actually be an interesting ablation for your paper! Most clinical NLP papers assume medical models are better, but for summarization tasks with good prompting, general models sometimes win.\n\nFor now, get Claude working end-to-end. You can always add model comparisons in Milestone 3.\n\nHow's your medical background helping with the project? I remember you mentioned experience with EHR systems.",
+      content: "Good question, Sarah. Here's my recommendation:\n\n**For your baseline (Milestone 2):** Use vanilla UNet. It's:\n- Easier to set up and debug\n- Well-documented with many reference implementations\n- Strong baseline for medical image segmentation\n\n**For experiments (Milestone 3):** Consider comparing:\n- Vanilla UNet (your baseline)\n- Attention UNet (adds attention gates)\n- TransUNet (transformer encoder + UNet decoder)\n\nThe comparison between CNN-only vs. attention/transformer models could be an interesting ablation for your paper! Most recent papers assume transformers are better, but for smaller datasets vanilla UNet often wins.\n\nFor now, get vanilla UNet working end-to-end. You can always add architecture comparisons in Milestone 3.\n\nHow's your radiology background helping with the project? I remember you mentioned experience reading medical images.",
       status: 'sent',
       createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000 + 25 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'student',
-      content: "Yes! I worked as a medical scribe for 2 years before grad school, so I know exactly what a good clinical summary should look like. That's actually why I chose this project.",
+      content: "Yes! I worked as a radiology technician for 2 years before grad school, so I know exactly what accurate organ segmentation should look like. That's actually why I chose this project.",
       status: 'sent',
       createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'agent',
-      content: "That's a huge advantage, Sarah! Your scribe experience is invaluable for:\n\n1. **Evaluation:** You can assess summary quality in ways automated metrics miss\n2. **Error analysis:** You'll recognize clinically significant mistakes\n3. **Writing:** Your paper's related work and methodology will be more credible\n\nI'd suggest creating a small \"expert evaluation set\" - maybe 50 notes where YOU write the ideal summary. This becomes gold standard for evaluation and makes your paper stronger.\n\nThis domain expertise is exactly what makes for impactful research. Keep leveraging it!\n\nLet me know when you have the baseline working - we'll review together before you move to Milestone 3.",
+      content: "That's a huge advantage, Sarah! Your radiology tech experience is invaluable for:\n\n1. **Evaluation:** You can assess segmentation quality in ways Dice score alone misses\n2. **Error analysis:** You'll recognize clinically significant boundary errors\n3. **Writing:** Your paper's related work and methodology will be more credible\n\nI'd suggest creating a small \"expert evaluation set\" - maybe 50 images where YOU manually refine the ground truth masks. This becomes gold standard for evaluation and makes your paper stronger.\n\nThis domain expertise is exactly what makes for impactful research. Keep leveraging it!\n\nLet me know when you have the baseline working - we'll review together before you move to Milestone 3.",
       status: 'sent',
       createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'student',
-      content: "Love the expert evaluation set idea! I'll do that. Quick question - the PDF-to-Colab tool you mentioned, would that help me reproduce some of the baseline papers' experiments?",
+      content: "Love the expert evaluation set idea! I'll do that. Quick question - the PDF-to-Colab tool you mentioned, would that help me reproduce some of the baseline UNet papers' experiments?",
       status: 'sent',
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     },
     {
       conversationId: sarahConv.id,
       role: 'agent',
-      content: "Yes! The PDF-to-Colab tool (https://paper-to-notebook-production.up.railway.app/) is perfect for that.\n\nUpload any ML paper PDF and it generates a Colab notebook with:\n- Paper summary and key contributions\n- Pseudocode from the methodology section\n- Starter implementation code\n- Dataset loading snippets\n\nSuper useful for quickly understanding and reproducing baselines. Try it with the \"Clinical Text Summarization\" papers from your lit review.\n\nOne tip: The generated code is a starting point, not production-ready. You'll need to adapt it for your specific MIMIC setup.\n\nHow's the section-aware chunking coming along?",
+      content: "Yes! The PDF-to-Colab tool (https://paper-to-notebook-production.up.railway.app/) is perfect for that.\n\nUpload any ML paper PDF and it generates a Colab notebook with:\n- Paper summary and key contributions\n- Pseudocode from the methodology section\n- Starter implementation code\n- Dataset loading snippets\n\nSuper useful for quickly understanding and reproducing baselines. Try it with the \"Medical Image Segmentation\" papers from your lit review.\n\nOne tip: The generated code is a starting point, not production-ready. You'll need to adapt it for your specific dataset format.\n\nHow's the augmentation pipeline coming along?",
       status: 'sent',
       createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000),
     },
@@ -471,13 +471,13 @@ async function seed() {
 
   await db.insert(schema.roadmaps).values({
     studentId: sarah.id,
-    topic: 'AI-Powered Clinical Documentation & EHR Summarization',
+    topic: 'Deep Learning for Multi-Organ CT Segmentation',
     content: {
       title: '8-Week Research Roadmap',
-      subtitle: 'AI-Powered Clinical Documentation & EHR Summarization',
+      subtitle: 'Deep Learning for Multi-Organ CT Segmentation',
       preparedFor: 'Sarah Johnson',
       date: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(),
-      abstract: 'This roadmap outlines an 8-week research project to develop an LLM-based system for automatically generating clinical summaries from electronic health records. Using the MIMIC-III dataset, we will build a RAG pipeline with domain-specific chunking strategies, implement automated and expert evaluation metrics, and produce a workshop-quality manuscript.',
+      abstract: 'This roadmap outlines an 8-week research project to develop a UNet-based system for automatically segmenting multiple organs from CT scans. Using a public medical imaging dataset, we will build a segmentation pipeline with domain-specific augmentation strategies, implement automated and expert evaluation metrics, and produce a workshop-quality manuscript.',
       milestones: [
         {
           number: 1,
@@ -485,8 +485,8 @@ async function seed() {
           title: 'Literature Review & Foundations',
           status: 'completed',
           objectives: [
-            'Survey clinical NLP and text summarization literature',
-            'Identify key evaluation metrics for clinical summaries',
+            'Survey medical image segmentation and UNet variants literature',
+            'Identify key evaluation metrics for organ segmentation',
             'Define research questions and scope',
           ],
           deliverables: [
@@ -501,14 +501,14 @@ async function seed() {
           title: 'Dataset & Implementation Setup',
           status: 'in_progress',
           objectives: [
-            'Set up MIMIC-III data access and preprocessing',
-            'Implement section-aware chunking for clinical notes',
-            'Build baseline RAG summarization pipeline',
+            'Set up medical imaging data access and preprocessing',
+            'Implement domain-appropriate augmentation pipeline',
+            'Build baseline UNet segmentation model',
           ],
           deliverables: [
             'Preprocessed dataset with train/val/test splits',
-            'Working baseline system producing summaries',
-            'Evaluation framework with ROUGE metrics',
+            'Working baseline system producing segmentation masks',
+            'Evaluation framework with Dice and IoU metrics',
           ],
         },
         {
@@ -517,8 +517,8 @@ async function seed() {
           title: 'Core Experiments',
           status: 'not_started',
           objectives: [
-            'Run ablation studies on chunking strategies',
-            'Compare general vs. medical LLMs',
+            'Run ablation studies on augmentation strategies',
+            'Compare UNet variants (vanilla, Attention, TransUNet)',
             'Conduct expert evaluation on subset',
           ],
           deliverables: [
@@ -550,7 +550,7 @@ async function seed() {
 
   console.log('\n✅ Seed completed successfully!');
   console.log('\nTest credentials:');
-  console.log('  Mentor: raj@vizuara.com / password123');
+  console.log('  Mentor: sreedath@vizuara.com / password123');
   console.log('  Student: priya@example.com / password123');
   console.log('  Student: alex@example.com / password123');
   console.log('  Student: sarah@example.com / password123');

@@ -1,12 +1,12 @@
 {
-  "last_updated": "2026-02-11T00:00:00.000Z",
+  "last_updated": "2026-02-16T00:00:00.000Z",
   "summary": {
     "total_files": 12,
     "phase1_videos": {
       "count": 1,
-      "total_lessons": 35,
-      "total_hours": "16 hrs 49 min",
-      "total_topics": 8
+      "total_lessons": 29,
+      "total_duration": "~1 month",
+      "total_lectures": 10
     },
     "phase1_voice_notes": {
       "count": 1,
@@ -23,7 +23,7 @@
     "phase2_topics": {
       "count": 1,
       "categories": 11,
-      "subtopics": 43
+      "subtopics": 44
     },
     "phase2_voice_notes": {
       "count": 1,
@@ -49,18 +49,22 @@
       "path": "resources/phase1-videos/video-catalog.md",
       "type": "markdown",
       "category": "phase1-videos",
-      "title": "Course Curriculum",
+      "title": "Computer Vision Course Curriculum",
       "metadata": {
-        "topics": 8,
-        "lessons": 35,
-        "duration": "16 hrs 49 min",
+        "lectures": 10,
+        "lessons": 29,
+        "duration": "~1 month",
         "topics_list": [
-          "LLM Foundations and Hands on Projects",
-          "Prompt Engineering",
-          "Agents and Langchain",
-          "Semantic Search",
-          "Retrieval Augmented Generation (RAG)",
-          "Multimodal LLMs"
+          "Introduction to CV and OpenCV",
+          "Building using OpenCV",
+          "Introduction to RCNN, Fast RCNN, Faster RCNN",
+          "Mask RCNN",
+          "Intro to UNet",
+          "UNet Implementation",
+          "Introduction to YOLO",
+          "Building with YOLO",
+          "Introduction to Roboflow",
+          "Building using Roboflow"
         ]
       }
     },
@@ -120,21 +124,21 @@
       "path": "resources/phase2-topics/topics.md",
       "type": "markdown",
       "category": "phase2-topics",
-      "title": "Proposed Research & Project Topics",
+      "title": "Proposed Computer Vision Research & Project Topics",
       "metadata": {
         "categories": 11,
-        "subtopics": 43,
+        "subtopics": 44,
         "category_list": [
-          "Healthcare & Biomedical AI",
-          "Finance & Business Intelligence",
-          "Education & Adaptive Learning",
-          "Agentic AI & Multi-Agent Systems",
-          "Creative & Entertainment AI",
-          "Legal & Governance",
-          "Multimodal & Frontier AI Applications",
-          "AI Safety, Evaluation & Responsible AI",
-          "Infrastructure & Production Systems",
-          "Domain-Specific Applied AI",
+          "Medical Imaging & Healthcare",
+          "Autonomous Vehicles & Robotics",
+          "Manufacturing & Quality Control",
+          "Agriculture & Environmental Monitoring",
+          "Security & Surveillance",
+          "Document Analysis & OCR",
+          "3D Vision & Reconstruction",
+          "Video Understanding & Analysis",
+          "Edge Deployment & Model Optimization",
+          "Domain Adaptation & Few-Shot Learning",
           "Emerging & Frontier Topics"
         ]
       }

@@ -1,6 +1,6 @@
 /**
  * Send Voice Note API
- * Sends a pre-recorded voice note from Dr. Raj to a student
+ * Sends a pre-recorded voice note from Dr. Sreedath to a student
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -24,7 +24,7 @@ I've attached a voice note for you. Give it a listen when you get a chance.
 
 Looking forward to hearing from you!
 
-- Dr. Raj`,
+- Dr. Sreedath`,
     },
   },
   phase2: {
@@ -39,7 +39,7 @@ I've attached a voice note with some thoughts. Give it a listen when you get a c
 
 Let me know how things are going!
 
-- Dr. Raj`,
+- Dr. Sreedath`,
     },
   },
 };
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     await createMessage({
       conversationId: conversation.id,
       role: 'agent',
-      content: `${messageContent}\n\n🎧 [Voice Note from Dr. Raj](${voiceNoteUrl})`,
+      content: `${messageContent}\n\n🎧 [Voice Note from Dr. Sreedath](${voiceNoteUrl})`,
       status: 'sent',
     });
 

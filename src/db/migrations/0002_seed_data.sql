@@ -1,10 +1,10 @@
 -- Vizuara Teaching Assistant Seed Data
 -- Run this AFTER 0001_create_schema.sql in Supabase SQL Editor
 
--- Create mentor user (Dr. Raj Dandekar)
+-- Create mentor user (Dr. Sreedath Panat)
 -- Password: mentor123 (bcrypt hash)
 INSERT INTO users (id, name, email, password_hash, role) VALUES
-  ('00000000-0000-0000-0000-000000000001', 'Dr. Raj Dandekar', 'raj@vizuara.com', '$2a$10$8K1p/a0dR1xqM8K3hM8ui.MhXKs2B.CjYcM0TzHlQvDjHTSJWKJYm', 'mentor')
+  ('00000000-0000-0000-0000-000000000001', 'Dr. Sreedath Panat', 'sreedath@vizuara.com', '$2a$10$8K1p/a0dR1xqM8K3hM8ui.MhXKs2B.CjYcM0TzHlQvDjHTSJWKJYm', 'mentor')
 ON CONFLICT (email) DO NOTHING;
 
 -- Create test student users
@@ -59,5 +59,5 @@ WHERE id = '00000000-0000-0000-0000-000000000103';
 -- Done!
 SELECT 'Seed data inserted successfully!' as status;
 SELECT 'Test accounts created:' as info;
-SELECT '  Mentor: raj@vizuara.com / mentor123' as mentor_login;
+SELECT '  Mentor: sreedath@vizuara.com / mentor123' as mentor_login;
 SELECT '  Students: alice@student.com, bob@student.com, carol@student.com / student123' as student_logins;

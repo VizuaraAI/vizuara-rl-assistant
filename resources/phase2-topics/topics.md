@@ -1,173 +1,185 @@
-# Vizuara GenAI Bootcamp — Proposed Research & Project Topics
+# Vizuara Computer Vision Bootcamp — Proposed Research & Project Topics
 
 > **Duration:** 2–3 months per topic (practically oriented, hands-on projects)
-> **Level:** Intermediate to Advanced (non-foundational — assumes working knowledge of LLMs, transformers, and Python)
+> **Level:** Intermediate to Advanced (assumes working knowledge of CNNs, object detection, segmentation, and Python)
 > **Philosophy:** Every topic must produce a working prototype, demo, or deployable system by the end of the project timeline.
 
 ---
 
-## 1. Healthcare & Biomedical AI
+## 1. Medical Imaging & Healthcare
 
-### 1.1 AI-Powered Clinical Documentation & EHR Summarization
-Build an LLM pipeline that ingests electronic health records (EHR), clinical notes, and discharge summaries to generate structured patient summaries, referral letters, and follow-up care plans. Implement domain-specific fine-tuning on medical corpora with privacy-preserving techniques like differential privacy and federated learning simulation.
+### 1.1 Automated Tumor Detection and Segmentation in Medical Scans
+Build a deep learning pipeline using UNet or Mask RCNN to detect and segment tumors in CT/MRI scans. Implement data augmentation strategies for limited medical datasets, compare different backbone architectures, and evaluate using Dice coefficient and IoU metrics.
 
-### 1.2 Medical Image Report Generation with Multimodal LLMs
-Develop a multimodal system that takes radiology images (X-rays, CT slices) as input and generates preliminary diagnostic reports using vision-language models. Combine a vision encoder (e.g., BiomedCLIP) with an instruction-tuned LLM to produce structured radiology narratives, and evaluate using RadGraph-based metrics.
+### 1.2 Retinal Disease Classification from Fundus Images
+Develop a multi-class classification system for detecting diabetic retinopathy, glaucoma, and macular degeneration from retinal fundus images. Implement transfer learning with attention mechanisms and explainability via Grad-CAM visualizations.
 
-### 1.3 Drug Interaction & Adverse Event Prediction using LLM-Augmented Knowledge Graphs
-Build a system that combines biomedical knowledge graphs (e.g., from DrugBank, UMLS) with LLM reasoning to predict drug-drug interactions and flag potential adverse events. Use retrieval-augmented generation over structured medical ontologies and evaluate against known pharmacovigilance datasets.
+### 1.3 X-Ray Abnormality Detection with Localization
+Create a chest X-ray analysis system that detects multiple abnormalities (pneumonia, cardiomegaly, effusion) with bounding box localization. Compare YOLO-based approaches with Faster RCNN and implement confidence calibration.
 
-### 1.4 AI-Powered Mental Health Companion with Guardrailed Conversations
-Design a conversational AI system for mental health support that uses empathetic response generation, mood tracking over sessions, and strict safety guardrails to escalate crisis situations. Implement constitutional AI principles and red-teaming to ensure the system never provides harmful advice.
-
----
-
-## 2. Finance & Business Intelligence
-
-### 2.1 Real-Time Financial News Agentic Analyst
-Build a multi-agent system that monitors live financial news feeds, extracts structured events (earnings surprises, M&A announcements, regulatory changes), reasons about their market impact, and generates actionable trading briefs. Use tool-calling agents with web search, calculator tools, and portfolio context.
-
-### 2.2 Automated Regulatory Compliance Auditor
-Create an LLM-based system that ingests regulatory documents (SEC filings, Basel III/IV frameworks, GDPR) and automatically audits corporate filings or internal policies for compliance gaps. Implement long-context RAG over 100K+ token legal documents with citation-grounded answers.
-
-### 2.3 Conversational BI: Natural Language to SQL to Insight
-Build an end-to-end natural language interface for business databases that converts user questions into SQL queries, executes them, and presents insights with auto-generated charts and narrative explanations. Implement query validation, self-correction loops, and multi-table reasoning.
-
-### 2.4 AI-Powered Fraud Detection Narrative Engine
-Develop a system that analyzes transactional data to detect anomalies and then uses an LLM to generate human-readable fraud investigation reports explaining why each flagged transaction is suspicious, including contextual reasoning and risk scoring.
+### 1.4 Surgical Tool Detection and Tracking in Laparoscopic Videos
+Build a real-time surgical tool detection and tracking system for laparoscopic surgery videos. Implement temporal consistency, handle occlusions, and provide tool usage analytics.
 
 ---
 
-## 3. Education & Adaptive Learning
+## 2. Autonomous Vehicles & Robotics
 
-### 3.1 Personalized AI Tutor with Socratic Reasoning
-Build an LLM-powered tutoring system that adapts to individual student knowledge levels, uses Socratic questioning to guide learning, generates custom practice problems, and provides step-by-step explanations. Implement spaced repetition scheduling and knowledge state tracking across sessions.
+### 2.1 Multi-Object Tracking for Autonomous Driving
+Develop a robust multi-object tracking system that combines YOLO detection with tracking algorithms (SORT, DeepSORT, ByteTrack). Handle occlusions, track identity switches, and evaluate on autonomous driving benchmarks.
 
-### 3.2 Automated Exam Generation & Grading Pipeline
-Create a system that takes a syllabus or textbook content as input and generates diverse question types (MCQs, short answer, case studies) at varying difficulty levels. Include an LLM-based grading module that evaluates open-ended answers against rubrics with detailed feedback.
+### 2.2 Lane Detection and Road Segmentation
+Build an end-to-end lane detection system using semantic segmentation approaches. Implement curve fitting, handle challenging conditions (rain, night, shadows), and optimize for real-time inference.
 
-### 3.3 Multimodal Lecture Summarizer & Study Guide Generator
-Develop a pipeline that ingests lecture videos (audio + slides + whiteboard), transcribes them, extracts key visual content, and generates comprehensive study guides with concept maps, flashcards, and practice questions — all organized by topic hierarchy.
+### 2.3 Monocular Depth Estimation for Navigation
+Create a depth estimation system from single RGB images using encoder-decoder architectures. Implement self-supervised training approaches and evaluate generalization across different environments.
 
----
-
-## 4. Agentic AI & Multi-Agent Systems
-
-### 4.1 Production-Grade Multi-Agent Orchestration Framework
-Build a multi-agent system where specialized agents (researcher, coder, reviewer, deployer) collaborate to solve complex tasks. Implement agent communication protocols (MCP/A2A-inspired), shared memory, conflict resolution, and human-in-the-loop checkpoints for critical decisions.
-
-### 4.2 Autonomous Code Review & Refactoring Agent
-Create an agentic system that reviews pull requests, identifies bugs, security vulnerabilities, and code smells, suggests refactoring improvements, and can autonomously apply fixes with test validation. Integrate with Git workflows and implement confidence-based escalation to human reviewers.
-
-### 4.3 AI-Powered Research Assistant with Hypothesis Generation
-Build a research agent that takes a broad research question, searches academic databases (arXiv, PubMed, Semantic Scholar), synthesizes findings, identifies gaps in the literature, and proposes novel hypotheses with supporting evidence chains. Include citation verification and contradiction detection.
-
-### 4.4 Browser Automation Agent for Complex Web Tasks
-Develop a vision-language agent that can navigate web interfaces, fill forms, extract information, and complete multi-step web tasks from natural language instructions. Implement visual grounding, action planning, error recovery, and safety constraints to prevent unintended actions.
+### 2.4 3D Object Detection from Point Clouds and Camera Fusion
+Develop a sensor fusion system that combines LiDAR point clouds with camera images for 3D object detection. Implement bird's eye view representations and evaluate on KITTI benchmark.
 
 ---
 
-## 5. Creative & Entertainment AI
+## 3. Manufacturing & Quality Control
 
-### 5.1 AI Game Narrative Engine with Dynamic Storytelling
-Build a system that generates interactive game narratives that adapt to player choices in real-time. Implement persistent world state, character memory, branching storylines with consistency checking, and tone/genre control. Use structured output for game engine integration.
+### 3.1 Automated Visual Defect Detection in Manufacturing
+Build an anomaly detection system for identifying surface defects in manufactured products using both supervised and unsupervised approaches. Implement few-shot learning for rare defect types.
 
-### 5.2 AI Music Composition Assistant with Style Transfer
-Create a system that assists in music composition by generating melodies, harmonies, and arrangements in specified styles. Implement prompt-controlled generation, MIDI output, and a feedback loop where users can iteratively refine sections of a composition.
+### 3.2 PCB Component Inspection and Verification
+Create a system that inspects printed circuit boards for missing components, misalignment, and solder defects. Use object detection combined with template matching for verification.
 
-### 5.3 Automated Video Script & Storyboard Generator
-Develop a pipeline that takes a content brief (topic, audience, duration, platform) and generates a complete video production package: script, scene-by-scene storyboard descriptions, shot suggestions, B-roll recommendations, and AI-generated reference images for each scene.
+### 3.3 Industrial Safety Compliance Monitoring
+Develop a real-time monitoring system that detects PPE (hard hats, safety vests, goggles) compliance and unsafe behaviors in industrial settings using YOLO-based detection.
 
-### 5.4 AI Dungeon Master: Procedural World Building with LLMs
-Build an AI-powered tabletop RPG game master that manages persistent world state, NPC interactions, combat mechanics, and narrative progression. Implement rule-based constraints blended with creative generation, player action parsing, and multi-session memory.
-
----
-
-## 6. Legal & Governance
-
-### 6.1 Intelligent Contract Analysis & Risk Extraction System
-Build a system that ingests legal contracts, identifies key clauses (indemnity, termination, liability caps), flags risky or non-standard provisions, and generates plain-language summaries with risk assessments. Implement long-document chunking strategies optimized for legal language.
-
-### 6.2 AI-Powered Policy Impact Simulator
-Create a system that takes proposed policy documents or legislation as input and uses LLM reasoning combined with structured data to simulate potential impacts across economic, social, and environmental dimensions, generating scenario-based analysis reports.
+### 3.4 Automated Visual Quality Grading
+Build a classification system that grades product quality (e.g., fruits, textiles, metals) based on visual features. Implement fine-grained classification with attention mechanisms.
 
 ---
 
-## 7. Multimodal & Frontier AI Applications
+## 4. Agriculture & Environmental Monitoring
 
-### 7.1 Document Understanding Pipeline: From Scans to Structured Data
-Build an end-to-end pipeline that processes scanned documents (invoices, receipts, forms, handwritten notes) using OCR, layout analysis, and multimodal LLMs to extract structured data into JSON/database formats. Handle multi-language, noisy scans, and complex table extraction.
+### 4.1 Crop Disease Detection from Aerial Imagery
+Develop a drone-based crop health monitoring system that detects diseases and nutrient deficiencies from aerial/satellite imagery. Implement multi-scale analysis and temporal change detection.
 
-### 7.2 Video Understanding Agent: Temporal Reasoning over Long Videos
-Develop a system that ingests long-form video content (lectures, meetings, surveillance) and answers complex temporal queries ("What happened after the speaker discussed pricing?"). Implement efficient frame sampling, scene segmentation, and temporal grounding with evidence timestamps.
+### 4.2 Weed Detection and Precision Spraying
+Build a real-time weed detection system for precision agriculture that distinguishes crops from weeds. Optimize for edge deployment on agricultural robots.
 
-### 7.3 Voice-First AI Assistant with Real-Time Tool Use
-Build a voice-interactive AI assistant that processes speech input, reasons about user intent, dynamically calls tools (calendar, email, web search, calculations), and responds with synthesized speech — all with sub-2-second latency. Implement streaming architectures and interruption handling.
+### 4.3 Livestock Monitoring and Behavior Analysis
+Create a system that tracks and monitors livestock health and behavior using video analysis. Implement pose estimation for animals and anomaly detection for health issues.
 
-### 7.4 3D Scene Understanding & Description from Multi-View Images
-Create a system that takes multiple images of a physical space and generates detailed 3D-aware descriptions, spatial relationship maps, and natural language summaries of the environment. Applications in real estate, interior design, and accessibility.
-
----
-
-## 8. AI Safety, Evaluation & Responsible AI
-
-### 8.1 Automated Red-Teaming Framework for LLM Applications
-Build a comprehensive red-teaming toolkit that automatically generates adversarial prompts, tests for jailbreaks, bias, toxicity, and hallucination in any LLM-based application. Implement attack taxonomies (prompt injection, indirect injection, data extraction), scoring pipelines, and compliance reporting.
-
-### 8.2 Hallucination Detection & Factual Grounding System
-Develop a system that takes LLM outputs and automatically detects hallucinated claims by cross-referencing against source documents and knowledge bases. Implement claim decomposition, entailment verification, confidence calibration, and user-facing trust indicators.
-
-### 8.3 LLM Output Watermarking & AI-Generated Content Detection
-Build a dual system: one that embeds invisible watermarks into LLM-generated text (for provenance tracking), and another that detects whether a given piece of text was AI-generated. Evaluate robustness against paraphrasing attacks and compare statistical vs. neural detection approaches.
+### 4.4 Forest Fire Detection from Satellite Imagery
+Develop an early warning system for forest fire detection using satellite imagery. Implement change detection algorithms and evaluate false positive rates.
 
 ---
 
-## 9. Infrastructure & Production Systems
+## 5. Security & Surveillance
 
-### 9.1 Building a Self-Hosted LLM Serving Platform with Autoscaling
-Design and deploy a production-grade LLM serving infrastructure using vLLM/TGI on local GPUs or cloud. Implement request batching, KV-cache optimization, model sharding, autoscaling based on queue depth, A/B testing between models, and comprehensive observability (latency, throughput, cost tracking).
+### 5.1 Real-Time Face Recognition with Anti-Spoofing
+Build a face recognition system with liveness detection to prevent spoofing attacks. Implement efficient face embedding extraction and compare different anti-spoofing approaches.
 
-### 9.2 LLM-Powered Data Pipeline: Unstructured to Structured at Scale
-Build a production pipeline that processes thousands of unstructured documents (emails, PDFs, web pages) per hour, extracts structured information using LLMs, handles errors gracefully, and populates a queryable data warehouse. Implement cost optimization, caching, and quality monitoring.
+### 5.2 Anomaly Detection in Surveillance Videos
+Create an unsupervised anomaly detection system for identifying unusual events in surveillance footage. Implement video prediction and reconstruction-based approaches.
 
-### 9.3 Fine-Tuning-as-a-Service: End-to-End MLOps for Custom LLMs
-Create a platform that allows users to upload domain-specific datasets, configure fine-tuning parameters (LoRA rank, learning rate, data mix), run training jobs, evaluate on custom benchmarks, and deploy the resulting model with one click. Implement experiment tracking, versioning, and rollback.
+### 5.3 Human Action Recognition for Safety Monitoring
+Develop an action recognition system that identifies dangerous activities (fighting, falling, trespassing). Compare skeleton-based and appearance-based approaches.
+
+### 5.4 Crowd Counting and Density Estimation
+Build a crowd analysis system that estimates density and counts individuals in crowded scenes. Implement density map regression and evaluate on crowd counting benchmarks.
 
 ---
 
-## 10. Domain-Specific Applied AI
+## 6. Document Analysis & OCR
 
-### 10.1 AI-Powered Agricultural Advisory System
-Build a multimodal system that takes crop images, soil data, weather forecasts, and local market prices to provide actionable farming advice: pest identification, irrigation scheduling, optimal harvest timing, and yield prediction. Optimize for low-bandwidth deployment in rural settings.
+### 6.1 End-to-End Document Digitization Pipeline
+Create a comprehensive document processing system that handles scanning, deskewing, OCR, and structured data extraction. Support multiple document types (invoices, forms, receipts).
 
-### 10.2 Smart City Traffic Optimization with LLM-Based Planning
-Develop a system that ingests real-time traffic data, event calendars, and construction schedules, then uses LLM reasoning to generate traffic management recommendations, rerouting suggestions, and predictive congestion alerts in natural language for city operators.
+### 6.2 Handwritten Text Recognition
+Develop a handwritten text recognition system using attention-based sequence models. Handle multiple languages and evaluate on IAM dataset.
 
-### 10.3 AI-Powered Customer Support System with Escalation Intelligence
-Build a production-ready customer support chatbot that handles multi-turn conversations, accesses product knowledge bases via RAG, performs actions (order lookup, refund processing) via tool use, detects customer sentiment for escalation, and generates post-interaction summaries for human agents.
+### 6.3 Table Detection and Structure Recognition
+Build a system that detects tables in documents and extracts their structure (rows, columns, cells). Handle complex nested tables and spanning cells.
 
-### 10.4 Personalized Fitness & Nutrition Coach with Progress Tracking
-Create an AI coaching system that generates personalized workout plans and meal suggestions based on user goals, dietary restrictions, and available equipment. Implement progress tracking via logged data, adaptive plan modification, and motivational interaction patterns.
+### 6.4 Document Layout Analysis and Classification
+Create a document understanding system that classifies document types and analyzes layout structure. Implement multi-modal approaches combining visual and textual features.
 
-### 10.5 Real Estate Valuation Assistant with Market Analysis
-Build a system that analyzes property listings, neighborhood data, comparable sales, and market trends to generate comprehensive property valuation reports with narrative explanations of pricing factors, investment potential, and risk assessment.
+---
+
+## 7. 3D Vision & Reconstruction
+
+### 7.1 Stereo Vision Depth Estimation
+Develop a stereo matching system for dense depth estimation. Implement cost volume construction, compare different aggregation methods, and handle challenging regions (textureless, reflective).
+
+### 7.2 Visual SLAM for Indoor Navigation
+Build a visual odometry and mapping system for indoor environments. Implement feature-based and direct methods, evaluate trajectory accuracy and map quality.
+
+### 7.3 Single-Image 3D Reconstruction
+Create a system that reconstructs 3D shapes from single RGB images. Implement neural implicit representations and compare with mesh-based approaches.
+
+### 7.4 Multi-View 3D Reconstruction
+Develop a structure-from-motion pipeline that reconstructs 3D scenes from multiple images. Implement feature matching, bundle adjustment, and dense reconstruction.
+
+---
+
+## 8. Video Understanding & Analysis
+
+### 8.1 Video Object Segmentation
+Build a video object segmentation system that tracks and segments objects throughout video sequences. Implement memory-based approaches for handling long videos.
+
+### 8.2 Video Summarization and Highlight Detection
+Create a system that automatically generates video summaries by identifying key moments. Implement attention-based scoring and evaluate on video summarization datasets.
+
+### 8.3 Sports Video Analytics
+Develop an analytics system for sports videos that tracks players, detects events, and generates statistics. Focus on a specific sport (soccer, basketball, tennis).
+
+### 8.4 Video-based Pose Estimation and Motion Analysis
+Build a multi-person pose estimation system for videos with temporal consistency. Implement applications like fitness tracking or physical therapy assessment.
+
+---
+
+## 9. Edge Deployment & Model Optimization
+
+### 9.1 Real-Time Object Detection on Edge Devices
+Optimize YOLO models for deployment on edge devices (Jetson, RPi, mobile). Compare pruning, quantization, and knowledge distillation approaches.
+
+### 9.2 Neural Architecture Search for Efficient Vision Models
+Implement neural architecture search techniques to find efficient architectures for specific vision tasks. Compare search strategies and evaluate Pareto-optimal solutions.
+
+### 9.3 Model Compression for Production Deployment
+Build a comprehensive model compression pipeline combining pruning, quantization, and knowledge distillation. Evaluate accuracy-latency tradeoffs on multiple hardware platforms.
+
+### 9.4 TensorRT Optimization Pipeline
+Create an end-to-end pipeline for optimizing PyTorch vision models with TensorRT. Benchmark speedups and handle complex model architectures.
+
+---
+
+## 10. Domain Adaptation & Few-Shot Learning
+
+### 10.1 Unsupervised Domain Adaptation for Object Detection
+Develop a domain adaptation system that transfers object detection models across domains (synthetic to real, day to night). Implement adversarial and self-training approaches.
+
+### 10.2 Few-Shot Object Detection
+Build a few-shot learning system that can detect new object categories with minimal examples. Compare meta-learning and transfer learning approaches.
+
+### 10.3 Self-Supervised Pre-training for Vision
+Implement self-supervised pre-training methods (contrastive learning, masked image modeling) and evaluate transfer performance on downstream tasks.
+
+### 10.4 Active Learning for Efficient Annotation
+Create an active learning pipeline that intelligently selects images for annotation. Compare uncertainty-based and diversity-based sampling strategies.
 
 ---
 
 ## 11. Emerging & Frontier Topics
 
-### 11.1 Neuro-Symbolic AI: Combining LLMs with Formal Reasoning
-Build a hybrid system that pairs an LLM with a symbolic reasoning engine (theorem prover, constraint solver, or rule engine) to solve problems requiring both natural language understanding and logical precision — such as legal reasoning, mathematical proof generation, or diagnostic troubleshooting.
+### 11.1 Vision Transformers for Dense Prediction
+Implement and evaluate Vision Transformer architectures for dense prediction tasks (segmentation, depth estimation). Compare with CNN-based approaches on efficiency and accuracy.
 
-### 11.2 Synthetic Data Generation for Privacy-Preserving AI
-Develop a framework that uses LLMs and generative models to produce high-quality synthetic datasets for domains where real data is sensitive (healthcare records, financial transactions, personal communications). Implement privacy metrics, utility evaluation, and membership inference attack testing.
+### 11.2 Neural Radiance Fields (NeRF) for Novel View Synthesis
+Build a NeRF-based system for novel view synthesis from sparse images. Implement optimization strategies and evaluate rendering quality.
 
-### 11.3 Test-Time Compute Optimization: Adaptive Reasoning Depth
-Implement and evaluate techniques for dynamically adjusting the amount of compute spent at inference time based on query difficulty. Build a router that classifies incoming queries and directs simple ones to fast, lightweight models while routing complex ones to deeper reasoning pipelines.
+### 11.3 Diffusion Models for Image Generation and Editing
+Develop a diffusion-based system for controlled image generation or editing. Implement conditional generation and inpainting applications.
 
-### 11.4 LLM-Powered Simulation Environments for Training AI Agents
-Create a framework where LLMs generate and manage simulation environments (customer service scenarios, negotiation settings, emergency response situations) for training and evaluating AI agents. Implement environment consistency, difficulty scaling, and automated performance metrics.
+### 11.4 Foundation Models for Computer Vision
+Fine-tune vision-language models (CLIP, SAM) for specific downstream tasks. Evaluate zero-shot capabilities and compare with task-specific training.
 
 ---
 
-*This topic list is designed to be a living document — updated as the GenAI landscape evolves. Each topic should include a hands-on project component with deliverable code, a written report, and a demo presentation.*
+*This topic list is designed to be a living document — updated as the Computer Vision landscape evolves. Each topic should include a hands-on project component with deliverable code, a written report, and a demo presentation.*

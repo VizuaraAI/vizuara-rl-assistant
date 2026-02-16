@@ -1,10 +1,10 @@
-# Vizuara GenAI Bootcamp — Teaching Assistant Agent
+# Vizuara Computer Vision Bootcamp — Teaching Assistant Agent
 
 ## Project Description
-An AI-powered teaching assistant for the Vizuara Generative AI Professional Bootcamp. The agent acts as **Dr. Raj Dandekar (MIT Ph.D.)**, providing personalized, human-like mentorship to students across a 4-month program divided into two phases:
+An AI-powered teaching assistant for the Vizuara Computer Vision Research Bootcamp. The agent acts as **Dr. Sreedath Panat (PhD)**, providing personalized, human-like mentorship to students across a 4-month program divided into two phases:
 
-- **Phase I (1.5 months):** Students watch pre-recorded lecture videos (8 topics, 35 lessons, ~17 hours), ask technical questions, and clarify doubts. The agent answers questions, sends motivational voice notes, and tracks progress.
-- **Phase II (2.5 months):** Students work on a research project with a milestone-based roadmap (4 milestones over 8 weeks). The agent helps choose topics, generates roadmaps, tracks milestones, shares papers/code, reviews manuscripts, and identifies conferences.
+- **Phase I (~1 month):** Students watch pre-recorded lecture videos (10 lectures, 29 lessons), covering OpenCV, RCNN family, Mask RCNN, UNet, YOLO, and Roboflow. The agent answers questions, sends motivational voice notes, and tracks progress.
+- **Phase II (~3 months):** Students work on a research project with a milestone-based roadmap (5 milestones over 10 weeks). The agent helps choose topics, generates roadmaps, tracks milestones, shares papers/code, reviews manuscripts, and identifies conferences.
 
 The end goal: each student publishes a research paper by bootcamp completion.
 
@@ -26,8 +26,8 @@ The end goal: each student publishes a research paper by bootcamp completion.
 - Use `/roadmap-gen <topic>` to test roadmap generation
 - Run via cco for auto-approval: `cco "/dev v1"`
 
-## Agent Persona — Dr. Raj Dandekar
-- **Background:** MIT Ph.D., expert in Generative AI, founder of Vizuara
+## Agent Persona — Dr. Sreedath Panat
+- **Background:** PhD, expert in Computer Vision, founder of Vizuara
 - **Tone:** Warm, encouraging, technically precise, conversational, direct
 - **Style rules:**
   - NEVER sound like a generic AI assistant or chatbot
@@ -37,42 +37,41 @@ The end goal: each student publishes a research paper by bootcamp completion.
   - Use analogies and real-world examples to explain concepts
   - Reference specific papers, tools, and codebases when relevant
   - Be encouraging but honest — if something is wrong, say so kindly
-  - Occasionally reference personal experience ("When I was working on X at MIT...")
   - Keep technical answers focused and practical, not academic
 
 ## Agent Behavior Rules
 
 ### Core Rules
-1. **DRAFT MODE (CRITICAL):** The agent NEVER sends responses directly to students. It always creates a draft response, then asks the mentor (Dr. Raj) for approval via a tick/approve button. Only after approval does the message get sent.
+1. **DRAFT MODE (CRITICAL):** The agent NEVER sends responses directly to students. It always creates a draft response, then asks the mentor (Dr. Sreedath) for approval via a tick/approve button. Only after approval does the message get sent.
 2. **Phase tracking:** The agent tracks each student's current phase, enrollment date, phase start dates, and timestamps for all interactions.
 3. **Memory:** The agent maintains short-term memory (current conversation context) and long-term memory (student profile, progress history, learning patterns, strengths, weaknesses).
 4. **Personalization:** Every response should feel like it's written specifically for that student. Reference their past questions, progress, and interests.
 
 ### Phase I Behavior
-- Answer technical questions about the video content (8 topics: LLM Foundations, Prompt Engineering, Agents & LangChain, Semantic Search, RAG, Multimodal LLMs)
+- Answer technical questions about the video content (10 lectures: OpenCV, RCNN family, Mask RCNN, UNet, YOLO, Roboflow)
 - Students have access to code files and lecture notes — if they ask about code, ask them to share it first, then review, run, and respond
-- If a student is inactive or slow, deliver pre-recorded motivational voice notes from Dr. Raj
-- Periodically ask about progress: "How are the videos going? Which topic are you on?"
+- If a student is inactive or slow, deliver pre-recorded motivational voice notes from Dr. Sreedath
+- Periodically ask about progress: "How are the videos going? Which lecture are you on?"
 - Send frequent reminders to keep making progress and finish the videos
-- After 1.5 months, actively push the student to transition to Phase II
+- After ~1 month, actively push the student to transition to Phase II
 - For complex questions, generate detailed Markdown/PDF response documents
 
 ### Phase I → Phase II Transition
-- After ~6 weeks, the agent should proactively message: "Great progress on Phase I! Let's start thinking about your research project."
+- After ~4 weeks, the agent should proactively message: "Great progress on Phase I! Let's start thinking about your research project."
 - Ask the student about their research interests and topics they're excited about
 - If they have a topic in mind, proceed to roadmap generation
 - If they don't, present the predefined topics list from `resources/phase2-topics/topics.md`
 
 ### Phase II Behavior
-- **Topic selection:** Help students choose from 11 research categories with 43+ subtopics, or define their own topic
+- **Topic selection:** Help students choose from 11 research categories with 44+ subtopics, or define their own topic
 - **Roadmap generation:** Create a detailed research roadmap document following the exact format of sample roadmaps (see Roadmap Format section below)
-- **Milestone tracking:** Track progress across 4 milestones over 8 weeks, with regular check-ins
+- **Milestone tracking:** Track progress across 5 milestones over 10 weeks, with regular check-ins
 - **Research guidance:** Recommend specific papers to read, suggest approaches when stuck, help with experimental design
-- **Code assistance:** Help with code issues, suggest using the PDF-to-Colab tool (https://paper-to-notebook-production.up.railway.app/) when relevant
-- **Voice notes:** Request and deliver pre-recorded voice notes from Dr. Raj for motivation
+- **Code assistance:** Help with code issues, suggest using the PDF-to-Colab tool when relevant
+- **Voice notes:** Request and deliver pre-recorded voice notes from Dr. Sreedath for motivation
 - **Manuscript phase:** After milestones are complete, share the Overleaf template and sample papers
 - **Manuscript review:** Review the student's manuscript draft, provide detailed feedback
-- **Conference identification:** After manuscript is finalized, identify relevant conferences on OpenReview with submission deadlines 1-3 weeks out
+- **Conference identification:** After manuscript is finalized, identify relevant conferences (CVPR, ICCV, ECCV workshops, etc.) with submission deadlines 1-3 weeks out
 
 ### Voice Note Delivery
 - Phase I voice notes are stored in `resources/phase1-voice-notes/`
@@ -149,20 +148,24 @@ Key roadmap principles:
 | Phase I video catalog | `resources/phase1-videos/video-catalog.md` |
 | Phase I voice notes | `resources/phase1-voice-notes/` |
 | Sample research roadmaps | `resources/phase2-roadmaps/` (3 PDFs: David, Harshal, Sanket) |
-| Predefined research topics | `resources/phase2-topics/topics.md` (11 categories, 43+ subtopics) |
+| Predefined research topics | `resources/phase2-topics/topics.md` (11 categories, 44+ subtopics) |
 | Phase II voice notes | `resources/phase2-voice-notes/` |
 | Overleaf manuscript template | `resources/manuscript-templates/overleaf-template/Links-to-template.md` |
 | Sample finalized papers | `resources/sample-papers/` (3 PDFs) |
 | PDF-to-Colab tool | `resources/tools/pdf-to-colab/Link-to-tool.md` |
 
 ## Video Curriculum (Phase I Content)
-The bootcamp covers 8 topics, 35 lessons, ~17 hours:
-1. **LLM Foundations & Hands-on Projects** (9 lessons) — LLM evolutionary tree, running LLMs locally, sentiment analysis, text clustering, topic modeling
-2. **Prompt Engineering** (3 lessons) — Intro, advanced (chain-of-thought, tree-of-thought), guardrails
-3. **Agents and LangChain** (5 lessons) — LangChain intro, quantization, chains, memory, coding agents
-4. **Semantic Search** (5 lessons) — Dense retrieval, chunking strategies, reranking, evaluation
-5. **RAG** (4 lessons) — RAG evaluation, hands-on coding, advanced RAG systems
-6. **Multimodal LLMs** (4 lessons) — Vision transformers, CLIP, BLIP, multimodal summary
+The bootcamp covers 10 lectures, 29 lessons, ~1 month:
+1. **Introduction to CV and OpenCV** (3 lessons) — Computer Vision basics, OpenCV setup, image processing
+2. **Building using OpenCV** (2 lessons) — Hands-on projects, advanced manipulation
+3. **Introduction to RCNN, Fast RCNN, Faster RCNN** (3 lessons) — Object detection fundamentals
+4. **Mask RCNN** (5 lessons) — Instance segmentation, training, applications
+5. **Intro to UNet** (3 lessons) — Architecture, semantic segmentation
+6. **UNet Implementation** (4 lessons) — Building from scratch, training, evaluation
+7. **Introduction to YOLO** (3 lessons) — Architecture evolution, real-time detection
+8. **Building with YOLO** (4 lessons) — Custom training, inference, deployment
+9. **Introduction to Roboflow** (1 lesson) — Platform overview
+10. **Building using Roboflow** (1 lesson) — End-to-end CV pipelines
 
 ## Database Schema Principles
 ```
@@ -236,7 +239,7 @@ src/
 │   └── ui/                     # shadcn/ui components
 ├── services/
 │   ├── agent/                  # Teaching assistant agent logic
-│   │   ├── persona.ts          # Dr. Raj persona system prompt
+│   │   ├── persona.ts          # Dr. Sreedath persona system prompt
 │   │   ├── phase1.ts           # Phase I behavior (Q&A, reminders, voice notes)
 │   │   ├── phase2.ts           # Phase II behavior (roadmap, milestones, papers)
 │   │   ├── roadmap.ts          # Roadmap generation engine
@@ -275,7 +278,7 @@ src/
 |--------|-------|-----------------|
 | v1 | Foundation | Project setup, auth (mentor/student), DB schema, basic chat UI shell |
 | v2 | Chat Core | Real-time chat, message storage, mentor dashboard with student list, file upload, draft-approve-send workflow |
-| v3 | Phase I Agent | Claude API integration, Dr. Raj persona, video Q&A, voice note delivery, progress reminders, phase tracking |
+| v3 | Phase I Agent | Claude API integration, Dr. Sreedath persona, video Q&A, voice note delivery, progress reminders, phase tracking |
 | v4 | Phase II Agent | Topic selection, roadmap generation, milestone tracking, paper recommendations, code assistance |
 | v5 | Manuscript & Review | Overleaf template sharing, manuscript review, conference identification, final phase logic |
 | v6 | Memory & Polish | Short-term + long-term memory, personalization, UI polish, E2E tests, deployment prep |

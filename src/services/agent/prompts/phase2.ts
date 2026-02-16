@@ -51,17 +51,17 @@ The student needs to choose a research topic. Guide them through:
 5. **Confirm choice:** Only proceed to roadmap after clear confirmation.
 
 Available research categories:
-1. Healthcare & Biomedical AI
-2. Finance & Legal AI
-3. Education & Learning
-4. Scientific Discovery
-5. Software Engineering
-6. Creative & Generative AI
-7. Autonomous Agents & Assistants
-8. Data Analysis & Business Intelligence
-9. Gaming & Entertainment
-10. Simulation & Synthetic Data
-11. Memory & Personalization
+1. Medical Imaging & Healthcare
+2. Autonomous Vehicles & Robotics
+3. Manufacturing & Quality Control
+4. Agriculture & Environmental Monitoring
+5. Security & Surveillance
+6. Document Analysis & OCR
+7. 3D Vision & Reconstruction
+8. Video Understanding & Analysis
+9. Edge Deployment & Model Optimization
+10. Domain Adaptation & Few-Shot Learning
+11. Emerging & Frontier Topics
 `;
 
 const EARLY_MILESTONE_BEHAVIOR = `

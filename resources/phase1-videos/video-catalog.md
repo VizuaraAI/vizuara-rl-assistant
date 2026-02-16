@@ -1,81 +1,108 @@
-# Course Curriculum
+# Computer Vision Bootcamp - Phase I Curriculum
 
-**8 topics • 35 lessons • 16 hrs 49 min**
-
----
-
-## 1. LLM Foundations and Hands on Projects
-
-*9 lessons*
-
-- Course Introduction
-- The LLM Evolutionary Tree
-- Hands on Project 1: Running an LLM on your local computer!
-- Hands on Project 2: Using LLMs for Movie Review Sentiment Analysis
-- Hands on Project 3: Advanced Movie Review Classification
-- Hands on Project 5: Using OpenAI API for Movie Review Classification
-- Hands on Project 6: Text Clustering using LLMs
-- Hands on Project 7: Topic Modeling using LLMs
-- Hands on Project 8: Advanced Text Clustering + Topic Modeling
+**10 lectures • 29 lessons • ~1 month**
 
 ---
 
-## 2. Prompt Engineering
+## 1. Introduction to CV and OpenCV
 
 *3 lessons*
 
-- Introduction to Prompt Engineering
-- Advanced Prompt Engineering | In-context Learning | Chain of Thought | Tree of Thought
-- LLM Guardrails - How to control LLM output
+- Introduction to Computer Vision
+- OpenCV Basics and Setup
+- Image Processing Fundamentals
 
 ---
 
-## 3. Agents and Langchain
+## 2. Building using OpenCV
+
+*2 lessons*
+
+- Hands-on OpenCV Projects
+- Advanced Image Manipulation
+
+---
+
+## 3. Introduction to RCNN, Fast RCNN, Faster RCNN
+
+*3 lessons*
+
+- Understanding RCNN Architecture
+- Fast RCNN Deep Dive
+- Faster RCNN Implementation
+
+---
+
+## 4. Mask RCNN
 
 *5 lessons*
 
-- LangChain and Agents Introduction
-- LLM Quantization
-- Hands on Project 9: Coding chains with LangChain
-- Giving Memory to LLMs
-- Hands on Project 10: Code your first LLM agent
+- Mask RCNN Architecture Overview
+- Instance Segmentation Basics
+- Training Mask RCNN Models
+- Mask RCNN Applications
+- Advanced Mask RCNN Techniques
 
 ---
 
-## 4. Semantic Search
+## 5. Intro to UNet
 
-*5 lessons*
+*3 lessons*
 
-- Semantic Search Introduction
-- Hands on Project 11: Coding an LLM Dense Retrieval System
-- LLM Chunking Strategies
-- Reranking for semantic search
-- Evaluating retrieval systems
+- UNet Architecture Overview
+- Semantic Segmentation Concepts
+- UNet for Medical Imaging
 
 ---
 
-## 5. Retrieval Augmented Generation (RAG)
+## 6. UNet Implementation
 
 *4 lessons*
 
-- Evaluating RAG Systems
-- Code files
-- Hands on Project 12: RAG Intro and Coding
-- Advanced RAG Systems
+- Building UNet from Scratch
+- Training UNet Models
+- UNet Loss Functions and Optimization
+- UNet Evaluation Metrics
 
 ---
 
-## 6. Multimodal LLMs
+## 7. Introduction to YOLO
+
+*3 lessons*
+
+- YOLO Architecture Evolution (v1 to v8)
+- YOLOv5/v8 Deep Dive
+- Real-time Object Detection Concepts
+
+---
+
+## 8. Building with YOLO
 
 *4 lessons*
 
-- Vision Transformers: How and why they work?
-- Introduction to CLIP: Multimodal Embedding Models
-- Introduction to BLIP: Making text generation multimodal
-- Multimodal LLM Summary
+- Custom YOLO Training
+- YOLO Inference Pipeline
+- YOLO Model Optimization
+- Deploying YOLO Models
 
 ---
 
-Students get access to all the code files and lecture notes as well. 
+## 9. Introduction to Roboflow
 
-A student asks a question about a particular code. You can ask them to first share their code with you. Then you can see that code, run it, and finally give a response. 
+*1 lesson*
+
+- Roboflow Platform Overview and Setup
+
+---
+
+## 10. Building using Roboflow
+
+*1 lesson*
+
+- End-to-End Computer Vision Pipeline with Roboflow
+
+---
+
+Students get access to all the code files and lecture notes as well.
+
+A student asks a question about a particular code. You can ask them to first share their code with you. Then you can see that code, run it, and finally give a response.

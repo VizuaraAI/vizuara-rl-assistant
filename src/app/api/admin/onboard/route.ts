@@ -105,27 +105,21 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate welcome message using preferred name
-    const welcomeMessage = `Hello ${displayName},
+    const welcomeMessage = `Hi,
 
-Welcome to the GenAI Industry Professional Plan!
+Welcome to the Computer Vision research bootcamp.
 
-Please watch the onboarding video: https://www.veed.io/view/6f40e098-5f2c-4f7f-8b0b-a614e3c556cc?panel=share
+Please note the following points
 
-Here are the next steps to be followed:
+1) We will allocate ~1 month for you to go through the foundational material. The material you have to follow is custom-allocated based on your topic of interest- that way, your foundation-building exercise is very focused.
 
-(a) Go to: https://flyvidesh.online/courses/llm-bootcamp-industry-professional-plan/. We have activated the Industry Plan for you now.
+2) Whenever you face any doubts or queries, ask on this platform.
 
-(b) We will allocate 1-1.5 months for you to go through the course videos and code files. You can start going through the modules sequentially.
+3) After going through the foundations, the remaining ~3 months after phase one will be spent on research.
 
-(c) Whenever you face any doubts or queries, ask here. We will respond immediately. We won't be having voice or video calls. Hence, it is very important that you are very proactive on email.
+This is a 4-month program starting today (${formatDate(startDate)} - ${formatDate(endDate)}).
 
-(d) The remaining 2-2.5 months will be spent on research.
-
-This is a 4 month mentorship from ${formatDate(startDate)} - ${formatDate(endDate)}.
-
-Let's get started!
-
-Let me know if you have any doubts or questions!`;
+Let's get started :)`;
 
     // Create welcome message as sent (auto-approved, no mentor review needed)
     const { error: msgError } = await supabase.from('messages').insert({

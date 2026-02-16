@@ -84,7 +84,7 @@ It's been ${daysSinceLastInteraction} days since this student's last message. Th
 - Reach out warmly — don't make them feel guilty
 - Ask if everything is okay
 - Offer specific help with where they left off
-- Consider mentioning a voice note from Dr. Raj for motivation
+- Consider mentioning a voice note from Dr. Sreedath for motivation
 `;
 }
 

@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Vizuara Teaching Assistant',
-  description: 'AI-powered teaching assistant for the Vizuara GenAI Bootcamp',
+  description: 'AI-powered teaching assistant for the Vizuara Computer Vision Bootcamp',
 };
 
 export default function RootLayout({

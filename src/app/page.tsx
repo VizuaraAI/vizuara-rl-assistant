@@ -16,7 +16,7 @@ export default function Home() {
           Vizuara AI Bootcamp
         </h1>
         <p className="text-lg mb-12 max-w-md mx-auto" style={{ color: '#86868b' }}>
-          Your personal AI teaching assistant for the Generative AI Professional Bootcamp
+          Your personal AI teaching assistant for the Computer Vision Research Bootcamp
         </p>
 
         {/* Portal Cards */}
@@ -34,7 +34,7 @@ export default function Home() {
             </div>
             <h2 className="text-xl font-semibold mb-2" style={{ color: '#1d1d1f' }}>Student Portal</h2>
             <p className="text-sm" style={{ color: '#86868b' }}>
-              Access your inbox, send messages to Dr. Raj, and track your learning journey
+              Access your inbox, send messages to Dr. Sreedath, and track your learning journey
             </p>
           </Link>
 
@@ -70,7 +70,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="absolute bottom-8 text-center text-sm" style={{ color: '#86868b' }}>
-        Powered by Dr. Raj Dandekar, PhD (MIT) • Vizuara
+        Powered by Dr. Sreedath Panat, PhD • Vizuara
       </footer>
     </main>
   );

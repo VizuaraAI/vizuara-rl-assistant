@@ -91,7 +91,7 @@ Return ONLY valid JSON (no markdown, no code blocks) matching this structure:
   "title": "Ten-Week Research Roadmap",
   "subtitle": "<Research Topic>",
   "researcher": "<Student Name>",
-  "mentor": "Dr. Raj Dandekar",
+  "mentor": "Dr. Sreedath Panat",
   "date": "<Current Date>",
   "abstract": "<4-6 SENTENCES mentioning: (1) specific methodology, (2) primary dataset with version, (3) key metrics to measure, (4) expected deliverables, (5) target output (e.g., workshop paper)>",
 
