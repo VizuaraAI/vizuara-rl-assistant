@@ -193,6 +193,7 @@ Return ONLY valid JSON array. No markdown fencing.`;
         // Try to upload to Supabase Storage
         let fullUrl = '';
         try {
+          console.log('[Colab] Uploading to Supabase Storage...');
           const notebookBuffer = new Uint8Array(Buffer.from(notebookContent));
 
           const { data: uploadData, error: uploadError } = await supabase.storage
@@ -203,14 +204,18 @@ Return ONLY valid JSON array. No markdown fencing.`;
               upsert: true,
             });
 
-          if (!uploadError) {
+          if (uploadError) {
+            console.error('[Colab] Storage upload error:', uploadError);
+          } else {
+            console.log('[Colab] Storage upload success:', uploadData);
             const { data: publicUrlData } = supabase.storage
               .from('notebooks')
               .getPublicUrl(filename);
             fullUrl = publicUrlData.publicUrl;
+            console.log('[Colab] Public URL:', fullUrl);
           }
         } catch (storageError) {
-          console.warn('Storage upload failed, using data URL fallback:', storageError);
+          console.error('[Colab] Storage upload failed:', storageError);
         }
 
         // If storage failed, create a data URL
@@ -219,6 +224,7 @@ Return ONLY valid JSON array. No markdown fencing.`;
           fullUrl = `data:application/json;base64,${base64Content}`;
         }
 
+        console.log('[Colab] Sending complete event with URL:', fullUrl);
         send('complete', {
           success: true,
           title,
@@ -229,6 +235,7 @@ Return ONLY valid JSON array. No markdown fencing.`;
           cellCount: cells.length,
           notebookContent: notebookContent, // Include content for frontend fallback
         });
+        console.log('[Colab] Complete event sent successfully');
 
       } catch (error) {
         console.error('Colab generation error:', error);
